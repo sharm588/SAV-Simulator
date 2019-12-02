@@ -1,0 +1,89 @@
+if(loc instanceof Zone && P.destination == loc)
+    {
+       P = WaitingList.get(0);
+      WaitingList.remove(0);
+    }
+    if(WaitingList.size() == 0)
+    {
+      return WaitingList;
+    }
+    if(loc instanceof Zone)
+    {
+      path.get(0).traveltime -= 30;
+    }
+    if(path.size()==0)
+    {
+      return WaitingList;
+    }
+    else
+    {
+      if(path.get(0).traveltime <=30)
+      {
+        loc = (Zone) path.get(0).Destination; //zone cast
+        path.remove(0);
+      }
+      else
+      {
+        path.get(0).traveltime -= 30;
+      }
+    }
+
+
+
+
+
+
+
+
+
+
+
+  public List<Passenger> steptoPassenger(List<Passenger> WaitingList)
+  {
+    //shortestpath call from zone to passenger origin and from passenger origin to destination
+    Passenger P = WaitingList.get(0);
+    path = shortestPath(loc, P.origin);
+    while(loc != (Zone) P.origin)
+    {
+      if (path.get(counter).traveltime > 30)
+      {
+        path.get(counter).traveltime -= 30;
+      }
+      else
+      {
+         loc = (Zone) path.get(counter).destination;
+         counter++;
+      }
+   }
+ }
+ public List<Passenger>
+   WaitingList.remove(0);
+   path = shortestPath(loc, P.destination);
+   counter = 0;
+   while(loc != (Zone) P.destination)
+   {
+     if (path.get(counter).traveltime > 30)
+     {
+       path.get(counter).traveltime -= 30;
+     }
+     else
+     {
+        loc = (Zone) path.get(counter).destination;
+        counter++;
+     }
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
