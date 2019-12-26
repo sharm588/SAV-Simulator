@@ -17,7 +17,7 @@
     
 6.) Set environment variable for resources folder to RESOURCES_FOLDER when running using "Application"
    
-    1. When running Application, click the box in the top right hand corner with the file's name
+    1. Click the box in the top right hand corner with the file's name (should be "Application")
     2. Click "Edit Configurations..."
     3. In the Enironment Variables section under Configuration, type "RESOURCES_FOLDER=" followed by the path for the resources folder
 
