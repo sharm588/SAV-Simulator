@@ -3,66 +3,103 @@ package org.umn.research.evsimulator;
 import lombok.Data;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
 public class Vehicle {
     private int batteryPercent;
     private Location loc;
-    private Network net;
+    public Network net;
+    private List<Link> path;
+    private int counter = 0;
+    private float currentTravelTime = 0;
+    private boolean pickedUp = false;
 
     public Vehicle (Network net, int batteryPercent, Location loc) {
-        this.net = net;
+
         this.batteryPercent = batteryPercent;
         this.loc = loc;
 
     }
 
-    public List<Passenger> step (List<Passenger> waitingList, List<Node> nodesList) {
-        Node node = null;
-        List<Link> path;
-        int counter = 0;
-
+    public List<Passenger> step (List<Passenger> waitingList, List<Node> nodesList) {                                   //assumes there is only one passenger on waiting list
+        Node node = null;                                                                                               //this is a temporary fix; need to change use of node so it is an instance variable of a Vehicle so movement of a Vehicle is tracked
+        //List<Link> path;
 
         Passenger P = waitingList.get(0);                                                                               //shortest path call from zone to passenger origin and from passenger origin to destination
 
-        for (int i = 0; i < nodesList.size(); i++) {                                                                    //match vehicle location with node to get outgoing nodes
-            if (((Zone) this.loc).getId() == nodesList.get(i).getId()) {
-                node = nodesList.get(i);
+        if (!this.pickedUp) {
+            if (this.getCurrentTravelTime() > 30) {
+                this.setCurrentTravelTime(this.getCurrentTravelTime() - 30);
+            }
+            else if (this.getPath().get(this.getCounter()).getDestination() == P.getOrigin()){
+                this.pickedUp = true;
+            }
+            else {
+                Zone z = null;
+                for (int i = 0; i < net.getZoneList().size(); i++) {
+                    if (this.getPath().get(this.getCounter()).getDestination().getId() == net.getZoneList().get(i).getId()) {
+                        z = net.getZoneList().get(i);
+                    }
+                }
+                this.loc = z;
+                this.counter++;
+                this.createTravelTime();
+            }
+
+        }
+        else
+        {
+
+            if (this.getCurrentTravelTime() > 30) {
+                this.setCurrentTravelTime(this.getCurrentTravelTime() - 30);
+            }
+            else if (this.getPath().get(this.getCounter()).getDestination() == P.getDestination()){
+                this.pickedUp = false;
+                waitingList.remove(0);
+            }
+            else {
+                Zone z = null;
+                for (int i = 0; i < net.getZoneList().size(); i++) {
+                    if (this.getPath().get(this.getCounter()).getDestination().getId() == net.getZoneList().get(i).getId()) {
+                        z = net.getZoneList().get(i);
+                    }
+                }
+                this.loc = z;
+                this.counter++;
+                this.createTravelTime();
             }
         }
 
-        path = net.shortestPath(node, P.getOrigin());                                                                   //get shortest path from vehicle location to passenger
-
-        while (node != P.getOrigin()) {
-
-            if (path.get(counter).getTraveltime() > 30) {
-                Link link = path.get(counter);
-                link.setTraveltime(link.getTraveltime() - 30);
-            } else {
-                node = path.get(counter).getDestination();
-                counter++;
-            }
-        }
-
-        waitingList.remove(0);                                                                                    //passenger picked up, so remove from waiting list
-        path = net.shortestPath( node, P.getDestination());                                                             //get shortest path from passenger to destination
-        counter = 0;
-
-        while (node != P.getDestination()) {
-            if (path.get(counter).getTraveltime() > 30) {
-                Link link = path.get(counter);
-                link.setTraveltime(link.getTraveltime() - 30);
-            } else {
-                node = path.get(counter).getDestination();
-                counter++;
-            }
-        }
 
         return waitingList;
 
     }
 
+
+    public void createPath (Location loc, Node dest) {
+        Zone z = (Zone) loc;
+        System.out.println("Vehicle Position ID: " + z.getId());
+        System.out.println("Heading towards ID " + dest.getId());
+        Node node = null;
+
+        if (z.getId() == dest.getId()) {                                                                                //check if vehicle is already at passenger location
+            this.setPickedUp(true);
+        }
+
+        for (int i = 0; i < net.getNodesList().size(); i++) {
+                                                                                                                        //match vehicle location with node to get outgoing nodes
+            if (z.getId() == net.getNodesList().get(i).getId()) {
+                node = net.getNodesList().get(i);
+            }
+        }
+        this.setPath(net.shortestPath(node, dest));
+    }
+
+    public void createTravelTime () {
+        this.setCurrentTravelTime(this.getPath().get(this.getCounter()).getTraveltime());
+    }
 }
 //org.umn.research.evsimulator.Location class that could be either node or link
 //instanceofto check if location is node or link

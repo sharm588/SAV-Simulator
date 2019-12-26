@@ -15,7 +15,7 @@ public class NetworkTest {
 
     }
 
-    @Test
+   /* @Test
     public void loadNetwork() {
         Network network = Network.createNetwork();
 
@@ -40,16 +40,17 @@ public class NetworkTest {
         Network network = Network.createNetwork();
         Vehicle vehicle = network.makeVehicle();
         assertNotNull(vehicle);
-    }
+    }*/
 
     @Test
     public void simulate() {
         Network network = Network.createNetwork();
         Vehicle vehicle = network.makeVehicle();
 
+        vehicle.net = network;
         assertNotNull(vehicle);
 
         List<Passenger> waitingList = network.simulate();
-        //assertTrue(waitingList.size() > 0);
+
     }
 }

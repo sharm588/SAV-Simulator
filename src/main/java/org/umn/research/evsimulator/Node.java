@@ -21,13 +21,11 @@ public class Node {
     }
 
     public String toString() {
-        return Integer.toString(id) + " " + Integer.toString(type);
+        return id + " " + type;
     }
 
     public void addOutgoing(Link link) {
         outgoing.add(link);
-        //System.out.println(this);
-        //System.out.println(outgoing);
     }
 
     public List<Link> getOutgoing() {

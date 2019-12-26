@@ -37,7 +37,6 @@ public class Network {
 
         //for(int t = 0; t < org.umn.research.evsimulator.Parameters.duration; t += org.umn.research.evsimulator.Parameters.dt) // 7200 is 2 hours in seconds (why 2 hours)
         //{
-        System.out.println("simulate called");
         for (Passenger p : passengers) {
             if (p.getDeparturetime() < 1000)  //change this to less than t asap
             {
@@ -47,29 +46,51 @@ public class Network {
         }
 
         for (Vehicle v : vehicleList) {
-            v.step(waitingList, nodesList); // moves vehicle forward on its assigned path. One node to next?
+            float totalTravelTime = 0;
+            Passenger P = waitingList.get(0);
+            v.createPath(v.getLoc(), P.getOrigin());
+            for (int i = 0; i < v.getPath().size(); i++) {
+                totalTravelTime += v.getPath().get(i).getTraveltime();
+            }
+            System.out.println("Total Travel Time: " + totalTravelTime + " seconds");
+            while (!v.isPickedUp()) {
+                v.step(waitingList, nodesList); // moves vehicle forward on its assigned path. One node to next?
+            }
+
+            Zone zOrigin = null;
+            for (int i = 0; i < this.getZoneList().size(); i++) {
+                if (P.getOrigin().getId() == this.getZoneList().get(i).getId()) {
+                    zOrigin = this.getZoneList().get(i);
+                }
+            }
+            System.out.println("Reached Passenger Origin ID: " + zOrigin.getId());
+            v.createPath(zOrigin, P.getDestination());
+            System.out.println("Reached Passenger Destination ID: " + P.getDestination().getId());
+            v.setCounter(0);
+            v.createTravelTime();
+            while (v.isPickedUp()) {
+                v.step(waitingList, nodesList); // moves vehicle forward on its assigned path. One node to next?
+            }
         }
 
         //}
-
-
+        System.out.println("EV ridesharing simulated");
         return waitingList;
     }
 
     public List<Link> shortestPath(Node origin, Node dest) {
         ArrayList<Link> output = new ArrayList<>();
-        System.out.println("origin outgoing: " + origin.getOutgoing());
+
         dijkstras(origin);
 
         Node curr = dest;
         while (curr != origin) {
-
             output.add(0, curr.getPred()); //missing parameters of link
             if (curr.getPred() != null) {
                 curr = curr.getPred().getSource();
             }
             else {
-                throw new RuntimeException(String.format("com.umn.research.evsimulator.Node is missing predecessor [id: %s, type: %s]",curr.getId(),curr.getType()));
+                throw new RuntimeException(String.format("org.umn.research.evsimulator.Node is missing predecessor [id: %s, type: %s]",curr.getId(),curr.getType()));
             }
         }
 
@@ -144,7 +165,9 @@ public class Network {
                 s.nextInt();
                 int sourcelink = s.nextInt();
                 int destlink = s.nextInt();
-                float tt = (s.nextFloat() / (5280)) / (s.nextFloat() * 3600);
+                float lengthInMiles = s.nextFloat() / 5280;
+                float speedInMilesPerSecond = s.nextFloat() / 3600;
+                float tt = lengthInMiles / speedInMilesPerSecond;
                 s.nextFloat();
                 s.nextFloat();
                 s.nextInt();
@@ -261,7 +284,6 @@ public class Network {
     private void dijkstras(Node source) {
 
         Set<Node> Q = new HashSet<Node>();
-        System.out.println("source outgoing: " + source.getOutgoing());
 
         for (Node n : nodesList) {
             n.setCost(Integer.MAX_VALUE);
