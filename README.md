@@ -16,10 +16,12 @@
 
 4.) Accept any installations needed for project to run (such as Gradle if prompted)
 
-5.) Go to File -> Settings Repository and enter the settings repository URL (https://github.com/sharm588/SAEV-Simulator-Settings.git)
+5.)  Overwrite current IDE settings with provided settings to ensure project runs correctly
     
-    1. Click 'Overwrite Local'
-    2. Enter access token when requested: b00412df1d4c49081939b50c6bd715951bffaf04
+    1. Go to File -> Settings Repository
+    2. Enter the settings repository URL (https://github.com/sharm588/SAEV-Simulator-Settings.git)
+    3. Click 'Overwrite Local'
+    4. Enter access token when requested: b00412df1d4c49081939b50c6bd715951bffaf04
     
 6.) Set environment variable for resources folder to "RESOURCES_FOLDER" when using main file *Application*
    
