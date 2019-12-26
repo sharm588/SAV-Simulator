@@ -4,7 +4,7 @@
 
 ## Run using IntelliJ IDEA IDE
 
-1.) Install IntelliJ Community Edition (https://www.jetbrains.com/idea/download)
+1.) Install IntelliJ Community Edition (https://www.jetbrains.com/idea/download) and Git (https://git-scm.com/downloads)
 
 2.) Upon opening, click *Check out from Version Control*
 
