@@ -4,7 +4,7 @@
 
 ## Run using IntelliJ IDEA IDE
 
-1.) Install IntelliJ Community Edition
+1.) Install IntelliJ Community Edition (https://www.jetbrains.com/idea/download)
 
 2.) Upon opening, click "Check out from Version Control"
 
@@ -23,4 +23,4 @@
     2. Click "Edit Configurations..."
     3. In the Enironment Variables section under Configuration, type "RESOURCES_FOLDER=" followed by the path for the resources folder
 
-7.) Project is up and running!
+7.) Project can be run be clicking the green play button in the top right hand corner.
