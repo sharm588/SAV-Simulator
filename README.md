@@ -6,9 +6,9 @@
 
 1.) Install IntelliJ Community Edition
 
-2.) Upon opening, click "Get From Version Control"
+2.) Upon opening, click "Check out from Version Control"
 
-3.) Enter GitHub URL (https://github.com/sharm588/SAEV-Simulator.git) and login credentials
+3.) Enter Git URL (https://github.com/sharm588/SAEV-Simulator.git) and login credentials
 
 4.) Accept any installations needed for project to run (such as Gradle if prompted)
 
