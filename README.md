@@ -2,7 +2,7 @@
 
 ![Autonomous Uber](https://s.marketwatch.com/public/resources/images/MW-EV890_uberse_ZH_20160914102258.jpg)
 
-## Run using IntelliJ IDEA IDE
+## Run using IntelliJ IDEA
 
 1.) Ensure the following are installed on your computer  
 
