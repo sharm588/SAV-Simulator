@@ -6,9 +6,9 @@
 
 1.) Ensure the following are installed on your computer  
 
-    i. Java (https://www.java.com/en/download)
-    ii. IntelliJ Community Edition (https://www.jetbrains.com/idea/download)
-    iii. Git (https://git-scm.com/downloads)
+    1. Java (https://www.java.com/en/download)
+    2. IntelliJ Community Edition (https://www.jetbrains.com/idea/download)
+    3. Git (https://git-scm.com/downloads)
 
 2.) Open IntelliJ IDEA and click *Check out from Version Control* from the main menu
 
@@ -18,13 +18,13 @@
 
 5.) Go to File -> Settings Repository and enter the settings repository URL (https://github.com/sharm588/SAEV-Simulator-Settings.git)
     
-    i. Click 'Overwrite Local'
-    ii. Enter access token when requested: b00412df1d4c49081939b50c6bd715951bffaf04
+    1. Click 'Overwrite Local'
+    2. Enter access token when requested: b00412df1d4c49081939b50c6bd715951bffaf04
     
 6.) Set environment variable for resources folder to "RESOURCES_FOLDER" when using main file *Application*
    
-    i. Click the box in the top right hand corner with the file's name
-    ii. Click 'Edit Configurations...'
-    iii. In the Environment Variables section under Configuration, type "RESOURCES_FOLDER=" followed by the path for the resources folder
+    1. Click the box in the top right hand corner with the file's name
+    2. Click 'Edit Configurations...'
+    3. In the Environment Variables section under Configuration, type "RESOURCES_FOLDER=" followed by the path for the resources folder
 
 7.) Project can be run be clicking the green play button in the top right hand corner.
