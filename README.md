@@ -17,6 +17,6 @@
    
     a.) When running Application, click the box in the top right hand corner with the file's name
     b.) Click "Edit Configurations..."
-    c.) In the Enironment Variables section under Configuration, type "RESOURCES_FOLDER=" followed by the path for the  resource folder
+    c.) In the Enironment Variables section under Configuration, type "RESOURCES_FOLDER=" followed by the path for the resource folder
 
 6.) Project is up and running!
