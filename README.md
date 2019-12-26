@@ -5,9 +5,9 @@
 ## Run using IntelliJ IDEA IDE
 
 1.) Ensure the following are installed on your computer  
-    * Java (https://www.java.com/en/download)
-    * IntelliJ Community Edition (https://www.jetbrains.com/idea/download)
-    * Git (https://git-scm.com/downloads)
+    - Java (https://www.java.com/en/download)
+    - IntelliJ Community Edition (https://www.jetbrains.com/idea/download)
+    - Git (https://git-scm.com/downloads)
 
 2.) Open IntelliJ IDEA and click *Check out from Version Control* from the main menu
 
