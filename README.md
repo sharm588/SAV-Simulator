@@ -27,4 +27,4 @@
     2. Click 'Edit Configurations...'
     3. In the Environment Variables section under Configuration, type "RESOURCES_FOLDER=" followed by the path for the resources folder
 
-7.) Project can be run be clicking the green play button in the top right hand corner.
+7.) Project can be run be clicking the green play button in the top right hand corner
