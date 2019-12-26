@@ -1,7 +1,6 @@
 # Shared Autonomous Electric Vehicles Simulator
 
-![Autonomous Uber]
-(https://s.marketwatch.com/public/resources/images/MW-EV890_uberse_ZH_20160914102258.jpg)
+![Autonomous Uber](https://s.marketwatch.com/public/resources/images/MW-EV890_uberse_ZH_20160914102258.jpg)
 
 ## Run using IntelliJ IDEA IDE
 
