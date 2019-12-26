@@ -23,10 +23,10 @@
     3. Click 'Overwrite Local'
     4. Enter access token when requested: b00412df1d4c49081939b50c6bd715951bffaf04
     
-6.) Set environment variable for resources folder to "RESOURCES_FOLDER" when using main file *Application*
+6.) Set environment variable for resources folder to 'RESOURCES_FOLDER' when using main file *Application*
    
     1. Click the box in the top right hand corner with the file's name
     2. Click 'Edit Configurations...'
-    3. In the Environment Variables section under Configuration, type "RESOURCES_FOLDER=" followed by the path for the resources folder
+    3. In the 'Environment Variables' section under 'Configuration', type 'RESOURCES_FOLDER=' followed by the path for the resources folder
 
 7.) Project can be run be clicking the green play button in the top right hand corner
