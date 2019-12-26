@@ -1,6 +1,6 @@
 # Shared Autonomous Electric Vehicles Simulator
 
-## Run using IntelliJ IDE
+## Run using IntelliJ IDEA IDE
 
 1.) Install IntelliJ Community Edition
 
