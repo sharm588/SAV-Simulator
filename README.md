@@ -1,5 +1,8 @@
 # Shared Autonomous Electric Vehicles Simulator
 
+![Autonomous Uber]
+(https://s.marketwatch.com/public/resources/images/MW-EV890_uberse_ZH_20160914102258.jpg)
+
 ## Run using IntelliJ IDEA IDE
 
 1.) Install IntelliJ Community Edition
@@ -8,7 +11,7 @@
 
 3.) Enter GitHub URL (https://github.com/sharm588/SAEV-Simulator.git) and login credentials
 
-4.) Accept any installations needed for project to run (such as Gradle)
+4.) Accept any installations needed for project to run (such as Gradle if prompted)
 
 5.) Go to File -> Settings Repository and enter the settings repository URL (https://github.com/sharm588/SAEV-Simulator-Settings.git)
     
