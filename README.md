@@ -17,7 +17,7 @@
     1. Click 'Overwrite Local'
     2. Enter access token when requested: b00412df1d4c49081939b50c6bd715951bffaf04
     
-6.) Set environment variable for resources folder to "RESOURCES_FOLDER" when running using *Application*
+6.) Set environment variable for resources folder to "RESOURCES_FOLDER" when using main file *Application*
    
     1. Click the box in the top right hand corner with the file's name
     2. Click 'Edit Configurations...'
