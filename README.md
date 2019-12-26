@@ -14,8 +14,8 @@
 
 5.) Go to File -> Settings Repository and enter the settings repository URL (https://github.com/sharm588/SAEV-Simulator-Settings.git)
     
-    1. Enter access token when requested: b00412df1d4c49081939b50c6bd715951bffaf04
-    2. Click "Overwrite Local"
+    1. Click "Overwrite Local"
+    2. Enter access token when requested: b00412df1d4c49081939b50c6bd715951bffaf04
     
 6.) Set environment variable for resources folder to RESOURCES_FOLDER when running using "Application"
    
