@@ -45,35 +45,75 @@ public class Network {
             // if passenger departure time is less than t, add passenger to waiting list
         }
 
-        for (Vehicle v : vehicleList) {
+        for (Vehicle vehicle : vehicleList) {
+            System.out.println("Vehicle #" + vehicle.getId());
             float totalTravelTime = 0;
-            Passenger P = waitingList.get(0);
-            v.createPath(v.getLoc(), P.getOrigin());
-            for (int i = 0; i < v.getPath().size(); i++) {
-                totalTravelTime += v.getPath().get(i).getTraveltime();
+            float fastestTime = Integer.MAX_VALUE;
+            Passenger passenger = null;
+
+            for (Passenger p : waitingList) { //find passenger that is closest to vehicle
+                vehicle.createPath(vehicle.getLoc(), p.getOrigin());
+
+                for (int i = 0; i < vehicle.getPath().size(); i++) {
+                    totalTravelTime += vehicle.getPath().get(i).getTraveltime();
+                }
+                if (totalTravelTime < fastestTime) { //find passenger that can be reached the fastest among fleet of SAEVs
+                    fastestTime = totalTravelTime;
+                    passenger = p;
+                }
+
+                totalTravelTime = 0;
             }
-            System.out.println("Total Travel Time: " + totalTravelTime + " seconds");
-            while (!v.isPickedUp()) {
-                v.step(waitingList, nodesList); // moves vehicle forward on its assigned path. One node to next?
+
+            Zone zone = (Zone) vehicle.getLoc();
+            System.out.println("Vehicle Position ID: " + zone.getId());
+            System.out.println("Heading towards ID " + passenger.getOrigin().getId());
+
+            for (int i = 0; i < vehicle.getPath().size(); i++) {
+                totalTravelTime += vehicle.getPath().get(i).getTraveltime();
+            }
+
+            System.out.println("Total Travel Time to Passenger: " + totalTravelTime + " seconds");
+            totalTravelTime = 0;
+
+            while (!vehicle.isPickedUp()) {
+                vehicle.step(waitingList, nodesList, passenger); // moves vehicle forward on its assigned path. One node to next?
             }
 
             Zone zOrigin = null;
             for (int i = 0; i < this.getZoneList().size(); i++) {
-                if (P.getOrigin().getId() == this.getZoneList().get(i).getId()) {
+                if (passenger.getOrigin().getId() == this.getZoneList().get(i).getId()) {
                     zOrigin = this.getZoneList().get(i);
                 }
             }
+            vehicle.setLoc(zOrigin);
+
             System.out.println("Reached Passenger Origin ID: " + zOrigin.getId());
-            v.createPath(zOrigin, P.getDestination());
-            System.out.println("Reached Passenger Destination ID: " + P.getDestination().getId());
-            v.setCounter(0);
-            v.createTravelTime();
-            while (v.isPickedUp()) {
-                v.step(waitingList, nodesList); // moves vehicle forward on its assigned path. One node to next?
+            vehicle.createPath(zOrigin, passenger.getDestination());
+
+            zone = (Zone) vehicle.getLoc();
+            System.out.println("Vehicle Position ID: " + zone.getId());
+            System.out.println("Heading towards ID " + passenger.getDestination().getId());
+
+            for (int i = 0; i < vehicle.getPath().size(); i++) {
+                totalTravelTime += vehicle.getPath().get(i).getTraveltime();
             }
+            System.out.println("Total Travel Time to Destination: " + totalTravelTime + " seconds");
+
+            System.out.println("Reached Passenger Destination ID: " + passenger.getDestination().getId());
+            vehicle.setCounter(0);
+            vehicle.createTravelTime();
+            while (vehicle.isPickedUp()) {
+                vehicle.step(waitingList, nodesList, passenger); // moves vehicle forward on its assigned path.
+            }
+            waitingList.remove(passenger);
+
+            if (waitingList.isEmpty()) {
+                break;
+            }
+            System.out.println();
         }
 
-        //}
         System.out.println("EV ridesharing simulated");
         return waitingList;
     }
@@ -97,7 +137,7 @@ public class Network {
         return output;
     }
 
-    public Vehicle makeVehicle() {
+    public Vehicle makeVehicle(Network network) {
         Random ran = new Random();
         //  int x = ran.nextInt(1)+1;
         int n;
@@ -110,6 +150,8 @@ public class Network {
 
         Vehicle v = new Vehicle(this, 100, l);
         vehicleList.add(v);
+        v.setId(vehicleList.indexOf(v));
+        v.net = network;
         return v;
         //}
     }
@@ -237,44 +279,45 @@ public class Network {
         File file = new File(fileName);
         try {
             Scanner s = new Scanner(file);
-            int i = 0;
-            int departuretime;
-            s.nextLine();
-            //while (s.hasNextLine())
-            //{
-            s.nextInt();
-            s.nextInt();
-            //Cast origin and destination as zone so that they can be used properly in the step function for shortest path
-            Node origin = nodeMap.get(s.nextInt());
+            while (passengers.size() < 200) {   //get first 200 passengers
+                int i = 0;
+                int departuretime;
+                s.nextLine();
+                //while (s.hasNextLine())
+                //{
+                s.nextInt();
+                s.nextInt();
+                //Cast origin and destination as zone so that they can be used properly in the step function for shortest path
+                Node origin = nodeMap.get(s.nextInt());
 
-            Node dest = nodeMap.get(s.nextInt());
+                Node dest = nodeMap.get(s.nextInt());
 
 
-            int ast = s.nextInt();
-            int start = departureIdMap.get(ast)[0];
-            int end = start + (departureIdMap.get(ast)[1]);
-            Random r = new Random();
-            double demandval = demand.get(i);
-            i++;
-            double floor = Math.floor(demandval);
-            double ceiling = Math.ceil(demandval);
-            Random r1 = new Random();
-            double checker;
-            //for(int j = 0; j<ceiling; j++)
-            //{
-            //generates random value to see if passengers is made
-            //checker = floor + (ceiling-floor)*r1.nextDouble();
-            //generates random departure time for each passenger
-            departuretime = r.nextInt(end - start) + start;
-            //  if(demandval>checker)
-            //{
-            Passenger p = new Passenger(origin, dest, departuretime);
-            passengers.add(p);
-            //}
-            // }
-            //s.nextLine();
-            // }
-
+                int ast = s.nextInt();
+                int start = departureIdMap.get(ast)[0];
+                int end = start + (departureIdMap.get(ast)[1]);
+                Random r = new Random();
+                double demandval = demand.get(i);
+                i++;
+                double floor = Math.floor(demandval);
+                double ceiling = Math.ceil(demandval);
+                Random r1 = new Random();
+                double checker;
+                //for(int j = 0; j<ceiling; j++)
+                //{
+                //generates random value to see if passengers is made
+                //checker = floor + (ceiling-floor)*r1.nextDouble();
+                //generates random departure time for each passenger
+                departuretime = r.nextInt(end - start) + start;
+                //  if(demandval>checker)
+                //{
+                Passenger p = new Passenger(origin, dest, departuretime);
+                passengers.add(p);
+                //}
+                // }
+                //s.nextLine();
+                // }
+            }
         } catch (FileNotFoundException ex) {
             throw new RuntimeException(ex);
         }

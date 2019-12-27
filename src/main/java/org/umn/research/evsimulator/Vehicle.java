@@ -6,6 +6,8 @@ import lombok.Data;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javafx.application.Platform.exit;
+
 @Data
 public class Vehicle {
     private int batteryPercent;
@@ -15,6 +17,7 @@ public class Vehicle {
     private int counter = 0;
     private float currentTravelTime = 0;
     private boolean pickedUp = false;
+    private int id;
 
     public Vehicle (Network net, int batteryPercent, Location loc) {
 
@@ -23,12 +26,8 @@ public class Vehicle {
 
     }
 
-    public List<Passenger> step (List<Passenger> waitingList, List<Node> nodesList) {                                   //assumes there is only one passenger on waiting list
+    public List<Passenger> step (List<Passenger> waitingList, List<Node> nodesList, Passenger P) {                                   //assumes there is only one passenger on waiting list
         Node node = null;                                                                                               //this is a temporary fix; need to change use of node so it is an instance variable of a Vehicle so movement of a Vehicle is tracked
-        //List<Link> path;
-
-        Passenger P = waitingList.get(0);                                                                               //shortest path call from zone to passenger origin and from passenger origin to destination
-
         if (!this.pickedUp) {
             if (this.getCurrentTravelTime() > 30) {
                 this.setCurrentTravelTime(this.getCurrentTravelTime() - 30);
@@ -57,7 +56,6 @@ public class Vehicle {
             }
             else if (this.getPath().get(this.getCounter()).getDestination() == P.getDestination()){
                 this.pickedUp = false;
-                waitingList.remove(0);
             }
             else {
                 Zone z = null;
@@ -80,8 +78,6 @@ public class Vehicle {
 
     public void createPath (Location loc, Node dest) {
         Zone z = (Zone) loc;
-        System.out.println("Vehicle Position ID: " + z.getId());
-        System.out.println("Heading towards ID " + dest.getId());
         Node node = null;
 
         if (z.getId() == dest.getId()) {                                                                                //check if vehicle is already at passenger location
@@ -98,7 +94,13 @@ public class Vehicle {
     }
 
     public void createTravelTime () {
-        this.setCurrentTravelTime(this.getPath().get(this.getCounter()).getTraveltime());
+        try {
+            this.setCurrentTravelTime(this.getPath().get(this.getCounter()).getTraveltime());
+        }
+        catch (IndexOutOfBoundsException e) {
+
+            exit();
+        }
     }
 }
 //org.umn.research.evsimulator.Location class that could be either node or link

@@ -1,5 +1,7 @@
 package org.umn.research.evsimulator;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Application {
@@ -7,11 +9,19 @@ public class Application {
     public static void main(String [] args)
     {
         Network network = Network.createNetwork();
-        Vehicle vehicle1 = network.makeVehicle();
-        //Vehicle vehicle2 = network.makeVehicle();
-        vehicle1.net = network;
-        //vehicle2.net = network;
 
+        createFleet(50, network);
         List<Passenger> waitingList = network.simulate();
+
+        System.out.println("Waiting List: " + waitingList);
+    }
+
+    private static void createFleet (int size, Network network) {
+        ArrayList<Vehicle> fleet = new ArrayList<>();
+
+        for (int i = 0; i < size; i++) {
+            fleet.add(network.makeVehicle(network));
+        }
+
     }
 }
