@@ -1,6 +1,5 @@
 package org.umn.research.evsimulator;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 

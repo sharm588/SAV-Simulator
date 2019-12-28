@@ -34,9 +34,6 @@ public class Network {
 
     public List<Passenger> simulate() //return type?
     {
-
-        //for(int t = 0; t < org.umn.research.evsimulator.Parameters.duration; t += org.umn.research.evsimulator.Parameters.dt) // 7200 is 2 hours in seconds (why 2 hours)
-        //{
         for (Passenger p : passengers) {
             if (p.getDeparturetime() < 1000)  //change this to less than t asap
             {
@@ -45,7 +42,10 @@ public class Network {
             // if passenger departure time is less than t, add passenger to waiting list
         }
 
-        for (Vehicle vehicle : vehicleList) {
+        System.out.println("Waiting List size: " + waitingList.size());
+        System.out.println();
+
+        for (Vehicle vehicle : vehicleList) { //currently looks for passenger closest to vehicle, should ideally be closest vehicle to passenger (remove waitlist removal in step)
             System.out.println("Vehicle #" + vehicle.getId());
             float totalTravelTime = 0;
             float fastestTime = Integer.MAX_VALUE;
@@ -113,7 +113,7 @@ public class Network {
             }
             System.out.println();
         }
-
+        System.out.println();
         System.out.println("EV ridesharing simulated");
         return waitingList;
     }
