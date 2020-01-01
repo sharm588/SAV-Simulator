@@ -39,7 +39,7 @@
 
 2.) Click the '+' button located above the list of libraries and click the *Java* option
 
-3.) Find the path for 'cplex.jar' (/.../CPLEX_Studio1210/cplex/lib/cplex.jar)
+3.) Find the path for cplex.jar (/.../CPLEX_Studio1210/cplex/lib/cplex.jar for macOS)
 
 4.) Click the 'Apply' button then 'Ok'
 
