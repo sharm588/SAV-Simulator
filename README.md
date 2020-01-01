@@ -33,7 +33,7 @@ Ensure the following are installed on your computer
     3. In the 'Environment Variables' section under 'Configuration', type 'RESOURCES_FOLDER=' followed by the path for the resources folder
     4. Click the 'Apply' button then 'Ok'
     
-### Adding the CPLEX Optimizer
+### Adding CPLEX Optimizer
 
 1.) Add CPLEX library to project
     
