@@ -46,5 +46,5 @@
 
     1. Click the box in the top right hand corner with the file's name
     2. Click 'Edit Configurations...'
-    3. In the 'VM Options' section under 'Configuration', type '-Djava.library.path=' followed by the path for the files for the CPLEX library (looks like '-Djava.library.path=/.../CPLEX_Studio1210/cplex/bin/x86-64_osx for macOS)
+    3. In the 'VM options' section under 'Configuration', type '-Djava.library.path=' followed by the path for the files for the CPLEX library (looks like '-Djava.library.path=/.../CPLEX_Studio1210/cplex/bin/x86-64_osx for macOS)
     4. Click the 'Apply' button then 'Ok'
