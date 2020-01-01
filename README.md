@@ -11,7 +11,7 @@ Ensure the following are installed on your computer
     3. Git (https://git-scm.com/downloads)
     4. CPLEX Optimizer (https://www.ibm.com/analytics/cplex-optimizer)
     
-### Setting Up IntelliJ Environment
+### Setting Up IntelliJ Project
 
 1.) Open IntelliJ IDEA and click *Check out from Version Control* from the main menu
 
