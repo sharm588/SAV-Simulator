@@ -39,7 +39,7 @@ Ensure the following are installed on your computer
     
     1. Select the 'Project Structure' folder icon in the top right hand corner and press the 'Libraries' tab
     2. Click the '+' button located above the list of libraries and click the 'Java' option
-    3. Find the path for cplex.jar (/.../CPLEX_Studio1210/cplex/lib/cplex.jar for macOS)
+    3. Find the path for cplex.jar ('/.../CPLEX_Studio1210/cplex/lib/cplex.jar' for macOS)
     4. Click the 'Apply' button then 'Ok'
 
 2.) Add the path for the CPLEX files to *VM options* in the main file *Application* 
