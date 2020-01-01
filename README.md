@@ -4,7 +4,7 @@
 
 ## Run using IntelliJ IDEA
 
-Ensure the following are installed on your computer:  
+Ensure the following are installed on your computer 
 
     1. Java (https://www.java.com/en/download)
     2. IntelliJ Community Edition (https://www.jetbrains.com/idea/download)
