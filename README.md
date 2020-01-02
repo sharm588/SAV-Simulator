@@ -6,10 +6,13 @@
 
 Ensure the following are installed on your computer 
 
-    1. Java (https://www.java.com/en/download)
-    2. IntelliJ Community Edition (https://www.jetbrains.com/idea/download)
-    3. Git (https://git-scm.com/downloads)
-    4. CPLEX Optimizer (https://www.ibm.com/analytics/cplex-optimizer)
+1.) Java (https://www.java.com/en/download)
+
+2.) IntelliJ Community Edition (https://www.jetbrains.com/idea/download)
+
+3.) Git (https://git-scm.com/downloads)
+
+4.) CPLEX Optimizer (https://www.ibm.com/analytics/cplex-optimizer)
     
 ### Setting Up IntelliJ Project
 
@@ -46,5 +49,5 @@ Ensure the following are installed on your computer
 
     1. Click the box in the top right hand corner with the file's name
     2. Click 'Edit Configurations...'
-    3. In the 'VM options' section under 'Configuration', type '-Djava.library.path=' followed by the path for the files for the CPLEX library (looks like '-Djava.library.path=/.../CPLEX_Studio1210/cplex/bin/x86-64_osx' for macOS)
+    3. In the 'VM options' section under 'Configuration', type '-Djava.library.path=' followed by the path for the files for the CPLEX library ('-Djava.library.path=/.../CPLEX_Studio1210/cplex/bin/x86-64_osx' for macOS)
     4. Click the 'Apply' button then 'Ok'
