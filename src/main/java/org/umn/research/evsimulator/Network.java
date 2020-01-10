@@ -32,10 +32,10 @@ public class Network {
         return network;
     }
 
-    public List<Passenger> simulate() //return type?
+    public List<Passenger> simulate()
     {
         for (Passenger p : passengers) {
-            if (p.getDeparturetime() < 1000)  //change this to less than t asap
+            if (p.getDeparturetime() < 1000)  //change to '< t' when finished
             {
                 waitingList.add(p);
             }
@@ -65,34 +65,46 @@ public class Network {
                 totalTravelTime = 0;
             }
 
-            Zone zone = (Zone) vehicle.getLoc();
-            System.out.println("Vehicle Position ID: " + zone.getId());
+            vehicle.createPath(vehicle.getLoc(), passenger.getOrigin()); //create path to passenger origin from current vehicle position
+
+            Zone location = (Zone) vehicle.getLoc(); //treat vehicle location as a starting zone
+            System.out.println("Vehicle Position ID: " + location.getId());
             System.out.println("Heading towards ID " + passenger.getOrigin().getId());
 
+            if (vehicle.getPath().size() > 0) {
+                printVehiclePath(vehicle);
+                if (vehicle.getPath().get(vehicle.getPath().size() - 1).getDestination().getId() != passenger.getOrigin().getId()) { //check if path destination and actual destination match
+                    throw new RuntimeException("Vehicle is headed to passenger origin ID " + vehicle.getPath().get(vehicle.getPath().size() - 1).getDestination().getId() + " but passenger is located at ID " + passenger.getOrigin().getId());
+                }
+            }
+
             for (int i = 0; i < vehicle.getPath().size(); i++) {
-                totalTravelTime += vehicle.getPath().get(i).getTraveltime();
+                totalTravelTime += vehicle.getPath().get(i).getTraveltime(); //calculate total travel time from vehicle location to passenger origin
             }
 
             System.out.println("Total Travel Time to Passenger: " + totalTravelTime + " seconds");
-            totalTravelTime = 0;
+            totalTravelTime = 0; //reset travel time for next calculation
 
             while (!vehicle.isPickedUp()) {
-                vehicle.step(waitingList, nodesList, passenger); // moves vehicle forward on its assigned path. One node to next?
+                vehicle.step(waitingList, nodesList, passenger); // moves vehicle forward on its assigned path
             }
 
-            Zone zOrigin = null;
-            for (int i = 0; i < this.getZoneList().size(); i++) {
-                if (passenger.getOrigin().getId() == this.getZoneList().get(i).getId()) {
-                    zOrigin = this.getZoneList().get(i);
+            location = matchLocationWithCorrespondingZone(passenger.getOrigin()); // treat passenger origin (also vehicle's current location) as a starting zone
+            vehicle.setLoc(location); //set vehicle location to passenger origin (as a zone)
+
+            System.out.println("Reached Passenger Origin ID: " + location.getId());
+
+            vehicle.createPath(location, passenger.getDestination()); //create path from passenger origin to destination
+
+            if (vehicle.getPath().size() > 0) {
+                printVehiclePath(vehicle);
+                if (vehicle.getPath().get(vehicle.getPath().size() - 1).getDestination().getId() != passenger.getDestination().getId()) {
+                    throw new RuntimeException("Vehicle is headed to destination ID " + vehicle.getPath().get(vehicle.getPath().size() - 1).getDestination().getId() + " but passenger destination is located at ID " + passenger.getDestination().getId());
                 }
             }
-            vehicle.setLoc(zOrigin);
 
-            System.out.println("Reached Passenger Origin ID: " + zOrigin.getId());
-            vehicle.createPath(zOrigin, passenger.getDestination());
-
-            zone = (Zone) vehicle.getLoc();
-            System.out.println("Vehicle Position ID: " + zone.getId());
+            location = (Zone) vehicle.getLoc();
+            System.out.println("Vehicle Position ID: " + location.getId());
             System.out.println("Heading towards ID " + passenger.getDestination().getId());
 
             for (int i = 0; i < vehicle.getPath().size(); i++) {
@@ -101,12 +113,17 @@ public class Network {
             System.out.println("Total Travel Time to Destination: " + totalTravelTime + " seconds");
 
             System.out.println("Reached Passenger Destination ID: " + passenger.getDestination().getId());
-            vehicle.setCounter(0);
+
+            vehicle.setCounter(0); //reset counter (keeps track of node index in path array list)
             vehicle.createTravelTime();
+
             while (vehicle.isPickedUp()) {
-                vehicle.step(waitingList, nodesList, passenger); // moves vehicle forward on its assigned path.
+                vehicle.step(waitingList, nodesList, passenger); // moves vehicle forward on its assigned path
             }
-            waitingList.remove(passenger);
+            waitingList.remove(passenger); //passenger has reached destination, so remove from waiting list
+
+            location = matchLocationWithCorrespondingZone(passenger.getDestination());
+            vehicle.setLoc(location); //set vehicle location as passenger destination (as a zone)
 
             if (waitingList.isEmpty()) {
                 break;
@@ -279,7 +296,7 @@ public class Network {
         File file = new File(fileName);
         try {
             Scanner s = new Scanner(file);
-            while (passengers.size() < 200) {   //get first 200 passengers
+            while (passengers.size() < 300) {   //reads all passengers in file
                 int i = 0;
                 int departuretime;
                 s.nextLine();
@@ -360,6 +377,27 @@ public class Network {
                 }
             }
         }
+    }
+
+    public Zone matchLocationWithCorrespondingZone (Node node) { //treat node as a new starting zone for vehicle
+        Zone location = null;
+        for (int i = 0; i < this.getZoneList().size(); i++) {
+            if (node.getId() == this.getZoneList().get(i).getId()) {
+                location = this.getZoneList().get(i);
+            }
+        }
+        return location;
+    }
+
+    private void printVehiclePath (Vehicle vehicle) {
+            System.out.print("Path: " + vehicle.getPath().get(0).getSource().getId());
+            for (Link link : vehicle.getPath()) {
+                if (vehicle.getPath().indexOf(link) != 0) {
+                    System.out.print(" -> ");
+                }
+                System.out.print(link.getDestination().getId());
+            }
+            System.out.println();
     }
 
     private static String getFilePath(String fileName) {
