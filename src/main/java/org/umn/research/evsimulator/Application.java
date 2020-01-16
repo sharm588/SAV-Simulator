@@ -9,7 +9,7 @@ public class Application {
     {
         Network network = Network.createNetwork();
 
-        createFleet(50, network);
+        createFleet(20, network);
         List<Passenger> waitingList = network.simulate();
 
         System.out.println("Waiting List: " + waitingList);

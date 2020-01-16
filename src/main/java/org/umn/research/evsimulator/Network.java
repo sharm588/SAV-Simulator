@@ -10,7 +10,7 @@ import java.util.*;
 @Data
 @EqualsAndHashCode
 public class Network {
-    //reads in nodes, identifies type and adds them to the list
+
     private List<Node> nodesList = new ArrayList<>();
     private List<Double> demand = new ArrayList<>();
     private HashMap<Integer, int[]> departureIdMap = new HashMap<>();
@@ -32,31 +32,32 @@ public class Network {
         return network;
     }
 
-    public List<Passenger> simulate()
-    {
+    public List<Passenger> simulate() {
         for (Passenger p : passengers) {
             if (p.getDeparturetime() < 1000)  //change to '< t' when finished
             {
-                waitingList.add(p);
+                waitingList.add(p); // if passenger departure time is less than t, add passenger to waiting list
             }
-            // if passenger departure time is less than t, add passenger to waiting list
         }
 
         System.out.println("Waiting List size: " + waitingList.size());
         System.out.println();
 
         for (Vehicle vehicle : vehicleList) { //currently looks for passenger closest to vehicle, should ideally be closest vehicle to passenger (remove waitlist removal in step)
+
             System.out.println("Vehicle #" + vehicle.getId());
             float totalTravelTime = 0;
             float fastestTime = Integer.MAX_VALUE;
             Passenger passenger = null;
 
             for (Passenger p : waitingList) { //find passenger that is closest to vehicle
+
                 vehicle.createPath(vehicle.getLoc(), p.getOrigin());
 
                 for (int i = 0; i < vehicle.getPath().size(); i++) {
                     totalTravelTime += vehicle.getPath().get(i).getTraveltime();
                 }
+
                 if (totalTravelTime < fastestTime) { //find passenger that can be reached the fastest among fleet of SAEVs
                     fastestTime = totalTravelTime;
                     passenger = p;
@@ -296,7 +297,7 @@ public class Network {
         File file = new File(fileName);
         try {
             Scanner s = new Scanner(file);
-            while (passengers.size() < 300) {   //reads all passengers in file
+            while (passengers.size() < 5000) {   //reads all passengers in file
                 int i = 0;
                 int departuretime;
                 s.nextLine();
