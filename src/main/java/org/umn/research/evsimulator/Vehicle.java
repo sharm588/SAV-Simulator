@@ -23,6 +23,8 @@ public class Vehicle {
     public boolean pickedUp = false;
     public boolean droppedOff = false;
     public boolean alreadyAtTarget = false;
+    public boolean noMoreRides = false;
+    public boolean alreadyPrintedDropOff = false;
     private int id;
 
     public Vehicle (Network net, int batteryPercent, Location loc) {

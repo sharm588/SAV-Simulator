@@ -20,6 +20,7 @@ public class Network {
     private List<Vehicle> vehicleList = new ArrayList<>();
     private List<Zone> zoneList = new ArrayList<>();
     private List<Passenger> waitingList = new ArrayList<>();
+    private int endTime = 0;
 
     public static Network createNetwork() {
         Network network = new Network();
@@ -53,11 +54,6 @@ public class Network {
         for (int i = 0; i < time; i += 30) { //simulate SAEV in 30 second intervals
             System.out.println("Time: " + i);
 
-            if (waitingList.isEmpty()) {
-                System.out.println("Waiting list is empty");
-                break;
-            }
-
             for (Vehicle vehicle : vehicleList) {
 
                 if (vehicle.isNotMoving()) { //check if vehicle is at zone, just picked up passenger, or just dropped off passenger
@@ -73,13 +69,17 @@ public class Network {
                     } else if (vehicle.isDroppedOff()) {
                         vehicle.setDroppedOff(false);
                         vehicle.setPickedUp(false);
-                        vehicle.setDroppedOff(false);
                         vehicle.setRequested(false);
-
-                        assignPassengerToVehicle(vehicle);
                         vehicle.setCounter(0); //reset counter (keeps track of node index in path array list)
 
-                        beginRouteToPassenger(vehicle);
+                        if (!vehicle.isNoMoreRides()) {
+                            assignPassengerToVehicle(vehicle);
+                            beginRouteToPassenger(vehicle);
+                        } else {
+                            vehicle.setDroppedOff(true);
+                            //System.out.println("Vehicle #" + vehicle.getId() + " is idle");
+                            vehicle.setAlreadyPrintedDropOff(true);
+                        }
 
                     }
                     vehicle.setNotMoving(false);
@@ -87,7 +87,7 @@ public class Network {
                 vehicle.step(waitingList, nodesList, vehicle.passenger);
 
                 if (vehicle.isJustPickedUp()) {
-                    System.out.println("(!) Vehicle #" + vehicle.getId() + " picked up passenger " + vehicle.getPassenger());
+                    System.out.println("(!) Vehicle #" + vehicle.getId() + " picked up passenger " + "[" + vehicle.getPassenger() + "]");
 
                     Location location = matchLocationWithCorrespondingZone(vehicle.getPassenger().getOrigin()); // treat passenger origin (also vehicle's current location) as a starting zone
                     vehicle.setLoc(location); //set vehicle location to passenger origin (as a zone)
@@ -97,15 +97,19 @@ public class Network {
                 }
 
                 if (vehicle.isDroppedOff()) {
-                    System.out.println("(!) Vehicle #" + vehicle.getId() + " dropped off passenger " + vehicle.getPassenger());
+                    if (!vehicle.isAlreadyPrintedDropOff()) {
+                        System.out.println("(!) Vehicle #" + vehicle.getId() + " dropped off passenger " + "[" + vehicle.getPassenger() + "]");
+                        if (vehicle.isNoMoreRides()) {
+                            vehicle.setAlreadyPrintedDropOff(true);
+                        }
+                    }
+
                     vehicle.setPickedUp(false);
                     vehicle.setNotMoving(true);
 
                     Location location = matchLocationWithCorrespondingZone(vehicle.getPassenger().getDestination());
                     vehicle.setLoc(location); //set vehicle location as passenger destination (as a zone)
                     vehicle.setCounter(0);
-
-                    waitingList.remove(vehicle.getPassenger()); //passenger has reached destination, so remove from waiting list
 
                 }
                 else if (!vehicle.isPickedUp()) {
@@ -115,11 +119,26 @@ public class Network {
                     System.out.println("Vehicle #" + vehicle.getId() + " is driving passenger to destination");
                 }
             }
+
+            if (waitingList.isEmpty()) {
+                System.out.println("(!) Waiting list is empty");
+                boolean done = true;
+                for (Vehicle vehicle : vehicleList) {
+                    if (!vehicle.isNoMoreRides() || !vehicle.isDroppedOff()) {
+                        done = false;
+                    }
+                }
+                if (done) {
+                    break;
+                }
+            }
+
+            endTime = i;
             System.out.println();
         }
 
         System.out.println();
-        System.out.println("EV ridesharing simulated in " + time + " seconds");
+        System.out.println("EV ridesharing simulated in " + endTime + " seconds");
         System.out.println();
         return waitingList;
     }
@@ -180,26 +199,31 @@ public class Network {
         float fastestTime = Integer.MAX_VALUE;
 
         if (!vehicle.isRequested()) {
-            for (Passenger p : waitingList) { //find passenger that is closest to vehicle
 
-                vehicle.createPath(vehicle.getLoc(), p.getOrigin());
-
-                for (int i = 0; i < vehicle.getPath().size(); i++) {
-                    totalTravelTime += vehicle.getPath().get(i).getTraveltime();
-                }
-
-                if (totalTravelTime < fastestTime) { //find passenger that can be reached the fastest among fleet of SAEVs
-                    fastestTime = totalTravelTime;
-                    vehicle.setPassenger(p);
-                }
-
-                totalTravelTime = 0;
+            if (waitingList.isEmpty()) {
+                vehicle.setNoMoreRides(true);
             }
-            vehicle.setRequested(true);
+            else {
+                for (Passenger p : waitingList) { //find passenger that is closest to vehicle
+
+                    vehicle.createPath(vehicle.getLoc(), p.getOrigin());
+
+                    for (int i = 0; i < vehicle.getPath().size(); i++) {
+                        totalTravelTime += vehicle.getPath().get(i).getTraveltime();
+                    }
+
+                    if (totalTravelTime < fastestTime) { //find passenger that can be reached the fastest among fleet of SAEVs
+                        fastestTime = totalTravelTime;
+                        vehicle.setPassenger(p);
+                    }
+
+                    totalTravelTime = 0;
+                }
+                waitingList.remove(vehicle.getPassenger());
+                vehicle.setRequested(true);
+                System.out.println("(!) Vehicle #" + vehicle.getId() + " has been assigned to passenger " + "[" + vehicle.getPassenger() + "]");
+            }
         }
-        System.out.println("(!) Vehicle #" + vehicle.getId() + " has been assigned to passenger " + vehicle.getPassenger());
-
-
     }
 
     public List<Link> shortestPath(Node origin, Node dest) {

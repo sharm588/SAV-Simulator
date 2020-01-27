@@ -12,14 +12,15 @@ public class Application {
         createFleet(fleetSize, network);
 
         System.out.println("Fleet size: " + fleetSize);
-        List<Passenger> waitingList = network.simulate(1000000);
+        List<Passenger> waitingList = network.simulate(3600);
 
         System.out.println("Waiting List after simulation");
         System.out.println("-----------------------------");
-        System.out.println("           [Empty]           ");
 
         if (waitingList.size() == 0) {
-
+            System.out.println("           [Empty]           ");
+        } else {
+            System.out.println("Size: " + waitingList.size());
         }
 
         for (Passenger passenger : waitingList) {
