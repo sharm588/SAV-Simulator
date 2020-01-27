@@ -8,11 +8,23 @@ public class Application {
     public static void main(String [] args)
     {
         Network network = Network.createNetwork();
+        int fleetSize = 20;
+        createFleet(fleetSize, network);
 
-        createFleet(20, network);
-        List<Passenger> waitingList = network.simulate();
+        System.out.println("Fleet size: " + fleetSize);
+        List<Passenger> waitingList = network.simulate(1000000);
 
-        System.out.println("Waiting List: " + waitingList);
+        System.out.println("Waiting List after simulation");
+        System.out.println("-----------------------------");
+        System.out.println("           [Empty]           ");
+
+        if (waitingList.size() == 0) {
+
+        }
+
+        for (Passenger passenger : waitingList) {
+            System.out.println(passenger);
+        }
     }
 
     private static void createFleet (int size, Network network) {

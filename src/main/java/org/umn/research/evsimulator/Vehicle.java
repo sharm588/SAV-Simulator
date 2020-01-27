@@ -16,7 +16,13 @@ public class Vehicle {
     private List<Link> path;
     private int counter = 0;
     private float currentTravelTime = 0;
-    private boolean pickedUp = false;
+    private boolean requested = false;
+    public Passenger passenger;
+    public boolean notMoving = true;
+    public boolean justPickedUp = false;
+    public boolean pickedUp = false;
+    public boolean droppedOff = false;
+    public boolean alreadyAtTarget = false;
     private int id;
 
     public Vehicle (Network net, int batteryPercent, Location loc) {
@@ -27,21 +33,17 @@ public class Vehicle {
     }
 
     public List<Passenger> step (List<Passenger> waitingList, List<Node> nodesList, Passenger P) {                                   //assumes there is only one passenger on waiting list
-        Node node = null;                                                                                               //this is a temporary fix; need to change use of node so it is an instance variable of a Vehicle so movement of a Vehicle is tracked
+
         if (!this.pickedUp) {
             if (this.getCurrentTravelTime() > 30) { //move forward 30 seconds
                 this.setCurrentTravelTime(this.getCurrentTravelTime() - 30);
             }
             else if (this.getPath().get(this.getCounter()).getDestination() == P.getOrigin()){ //if next node is destination and within 30 seconds, passenger is picked up
+                this.setJustPickedUp(true);
                 this.pickedUp = true;
             }
             else { //otherwise, move to next node
                 Zone nextNode = net.matchLocationWithCorrespondingZone(this.getPath().get(this.getCounter()).getDestination());
-                /*for (int i = 0; i < net.getZoneList().size(); i++) {
-                    if (this.getPath().get(this.getCounter()).getDestination().getId() == net.getZoneList().get(i).getId()) {
-                        nextNode = net.getZoneList().get(i);
-                    }
-                }*/
                 this.loc = nextNode;
                 this.counter++; //counter keeps track of node index in path array list
                 this.createTravelTime();
@@ -52,8 +54,8 @@ public class Vehicle {
             if (this.getCurrentTravelTime() > 30) {
                 this.setCurrentTravelTime(this.getCurrentTravelTime() - 30);
             }
-            else if (this.getPath().get(this.getCounter()).getDestination() == P.getDestination()){ //set pickedUp to false for next potential passenger
-                this.pickedUp = false;
+            else if (this.getPath().get(this.getCounter()).getDestination() == P.getDestination()){ //set droppedOff to true for next potential passenger
+                this.setDroppedOff(true);
             }
             else {
                 Zone nextNode = net.matchLocationWithCorrespondingZone(this.getPath().get(this.getCounter()).getDestination());
@@ -78,8 +80,8 @@ public class Vehicle {
         Zone location = (Zone) loc;
         Node node = null;
 
-        if (location.getId() == dest.getId()) {                                                                                //check if vehicle is already at passenger location
-            this.setPickedUp(true);
+        if (location.getId() == dest.getId() && this.isRequested()) {                                                                                //check if vehicle is already at passenger location
+            this.setAlreadyAtTarget(true);
         }
 
         for (int i = 0; i < net.getNodesList().size(); i++) {

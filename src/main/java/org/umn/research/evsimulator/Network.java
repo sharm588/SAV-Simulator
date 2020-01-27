@@ -32,41 +32,102 @@ public class Network {
         return network;
     }
 
-    public List<Passenger> simulate() {
-        for (Passenger p : passengers) {
-            if (p.getDeparturetime() < 1000)  //change to '< t' when finished
+    public List<Passenger> simulate(float time) {
+
+        for (Passenger p : passengers) { //fill waiting list, change to '< t' when finished
+            if (p.getDeparturetime() < 1000)
             {
-                waitingList.add(p); // if passenger departure time is less than t, add passenger to waiting list
+                waitingList.add(p);
             }
         }
 
         System.out.println("Waiting List size: " + waitingList.size());
         System.out.println();
 
-        for (Vehicle vehicle : vehicleList) { //currently looks for passenger closest to vehicle, should ideally be closest vehicle to passenger (remove waitlist removal in step)
+        for (Vehicle vehicle : vehicleList) { //assign a passenger to each vehicle of fleet
+
+            assignPassengerToVehicle(vehicle);
+
+        }
+        System.out.println();
+        for (int i = 0; i < time; i += 30) { //simulate SAEV in 30 second intervals
+            System.out.println("Time: " + i);
+
+            if (waitingList.isEmpty()) {
+                System.out.println("Waiting list is empty");
+                break;
+            }
+
+            for (Vehicle vehicle : vehicleList) {
+
+                if (vehicle.isNotMoving()) { //check if vehicle is at zone, just picked up passenger, or just dropped off passenger
+
+                    if (vehicle.isPickedUp()) {
+
+                        beginRouteToDestination(vehicle);
+
+                    } else if (!vehicle.isPickedUp() && !vehicle.isDroppedOff()) {
+
+                        beginRouteToPassenger(vehicle);
+
+                    } else if (vehicle.isDroppedOff()) {
+                        vehicle.setDroppedOff(false);
+                        vehicle.setPickedUp(false);
+                        vehicle.setDroppedOff(false);
+                        vehicle.setRequested(false);
+
+                        assignPassengerToVehicle(vehicle);
+                        vehicle.setCounter(0); //reset counter (keeps track of node index in path array list)
+
+                        beginRouteToPassenger(vehicle);
+
+                    }
+                    vehicle.setNotMoving(false);
+                }
+                vehicle.step(waitingList, nodesList, vehicle.passenger);
+
+                if (vehicle.isJustPickedUp()) {
+                    System.out.println("(!) Vehicle #" + vehicle.getId() + " picked up passenger " + vehicle.getPassenger());
+
+                    Location location = matchLocationWithCorrespondingZone(vehicle.getPassenger().getOrigin()); // treat passenger origin (also vehicle's current location) as a starting zone
+                    vehicle.setLoc(location); //set vehicle location to passenger origin (as a zone)
+
+                    vehicle.setJustPickedUp(false);
+                    vehicle.setNotMoving(true);
+                }
+
+                if (vehicle.isDroppedOff()) {
+                    System.out.println("(!) Vehicle #" + vehicle.getId() + " dropped off passenger " + vehicle.getPassenger());
+                    vehicle.setPickedUp(false);
+                    vehicle.setNotMoving(true);
+
+                    Location location = matchLocationWithCorrespondingZone(vehicle.getPassenger().getDestination());
+                    vehicle.setLoc(location); //set vehicle location as passenger destination (as a zone)
+                    vehicle.setCounter(0);
+
+                    waitingList.remove(vehicle.getPassenger()); //passenger has reached destination, so remove from waiting list
+
+                }
+                else if (!vehicle.isPickedUp()) {
+                    System.out.println("Vehicle #" + vehicle.getId() + " is heading towards passenger" );
+                }
+                else if (vehicle.isPickedUp()) {
+                    System.out.println("Vehicle #" + vehicle.getId() + " is driving passenger to destination");
+                }
+            }
+            System.out.println();
+        }
+
+        /*for (Vehicle vehicle : vehicleList) { //currently looks for passenger closest to vehicle, should ideally be closest vehicle to passenger (remove waitlist removal in step)
 
             System.out.println("Vehicle #" + vehicle.getId());
             float totalTravelTime = 0;
             float fastestTime = Integer.MAX_VALUE;
             Passenger passenger = null;
 
-            for (Passenger p : waitingList) { //find passenger that is closest to vehicle
-
-                vehicle.createPath(vehicle.getLoc(), p.getOrigin());
-
-                for (int i = 0; i < vehicle.getPath().size(); i++) {
-                    totalTravelTime += vehicle.getPath().get(i).getTraveltime();
-                }
-
-                if (totalTravelTime < fastestTime) { //find passenger that can be reached the fastest among fleet of SAEVs
-                    fastestTime = totalTravelTime;
-                    passenger = p;
-                }
-
-                totalTravelTime = 0;
-            }
-
             vehicle.createPath(vehicle.getLoc(), passenger.getOrigin()); //create path to passenger origin from current vehicle position
+
+
 
             Zone location = (Zone) vehicle.getLoc(); //treat vehicle location as a starting zone
             System.out.println("Vehicle Position ID: " + location.getId());
@@ -83,6 +144,8 @@ public class Network {
                 totalTravelTime += vehicle.getPath().get(i).getTraveltime(); //calculate total travel time from vehicle location to passenger origin
             }
 
+
+
             System.out.println("Total Travel Time to Passenger: " + totalTravelTime + " seconds");
             totalTravelTime = 0; //reset travel time for next calculation
 
@@ -96,6 +159,7 @@ public class Network {
             System.out.println("Reached Passenger Origin ID: " + location.getId());
 
             vehicle.createPath(location, passenger.getDestination()); //create path from passenger origin to destination
+
 
             if (vehicle.getPath().size() > 0) {
                 printVehiclePath(vehicle);
@@ -111,6 +175,7 @@ public class Network {
             for (int i = 0; i < vehicle.getPath().size(); i++) {
                 totalTravelTime += vehicle.getPath().get(i).getTraveltime();
             }
+
             System.out.println("Total Travel Time to Destination: " + totalTravelTime + " seconds");
 
             System.out.println("Reached Passenger Destination ID: " + passenger.getDestination().getId());
@@ -130,10 +195,89 @@ public class Network {
                 break;
             }
             System.out.println();
-        }
+        }*/
         System.out.println();
-        System.out.println("EV ridesharing simulated");
+        System.out.println("EV ridesharing simulated in " + time + " seconds");
+        System.out.println();
         return waitingList;
+    }
+
+    public void beginRouteToDestination (Vehicle vehicle) {
+        float totalTravelTime = 0;
+
+        vehicle.createPath(vehicle.getLoc(), vehicle.getPassenger().getDestination());
+
+        for (int i = 0; i < vehicle.getPath().size(); i++) {
+            totalTravelTime += vehicle.getPath().get(i).getTraveltime(); //calculate total travel time from vehicle location to passenger origin
+        }
+
+        System.out.println("Vehicle #" + vehicle.getId() + " is beginning route to destination | Travel time: " + totalTravelTime + " seconds");
+
+        if (vehicle.getPath().size() > 0) {
+            printVehiclePath(vehicle);
+            if (vehicle.getPath().get(vehicle.getPath().size() - 1).getDestination().getId() != vehicle.getPassenger().getDestination().getId()) {
+                throw new RuntimeException("Vehicle is headed to destination ID " + vehicle.getPath().get(vehicle.getPath().size() - 1).getDestination().getId() + " but passenger destination is located at ID " + vehicle.getPassenger().getDestination().getId());
+            }
+        }
+
+        vehicle.setCounter(0); //reset counter (keeps track of node index in path array list)
+        vehicle.createTravelTime();
+    }
+
+    public void beginRouteToPassenger (Vehicle vehicle) {
+
+        float totalTravelTime = 0;
+
+        vehicle.createPath(vehicle.getLoc(), vehicle.getPassenger().getOrigin());
+
+        for (int i = 0; i < vehicle.getPath().size(); i++) {
+            totalTravelTime += vehicle.getPath().get(i).getTraveltime(); //calculate total travel time from vehicle location to passenger origin
+        }
+
+        if (vehicle.isAlreadyAtTarget()) {
+            vehicle.setAlreadyAtTarget(false);
+            vehicle.setPickedUp(true);
+            System.out.println("(!) Vehicle #" + vehicle.getId() + " already at passenger location. Beginning route to destination | Travel time: " + totalTravelTime + " seconds");
+            vehicle.createPath(vehicle.getLoc(), vehicle.getPassenger().getDestination());
+        }
+        else {
+            System.out.println("Vehicle #" + vehicle.getId() + " is beginning route to assigned passenger | Travel time: " + totalTravelTime + " seconds");
+
+            if (vehicle.getPath().size() > 0) {
+                printVehiclePath(vehicle);
+                if (vehicle.getPath().get(vehicle.getPath().size() - 1).getDestination().getId() != vehicle.getPassenger().getOrigin().getId()) { //check if path destination and actual destination match
+                    throw new RuntimeException("Vehicle is headed to passenger origin ID " + vehicle.getPath().get(vehicle.getPath().size() - 1).getDestination().getId() + " but passenger is located at ID " + vehicle.getPassenger().getOrigin().getId());
+                }
+            }
+        }
+    }
+
+    public void assignPassengerToVehicle (Vehicle vehicle) {
+
+        float totalTravelTime = 0;
+        float fastestTime = Integer.MAX_VALUE;
+
+        if (!vehicle.isRequested()) {
+            for (Passenger p : waitingList) { //find passenger that is closest to vehicle
+
+                vehicle.createPath(vehicle.getLoc(), p.getOrigin());
+
+                for (int i = 0; i < vehicle.getPath().size(); i++) {
+                    totalTravelTime += vehicle.getPath().get(i).getTraveltime();
+                }
+
+                if (totalTravelTime < fastestTime) { //find passenger that can be reached the fastest among fleet of SAEVs
+                    fastestTime = totalTravelTime;
+                    vehicle.setPassenger(p);
+                }
+
+                totalTravelTime = 0;
+            }
+            vehicle.setRequested(true);
+        }
+        System.out.println("(!) Vehicle #" + vehicle.getId() + " has been assigned to passenger " + vehicle.getPassenger());
+
+
     }
 
     public List<Link> shortestPath(Node origin, Node dest) {
