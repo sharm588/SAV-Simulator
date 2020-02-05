@@ -12,7 +12,7 @@ public class Application {
         createFleet(fleetSize, network);
 
         System.out.println("Fleet size: " + fleetSize);
-        List<Passenger> waitingList = network.simulate(3600);
+        List<Passenger> waitingList = network.simulate(10000000);
 
         System.out.println("Waiting List after simulation");
         System.out.println("-----------------------------");

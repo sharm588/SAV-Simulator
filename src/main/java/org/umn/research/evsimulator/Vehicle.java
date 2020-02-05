@@ -17,6 +17,7 @@ public class Vehicle {
     private int counter = 0;
     private float currentTravelTime = 0;
     private boolean requested = false;
+    public int assignedPassenger = 0;
     public Passenger passenger;
     public boolean notMoving = true;
     public boolean justPickedUp = false;
@@ -25,6 +26,9 @@ public class Vehicle {
     public boolean alreadyAtTarget = false;
     public boolean noMoreRides = false;
     public boolean alreadyPrintedDropOff = false;
+    public boolean alreadyBeginningRouteToDestination = false;
+    public boolean alreadyBeginningRouteToPassenger = false;
+
     private int id;
 
     public Vehicle (Network net, int batteryPercent, Location loc) {

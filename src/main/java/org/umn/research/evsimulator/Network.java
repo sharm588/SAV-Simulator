@@ -11,6 +11,8 @@ import java.util.*;
 @EqualsAndHashCode
 public class Network {
 
+    public ArrayList<Integer> oneVehicleToPassenger = new ArrayList<>();
+    public ArrayList<Integer> onePassengerToVehicle = new ArrayList<>();
     private List<Node> nodesList = new ArrayList<>();
     private List<Double> demand = new ArrayList<>();
     private HashMap<Integer, int[]> departureIdMap = new HashMap<>();
@@ -30,10 +32,19 @@ public class Network {
         network.scanDemand(getFilePath("dynamic_od.txt"));
         network.readDepartureTimes(getFilePath("demand_profile.txt"));
         network.createPassengers(getFilePath("dynamic_od.txt"));
+
+
         return network;
     }
 
     public List<Passenger> simulate(float time) {
+
+        for (int i = 0; i < passengers.size(); i++) {
+            oneVehicleToPassenger.add(0);
+        }
+        for (int i = 0; i < vehicleList.size(); i++) {
+            onePassengerToVehicle.add(0);
+        }
 
         for (Passenger p : passengers) { //fill waiting list, change to '< t' when finished
             if (p.getDeparturetime() < 1000)
@@ -52,7 +63,7 @@ public class Network {
         }
         System.out.println();
         for (int i = 0; i < time; i += 30) { //simulate SAEV in 30 second intervals
-            System.out.println("Time: " + i);
+            System.out.println("Time: " + i + " seconds");
 
             for (Vehicle vehicle : vehicleList) {
 
@@ -71,6 +82,11 @@ public class Network {
                         vehicle.setPickedUp(false);
                         vehicle.setRequested(false);
                         vehicle.setCounter(0); //reset counter (keeps track of node index in path array list)
+
+                        int indexVehicle = vehicleList.indexOf(vehicle);
+                        int indexPassenger = passengers.indexOf(vehicle.getPassenger());
+                        onePassengerToVehicle.set(indexVehicle, onePassengerToVehicle.get(indexVehicle)-1);
+                        oneVehicleToPassenger.set(indexPassenger, oneVehicleToPassenger.get(indexPassenger)-1);
 
                         if (!vehicle.isNoMoreRides()) {
                             assignPassengerToVehicle(vehicle);
@@ -112,12 +128,14 @@ public class Network {
                     vehicle.setCounter(0);
 
                 }
-                else if (!vehicle.isPickedUp()) {
+                else if (!vehicle.isPickedUp() && !vehicle.isAlreadyBeginningRouteToPassenger()) {
                     System.out.println("Vehicle #" + vehicle.getId() + " is heading towards passenger" );
                 }
-                else if (vehicle.isPickedUp()) {
+                else if (vehicle.isPickedUp() && !vehicle.isAlreadyBeginningRouteToDestination()) {
                     System.out.println("Vehicle #" + vehicle.getId() + " is driving passenger to destination");
                 }
+                vehicle.setAlreadyBeginningRouteToDestination(false);
+                vehicle.setAlreadyBeginningRouteToPassenger(false);
             }
 
             if (waitingList.isEmpty()) {
@@ -138,7 +156,7 @@ public class Network {
         }
 
         System.out.println();
-        System.out.println("EV ridesharing simulated in " + endTime + " seconds");
+        System.out.println("EV ridesharing simulated in " + (endTime + 30) + " seconds");
         System.out.println();
         return waitingList;
     }
@@ -178,11 +196,27 @@ public class Network {
         if (vehicle.isAlreadyAtTarget()) {
             vehicle.setAlreadyAtTarget(false);
             vehicle.setPickedUp(true);
-            System.out.println("(!) Vehicle #" + vehicle.getId() + " already at passenger location. Beginning route to destination | Travel time: " + totalTravelTime + " seconds");
+
             vehicle.createPath(vehicle.getLoc(), vehicle.getPassenger().getDestination());
+
+            totalTravelTime = 0;
+            for (int i = 0; i < vehicle.getPath().size(); i++) {
+                totalTravelTime += vehicle.getPath().get(i).getTraveltime(); //calculate total travel time from vehicle location to passenger origin
+            }
+
+            System.out.println("(!) Vehicle #" + vehicle.getId() + " already at passenger location. Beginning route to destination | Travel time: " + totalTravelTime + " seconds");
+            vehicle.setAlreadyBeginningRouteToDestination(true);
+
+            if (vehicle.getPath().size() > 0) {
+                printVehiclePath(vehicle);
+                if (vehicle.getPath().get(vehicle.getPath().size() - 1).getDestination().getId() != vehicle.getPassenger().getDestination().getId()) {
+                    throw new RuntimeException("Vehicle is headed to destination ID " + vehicle.getPath().get(vehicle.getPath().size() - 1).getDestination().getId() + " but passenger destination is located at ID " + vehicle.getPassenger().getDestination().getId());
+                }
+            }
         }
         else {
             System.out.println("Vehicle #" + vehicle.getId() + " is beginning route to assigned passenger | Travel time: " + totalTravelTime + " seconds");
+            vehicle.setAlreadyBeginningRouteToPassenger(true);
 
             if (vehicle.getPath().size() > 0) {
                 printVehiclePath(vehicle);
@@ -195,8 +229,10 @@ public class Network {
 
     public void assignPassengerToVehicle (Vehicle vehicle) {
 
+
         float totalTravelTime = 0;
         float fastestTime = Integer.MAX_VALUE;
+
 
         if (!vehicle.isRequested()) {
 
@@ -224,6 +260,25 @@ public class Network {
                 System.out.println("(!) Vehicle #" + vehicle.getId() + " has been assigned to passenger " + "[" + vehicle.getPassenger() + "]");
             }
         }
+
+        int indexVehicle = vehicleList.indexOf(vehicle);
+        int indexPassenger = passengers.indexOf(vehicle.getPassenger());
+        onePassengerToVehicle.set(indexVehicle, onePassengerToVehicle.get(indexVehicle)+1);
+        oneVehicleToPassenger.set(indexPassenger, oneVehicleToPassenger.get(indexPassenger)+1);
+
+        for (int x : onePassengerToVehicle) {
+            if (x > 1) {
+                System.out.println("break1");
+            }
+        }
+
+        for (int x : oneVehicleToPassenger) {
+            if (x > 1) {
+                System.out.println("break2");
+
+            }
+        }
+
     }
 
     public List<Link> shortestPath(Node origin, Node dest) {
@@ -292,7 +347,7 @@ public class Network {
         }
     }
 
-    //creats hashmap for nodew with format <id of node, com.umn.research.evsimulator.Node>
+    //creates hashmap for nodew with format <id of node, com.umn.research.evsimulator.Node>
     private void createNodeMap() {
         int count = 0;
         for (int i = 0; i < nodesList.size(); i++) {
@@ -335,7 +390,7 @@ public class Network {
     }
 
     private void scanDemand(String fileName) {
-        //creats arraylist of demand values
+        //creates arraylist of demand values
         File file = new File(fileName);
         try {
             Scanner s = new Scanner(file);
@@ -495,5 +550,3 @@ public class Network {
         return System.getenv("RESOURCES_FOLDER")+"/"+fileName;
     }
 }
-
-// use instance variable for vehicle list and add vehicles to vehicle like in make vehicle function
