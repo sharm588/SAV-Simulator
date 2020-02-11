@@ -54,6 +54,6 @@ Ensure the following are installed on your computer
     
 3.) If using Gradle, go to the *build.gradle* file and add the following line 
 
-*Note: Make sure to click the 'import changes' pop-up that shows up when using IntelliJ*
+   *Note: Make sure to click the 'import changes' pop-up that shows up when using IntelliJ*
     
     compile files('/.../CPLEX_Studio1210/cplex/lib/cplex.jar')
