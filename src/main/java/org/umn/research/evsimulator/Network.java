@@ -1,11 +1,17 @@
 package org.umn.research.evsimulator;
 
+import ilog.concert.IloIntVar;
+import ilog.concert.IloLinearNumExpr;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
+
+import ilog.concert.IloException;
+import ilog.concert.IloNumVar;
+import ilog.cplex.IloCplex;
 
 @Data
 @EqualsAndHashCode
@@ -229,7 +235,7 @@ public class Network {
 
     public void assignPassengerToVehicle (Vehicle vehicle) {
 
-
+        constraints();
         float totalTravelTime = 0;
         float fastestTime = Integer.MAX_VALUE;
 
@@ -279,6 +285,35 @@ public class Network {
             }
         }
 
+    }
+
+    public void constraints () {
+        try {
+            int i = 0;
+            int size = vehicleList.size() * passengers.size();
+            IloCplex c = new IloCplex();
+            IloIntVar[] x = c.intVarArray(size, 0, 1);
+            for (Vehicle vehicle : vehicleList) {
+                IloLinearNumExpr e = c.linearNumExpr();
+                for (Passenger passenger : passengers) {
+                     x[i] = c.intVar(0, 1);
+                    e.addTerm(1, x[i]);
+                    c.addLe(e, 1);
+                    i++;
+
+                }
+                c.solve();
+                double[] vals = c.getValues(x);
+                int nCols = c.getNcols();
+                for (int a = 0; a < nCols; a++) {
+                    c.output().println(vals[a]);
+                }
+            }
+
+        }
+        catch (IloException e) {
+            e.printStackTrace();
+        }
     }
 
     public List<Link> shortestPath(Node origin, Node dest) {
