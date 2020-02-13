@@ -56,4 +56,4 @@ Ensure the following are installed on your computer
 
    *Note: Make sure to click the 'import changes' pop-up that shows up when using IntelliJ*
     
-    compile files('/.../CPLEX_Studio1210/cplex/lib/cplex.jar')
+    compile files('/.../CPLEX_Studio1210/cplex/lib/cplex.jar') for macOS
