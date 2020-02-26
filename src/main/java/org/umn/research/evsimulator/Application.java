@@ -1,18 +1,25 @@
 package org.umn.research.evsimulator;
 
+import ilog.concert.IloException;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Application {
 
-    public static void main(String [] args)
+    public static void main(String [] args) throws IloException
     {
         Network network = Network.createNetwork();
         int fleetSize = 20;
         createFleet(fleetSize, network);
 
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Input beta value: ");
+        double betaVal = scanner.nextFloat();
         System.out.println("Fleet size: " + fleetSize);
-        List<Passenger> waitingList = network.simulate(10000000);
+        List<Passenger> waitingList = network.simulate(10000000, betaVal);
 
         System.out.println("Waiting List after simulation");
         System.out.println("-----------------------------");

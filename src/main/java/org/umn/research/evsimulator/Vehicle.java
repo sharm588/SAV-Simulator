@@ -28,6 +28,7 @@ public class Vehicle {
     public boolean alreadyPrintedDropOff = false;
     public boolean alreadyBeginningRouteToDestination = false;
     public boolean alreadyBeginningRouteToPassenger = false;
+    public double totalDistanceTraveled = 0.0;
 
     private int id;
 
@@ -51,6 +52,7 @@ public class Vehicle {
             else { //otherwise, move to next node
                 Zone nextNode = net.matchLocationWithCorrespondingZone(this.getPath().get(this.getCounter()).getDestination());
                 this.loc = nextNode;
+                this.totalDistanceTraveled += this.getPath().get(this.getCounter()).getDistance();
                 this.counter++; //counter keeps track of node index in path array list
                 this.createTravelTime();
             }
@@ -71,6 +73,7 @@ public class Vehicle {
                     }
                 }*/
                 this.loc = nextNode;
+                this.totalDistanceTraveled += this.getPath().get(this.getCounter()).getDistance();
                 this.counter++;
                 this.createTravelTime();
             }

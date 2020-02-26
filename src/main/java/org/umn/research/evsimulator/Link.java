@@ -10,12 +10,14 @@ public class Link implements Location {
     private Node destination;
     private int id;
     private float traveltime;
+    private float distance;
 
-    public Link(int id, Node source, Node destination, float traveltime) {
+    public Link(int id, Node source, Node destination, float traveltime, float distance) {
         this.id = id;
         this.source = source;
         this.destination = destination;
         this.traveltime = traveltime;
+        this.distance = distance;
 
         source.addOutgoing(this);
     }
