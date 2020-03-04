@@ -34,6 +34,7 @@ public class Network {
     private double sumOfWaitTimes = 0;
     private int originalWaitingListSize = 0;
     private double beta = 1;
+    public double avgWaitTime;
 
     public static Network createNetwork() {
         Network network = new Network();
@@ -80,7 +81,7 @@ public class Network {
         }
         System.out.println();
         for (int i = 0; i < time; i += 30) { //simulate SAEV in 30 second intervals
-            System.out.println("Time: " + i + " seconds");
+        //    System.out.println("Time: " + i + " seconds");
 
             for (Vehicle vehicle : vehicleList) {
 
@@ -122,7 +123,7 @@ public class Network {
                 vehicle.step(waitingList, nodesList, vehicle.passenger);
 
                 if (vehicle.isJustPickedUp()) {
-                    System.out.println("(!) Vehicle #" + vehicle.getId() + " picked up passenger " + "[" + vehicle.getPassenger() + "]");
+                 //  System.out.println("(!) Vehicle #" + vehicle.getId() + " picked up passenger " + "[" + vehicle.getPassenger() + "]");
 
                     Location location = matchLocationWithCorrespondingZone(vehicle.getPassenger().getOrigin()); // treat passenger origin (also vehicle's current location) as a starting zone
                     vehicle.setLoc(location); //set vehicle location to passenger origin (as a zone)
@@ -133,7 +134,7 @@ public class Network {
 
                 if (vehicle.isDroppedOff()) {
                     if (!vehicle.isAlreadyPrintedDropOff()) {
-                        System.out.println("(!) Vehicle #" + vehicle.getId() + " dropped off passenger " + "[" + vehicle.getPassenger() + "]");
+                    //    System.out.println("(!) Vehicle #" + vehicle.getId() + " dropped off passenger " + "[" + vehicle.getPassenger() + "]");
                         availableVehiclesList.add(vehicle);
                         if (vehicle.isNoMoreRides()) {
                             vehicle.setAlreadyPrintedDropOff(true);
@@ -149,18 +150,18 @@ public class Network {
 
                 }
                 else if (!vehicle.isPickedUp() && !vehicle.isAlreadyBeginningRouteToPassenger()) {
-                    System.out.println("Vehicle #" + vehicle.getId() + " is heading towards passenger" );
+                  //  System.out.println("Vehicle #" + vehicle.getId() + " is heading towards passenger" );
                     sumOfWaitTimes += 30;
                 }
                 else if (vehicle.isPickedUp() && !vehicle.isAlreadyBeginningRouteToDestination()) {
-                    System.out.println("Vehicle #" + vehicle.getId() + " is driving passenger to destination");
+                 //   System.out.println("Vehicle #" + vehicle.getId() + " is driving passenger to destination");
                 }
                 vehicle.setAlreadyBeginningRouteToDestination(false);
                 vehicle.setAlreadyBeginningRouteToPassenger(false);
             }
 
             if (waitingList.isEmpty()) {
-                System.out.println("(!) Waiting list is empty");
+              //  System.out.println("(!) Waiting list is empty");
                 boolean done = true;
                 for (Vehicle vehicle : vehicleList) {
                     if (!vehicle.isNoMoreRides() || !vehicle.isDroppedOff()) {
@@ -187,6 +188,7 @@ public class Network {
     private void printStats () {
         System.out.println("Total number of passengers: " + totalNumberOfPassengers);
         System.out.println("Average passenger wait time: " + sumOfWaitTimes / totalNumberOfPassengers + " seconds");
+        avgWaitTime = sumOfWaitTimes / totalNumberOfPassengers;
         System.out.println("Distance traveled for each vehicle: ");
         for (int i = 0; i < vehicleList.size(); i++) {
             System.out.println("Vehicle #" + i + ": " + vehicleList.get(i).totalDistanceTraveled + " miles");
@@ -300,7 +302,7 @@ public class Network {
                     travelTimeCombo += v.getPath().get(y).getTraveltime();
                     //calculate total travel time from vehicle location to passenger origin
                 }
-                summation.addTerm(xValues[iterator], travelTimeCombo);
+                summation.addTerm(xValues[iterator], beta * travelTimeCombo);
                 iterator++;
             }
             travelTimeCombo = 0;
@@ -361,7 +363,7 @@ public class Network {
             totalTravelTime += vehicle.getPath().get(i).getTraveltime(); //calculate total travel time from vehicle location to passenger origin
         }
 
-        System.out.println("Vehicle #" + vehicle.getId() + " is beginning route to destination | Travel time: " + totalTravelTime + " seconds");
+       // System.out.println("Vehicle #" + vehicle.getId() + " is beginning route to destination | Travel time: " + totalTravelTime + " seconds");
 
 
         if (vehicle.getPath().size() > 0) {
@@ -379,8 +381,8 @@ public class Network {
 
         float totalTravelTime = 0;
 
-        System.out.println(vehicle.getLoc());
-        System.out.println(vehicle.getPassenger());
+       // System.out.println(vehicle.getLoc());
+       // System.out.println(vehicle.getPassenger());
 
 
         vehicle.createPath(vehicle.getLoc(), vehicle.getPassenger().getOrigin());
@@ -400,7 +402,7 @@ public class Network {
                 totalTravelTime += vehicle.getPath().get(i).getTraveltime(); //calculate total travel time from vehicle location to passenger origin
             }
 
-            System.out.println("(!) Vehicle #" + vehicle.getId() + " already at passenger location. Beginning route to destination | Travel time: " + totalTravelTime + " seconds");
+         //   System.out.println("(!) Vehicle #" + vehicle.getId() + " already at passenger location. Beginning route to destination | Travel time: " + totalTravelTime + " seconds");
             vehicle.setAlreadyBeginningRouteToDestination(true);
 
             if (vehicle.getPath().size() > 0) {
@@ -411,7 +413,7 @@ public class Network {
             }
         }
         else {
-            System.out.println("Vehicle #" + vehicle.getId() + " is beginning route to assigned passenger | Travel time: " + totalTravelTime + " seconds");
+        //    System.out.println("Vehicle #" + vehicle.getId() + " is beginning route to assigned passenger | Travel time: " + totalTravelTime + " seconds");
             vehicle.setAlreadyBeginningRouteToPassenger(true);
 
             if (vehicle.getPath().size() > 0) {
@@ -473,7 +475,7 @@ public class Network {
                     waitingList.remove(vehicle.getPassenger());
                     vehicle.setRequested(true);
                     availableVehiclesList.remove(vehicle);
-                    System.out.println("(!) Vehicle #" + vehicle.getId() + " has been assigned to passenger " + "[" + vehicle.getPassenger() + "]");
+               //     System.out.println("(!) Vehicle #" + vehicle.getId() + " has been assigned to passenger " + "[" + vehicle.getPassenger() + "]");
                 }
             }
 
@@ -762,14 +764,14 @@ public class Network {
     }
 
     private void printVehiclePath (Vehicle vehicle) {
-            System.out.print("Path: " + vehicle.getPath().get(0).getSource().getId());
+         //   System.out.print("Path: " + vehicle.getPath().get(0).getSource().getId());
             for (Link link : vehicle.getPath()) {
                 if (vehicle.getPath().indexOf(link) != 0) {
-                    System.out.print(" -> ");
+              //      System.out.print(" -> ");
                 }
-                System.out.print(link.getDestination().getId());
+             //   System.out.print(link.getDestination().getId());
             }
-            System.out.println();
+         //   System.out.println();
     }
 
     private static String getFilePath(String fileName) {
