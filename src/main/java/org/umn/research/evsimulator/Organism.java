@@ -1,6 +1,9 @@
 package org.umn.research.evsimulator;
 
 import ilog.concert.IloException;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Collections.*;
 import java.util.Comparator;
 import java.util.Random;
@@ -13,7 +16,7 @@ public class Organism implements Comparable<Organism> {
     double randombeta = high * r.nextDouble();
     double waitTime;
 
-    public Organism () throws IloException {
+    public Organism () throws IloException, IOException {
         waitTime = app.runSimulation(randombeta);
     }
 

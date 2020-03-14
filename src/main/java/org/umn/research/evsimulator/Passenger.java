@@ -9,7 +9,7 @@ public class Passenger {
     private Node origin;
     private Node destination;
     private int departuretime;
-    public int assignedToVehicle = 0;
+    public boolean assigned = false;
 
     public Passenger(Node origin, Node destination, int departuretime) {
         this.destination = destination;

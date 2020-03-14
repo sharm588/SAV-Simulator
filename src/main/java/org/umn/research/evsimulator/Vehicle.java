@@ -28,6 +28,7 @@ public class Vehicle {
     public boolean alreadyPrintedDropOff = false;
     public boolean alreadyBeginningRouteToDestination = false;
     public boolean alreadyBeginningRouteToPassenger = false;
+    public boolean idle = false;
     public double totalDistanceTraveled = 0.0;
 
     private int id;
