@@ -10,26 +10,32 @@ import java.util.Scanner;
 
 public class Application {
 
+    private static boolean writeToFile = true;
+
     public static void main(String [] args) throws IloException, IOException
     {
 
         GeneticAlgorithm alg = new GeneticAlgorithm();
+
+        if (alg.populationSize > 10) {
+            writeToFile = false;
+        }
         alg.createPopulation();
         alg.survivalOfFittest();
 
+
     }
 
-    public double runSimulation(double betaVal) throws IloException, IOException {
+    public static double runSimulation(double betaVal) throws IloException, IOException {
         Network network = Network.createNetwork();
-        int fleetSize = 20;
+        int fleetSize = 50;
         createFleet(fleetSize, network);
 
         //Scanner scanner = new Scanner(System.in);
 
         //System.out.println("Input beta value: ");
         //double betaVal = scanner.nextFloat();
-        System.out.println("Fleet size: " + fleetSize);
-        List<Passenger> waitingList = network.simulate(7200, betaVal);
+        List<Passenger> waitingList = network.simulate(7200, betaVal, writeToFile);
 
         /*System.out.println("Waiting List after simulation (" + waitingList.size() + ")");
         System.out.println("-----------------------------");

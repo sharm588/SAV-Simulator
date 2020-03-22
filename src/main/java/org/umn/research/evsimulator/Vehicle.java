@@ -30,6 +30,7 @@ public class Vehicle {
     public boolean alreadyBeginningRouteToPassenger = false;
     public boolean idle = false;
     public double totalDistanceTraveled = 0.0;
+    public int numberDroppedOff = 0;
 
     private int id;
 
@@ -40,7 +41,25 @@ public class Vehicle {
 
     }
 
-    public List<Passenger> step (List<Passenger> waitingList, List<Node> nodesList, Passenger P) {                                   //assumes there is only one passenger on waiting list
+    public void resetVariables () {
+
+        notMoving = true;
+        justPickedUp = false;
+        pickedUp = false;
+        droppedOff = false;
+        alreadyAtTarget = false;
+        noMoreRides = false;
+        alreadyPrintedDropOff = false;
+        alreadyBeginningRouteToDestination = false;
+        alreadyBeginningRouteToPassenger = false;
+        idle = false;
+        requested = false;
+        counter = 0;
+
+    }
+
+    public List<Passenger> step (List<Passenger> waitingList, List<Node> nodesList, Passenger P) {//assumes there is only one passenger on waiting list
+
 
         if (!this.pickedUp) {
             if (this.getCurrentTravelTime() > 30) { //move forward 30 seconds
@@ -65,6 +84,7 @@ public class Vehicle {
             }
             else if (this.getPath().get(this.getCounter()).getDestination() == P.getDestination()){ //set droppedOff to true for next potential passenger
                 this.setDroppedOff(true);
+
             }
             else {
                 Zone nextNode = net.matchLocationWithCorrespondingZone(this.getPath().get(this.getCounter()).getDestination());

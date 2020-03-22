@@ -10,14 +10,13 @@ import java.util.Random;
 
 public class Organism implements Comparable<Organism> {
 
-    Application app = new Application();
     double high = 10.0;
     Random r = new Random();
     double randombeta = high * r.nextDouble();
     double waitTime;
 
     public Organism () throws IloException, IOException {
-        waitTime = app.runSimulation(randombeta);
+        waitTime = Application.runSimulation(randombeta);
     }
 
     public int compareTo(Organism other) {

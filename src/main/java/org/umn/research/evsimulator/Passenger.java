@@ -9,6 +9,7 @@ public class Passenger {
     private Node origin;
     private Node destination;
     private int departuretime;
+    public boolean dispatched = false;
     public boolean assigned = false;
 
     public Passenger(Node origin, Node destination, int departuretime) {
