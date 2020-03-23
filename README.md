@@ -52,7 +52,7 @@ Ensure the following are installed on your computer
     3. In the 'VM options' section under 'Configuration', type '-Djava.library.path=' followed by the path for the files for the CPLEX library ('-Djava.library.path=/.../CPLEX_Studio1210/cplex/bin/x86-64_osx' for macOS)
     4. Click the 'Apply' button then 'Ok'
     
-3.) If using Gradle, go to the *build.gradle* file and compile the cplex.jar file under *dependencies*
+3.) Go to the *build.gradle* file and compile the cplex.jar file under *dependencies*
 
    *Note: Make sure to click the 'import changes' pop-up that shows up when using IntelliJ*
     
