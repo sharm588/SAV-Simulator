@@ -3,7 +3,6 @@ package org.umn.research.evsimulator;
 import lombok.Data;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static javafx.application.Platform.exit;
@@ -14,21 +13,22 @@ public class Vehicle {
     private Location loc;
     public Network net;
     private List<Link> path;
-    private int counter = 0;
-    private float currentTravelTime = 0;
-    private boolean requested = false;
-    public int assignedPassenger = 0;
-    public Passenger passenger;
-    public boolean notMoving = true;
-    public boolean justPickedUp = false;
-    public boolean pickedUp = false;
-    public boolean droppedOff = false;
-    public boolean alreadyAtTarget = false;
-    public boolean noMoreRides = false;
-    public boolean alreadyPrintedDropOff = false;
-    public boolean alreadyBeginningRouteToDestination = false;
-    public boolean alreadyBeginningRouteToPassenger = false;
-    public boolean idle = false;
+    private int counter = 0; // counts how far in path vehicle is (by counting nodes)
+    private float currentTravelTime = 0; //travel time to target node
+    private boolean requested = false; // checks if vehicle is assigned to passenger
+    public Passenger passenger; // vehicle's assigned passenger
+    public boolean notMoving = true; // check if vehicle is is motion or not
+    public boolean justPickedUp = false; // checks if vehicle has just picked up assigned passenger
+    public boolean pickedUp = false; // checks if passenger is in vehicle
+    public boolean droppedOff = false; // checks if vehicle has dropped off assigned passenger
+    public boolean alreadyAtTarget = false; // checks if vehicle is already at passenger pickup location
+    public boolean noMoreRides = false; // checks if vehicle can get assigned to more passengers or not
+    public boolean alreadyPrintedDropOff = false; // checks if drop off message is already printed in simulation log
+    public boolean alreadyBeginningRouteToDestination = false; // is true when vehicle is already at passenger origin
+    public boolean beginningRouteToPassenger = false; // is true when vehicle begins route to passenger
+    public boolean idle = false; // checks if vehicle is not doing anything
+    public boolean sentToNode = false; // checks if empty vehicle is sent to a different node
+    public Node node; // node empty vehicle is sent to
     public double totalDistanceTraveled = 0.0;
     public int numberDroppedOff = 0;
 
@@ -51,7 +51,7 @@ public class Vehicle {
         noMoreRides = false;
         alreadyPrintedDropOff = false;
         alreadyBeginningRouteToDestination = false;
-        alreadyBeginningRouteToPassenger = false;
+        beginningRouteToPassenger = false;
         idle = false;
         requested = false;
         counter = 0;

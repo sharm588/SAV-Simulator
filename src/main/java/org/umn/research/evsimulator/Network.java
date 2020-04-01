@@ -7,7 +7,6 @@ import lombok.EqualsAndHashCode;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.*;
 import java.lang.*;
@@ -18,8 +17,7 @@ import ilog.cplex.IloCplex;
 @EqualsAndHashCode
 public class Network {
 
-   // public ArrayList<Integer> oneVehicleToPassenger = new ArrayList<>();
-   // public ArrayList<Integer> onePassengerToVehicle = new ArrayList<>();
+    private int timeIncrement = 30;
     private List<Node> nodesList = new ArrayList<>();
     private List<Double> demand = new ArrayList<>();
     private HashMap<Integer, int[]> departureIdMap = new HashMap<>();
@@ -38,9 +36,11 @@ public class Network {
     private double sumOfWaitTimes = 0;
     private int originalWaitingListSize = 0;
     private double beta = 1;
+    private double alpha = 1;
     public double avgWaitTime;
     public FileWriter simulationWriter;
     private int initialThreshold = 300;
+    private List<Double> zValuesList = new ArrayList<>();
 
 
     public static Network createNetwork() throws IOException{
@@ -66,7 +66,7 @@ public class Network {
 
         while (waitingList.size() == 0) {   //ensure the simulation has some passengers in the waiting list to start with
 
-            for (Passenger p : passengers) { //fill waiting list, change to '< t' when finished
+            for (Passenger p : passengers) { //fill waiting list with passengers with departure times within the initial time threshold
                 if (initialThreshold >= p.getDeparturetime()) {
                     waitingList.add(p);
                     p.setDispatched(true);
@@ -92,6 +92,14 @@ public class Network {
 
         IloIntVar[] initialAssignment = generateAssignments(c); //initialize initial assignments
 
+        sendVehicleToEmptyNode();
+
+        for (Vehicle vehicle : availableVehiclesList) {
+            if (vehicle.isSentToNode()) {
+                if (writerOn) simulationWriter.write("Vehicle #" + vehicle.getId() + " sent to node " + vehicle.getNode() + "\n");
+            }
+        }
+
         for (Vehicle vehicle : vehicleList) { //assign a passenger to each vehicle of fleet
 
             assignPassengerToVehicle(vehicle, initialAssignment, c, writerOn);
@@ -102,7 +110,7 @@ public class Network {
 
         if (writerOn) simulationWriter.write("\n");
 
-        for (int i = 0; i < time; i += 30) { //simulate SAEV in 30 second intervals
+        for (int i = 0; i < time; i += timeIncrement) { //simulate SAEV in 30 second intervals
 
             if (writerOn) simulationWriter.write("Time: " + i + " seconds\n");
 
@@ -132,6 +140,14 @@ public class Network {
             }
 
             IloIntVar[] newAssignment = generateAssignments(c); //generate new assignments for vehicles
+
+            sendVehicleToEmptyNode();
+
+            for (Vehicle vehicle : availableVehiclesList) {
+                if (vehicle.isSentToNode()) {
+                    if (writerOn) simulationWriter.write("Vehicle #" + vehicle.getId() + " sent to node " + vehicle.getNode() + "\n");
+                }
+            }
 
             for (Vehicle vehicle : availableVehiclesList) { //assign vehicles to passengers based on assignment above
 
@@ -208,7 +224,7 @@ public class Network {
                         vehicle.setIdle(true);
                         vehicle.passenger = null;
 
-                    } else if (!vehicle.isPickedUp() && !vehicle.isAlreadyBeginningRouteToPassenger() && vehicle.isRequested()) { // otherwise if vehicle has not picked up passenger and vehicle is requested (and vehicle hasn't already begun route to passenger
+                    } else if (!vehicle.isPickedUp() && !vehicle.isBeginningRouteToPassenger() && vehicle.isRequested()) { // otherwise if vehicle has not picked up passenger and vehicle is requested (and vehicle hasn't already begun route to passenger
 
                         if (writerOn) simulationWriter.write("Vehicle #" + vehicle.getId() + " is heading towards passenger\n");
                         sumOfWaitTimes += 30;
@@ -220,7 +236,7 @@ public class Network {
                     }
 
                     vehicle.setAlreadyBeginningRouteToDestination(false);
-                    vehicle.setAlreadyBeginningRouteToPassenger(false);
+                    vehicle.setBeginningRouteToPassenger(false);
 
                 }
 
@@ -278,6 +294,25 @@ public class Network {
         c.clearModel();
         int size = availableVehiclesList.size() * waitingList.size();
         IloIntVar[] xValues = c.intVarArray(size, 0, 1);
+        ArrayList<Node>sources = new ArrayList<>();
+        ArrayList<Node>destinations = new ArrayList<>();
+
+        for (Passenger passenger : waitingList) {   //get passenger sources / destinations
+            Node passengerSource = passenger.getOrigin();
+            Node passengerDestination = passenger.getDestination();
+
+            if (!sources.contains(passengerSource)) {
+                sources.add(passengerSource);
+            }
+
+            if (!destinations.contains(passengerDestination)) {
+                destinations.add(passengerDestination);
+            }
+        }
+
+        int zValuesSize = nodesList.size() * availableVehiclesList.size();
+        IloIntVar[] zValues = c.intVarArray(zValuesSize, 0, 1);
+
         int i = 0;
 
         for (Vehicle vehicle : availableVehiclesList) { // constraint: each vehicle is assigned to <= 1 passenger [one vehicle to passenger]
@@ -296,52 +331,53 @@ public class Network {
             IloLinearNumExpr e = c.linearNumExpr();
             for (int p = next; p < xValues.length; p += waitingList.size()) {
                 e.addTerm(1, xValues[p]);
-                //System.out.println("Passenger checked: " + p);
             }
             next++;
             c.addLe(e, 1);
         }
 
+        double travelTime = 0;
+        i = 0;
+        for (Vehicle vehicle : availableVehiclesList) { //constraint: if vehicle is more than 10 time steps away from passenger origin, set zValue to 0
+            for (Node node : nodesList) {
 
-        /*for (Passenger passenger : waitingList) {   //constraint: each passenger is assigned to <= 1 vehicle [one passenger to vehicle]
-            IloLinearNumExpr e1 = c.linearNumExpr();
-            for (Vehicle vehicle : availableVehiclesList) {
-                if (j >= waitingList.size()) {
-                    break;
+                vehicle.createPath(vehicle.getLoc(), node);
+                for (int x = 0; x < vehicle.getPath().size(); x++) {
+                    travelTime += vehicle.getPath().get(x).getTraveltime(); //calculate total travel time from vehicle location to passenger origin
                 }
-                //xValues[j] = c.intVar(0, 1);
-                //e1.addTerm(1, xValues[j]);
-                j += waitingList.size();
-            }
-            originalJValue++;
-            j = originalJValue;
-
-
-            c.addLe(e1, 1);
-        }*/
-
-        ArrayList<Node>sources = new ArrayList<>();
-        ArrayList<Node>destinations = new ArrayList<>();
-
-        for (Passenger passenger : waitingList) {   //get passenger sources / destinations
-            Node passengerSource = passenger.getOrigin();
-            Node passengerDestination = passenger.getDestination();
-
-            if (!sources.contains(passengerSource)) {
-                sources.add(passengerSource);
-            }
-
-            if (!destinations.contains(passengerDestination)) {
-                destinations.add(passengerDestination);
+                if (travelTime > 10 * timeIncrement) {
+                    zValues[i] = c.intVar(0, 0);
+                } else {
+                    zValues[i] = c.intVar(0, 1);
+                }
+                travelTime = 0;
+                i++;
             }
         }
+
+        i = 0;
+        next = 0;
+        for (Vehicle vehicle : availableVehiclesList) { //constraint: vehicle can either be assigned to one passenger or to travel empty to one node
+            IloLinearNumExpr e = c.linearNumExpr();
+            for (int z = next * nodesList.size(); z < nodesList.size(); z++) { //iterate through vehicle's node values
+                e.addTerm(1, zValues[z]);
+            }
+
+            for (int p = next * waitingList.size(); p < waitingList.size(); p ++) { //iterate through vehicle's passenger assignments
+                e.addTerm(1, xValues[p]);
+            }
+            c.addLe(e, 1); //sum of both must be <= 1
+            next++;
+        }
+
+
+
 
         IloLinearNumExpr summation = c.linearNumExpr();
         for (Node source : sources) { //objective: minimize the waiting list size (waiting list size - each passengersPerVehicle element for each passenger traveling from r to s)
 
             for (Node  destination : destinations) {
                 //Node dest = destination.getDestination();
-
 
                 for (Passenger passenger : waitingList) {
 
@@ -353,17 +389,7 @@ public class Network {
                         }
 
                     }
-
                 }
-
-                //c.addLe(c.sum(xValues), 1); //one passenger to vehicle
-                /*
-                System.out.println(c.solve());
-                System.out.println();
-                System.out.println("val: " + c.getValue(summation));
-                System.out.println();
-                c.remove(objective);*/
-
             }
         }
 
@@ -371,17 +397,23 @@ public class Network {
         int iterator = 0;
         for (Vehicle v : availableVehiclesList) {
             for (Passenger p : waitingList) {
-                //System.out.println("loc: " + v.getLoc());
-                //System.out.println("origin: " + p.getOrigin());
+
                 v.createPath(v.getLoc(), p.getOrigin());
                 for (int y = 0; y < v.getPath().size(); y++) {
-                    travelTimeCombo += v.getPath().get(y).getTraveltime();
-                    //calculate total travel time from vehicle location to passenger origin
+                    travelTimeCombo += v.getPath().get(y).getTraveltime(); //calculate total travel time from vehicle location to passenger origin
                 }
                 summation.addTerm(xValues[iterator], beta * travelTimeCombo * -1); // -1 is used since terms are being subtracted
                 iterator++;
             }
             travelTimeCombo = 0;
+        }
+
+        i = 0;
+        for (Vehicle vehicle : availableVehiclesList) { //objective: minimize preemptive vehicle relocation
+            for (Node node : nodesList) {
+                summation.addTerm(alpha, zValues[i]);
+                i++;
+            }
         }
 
 
@@ -394,7 +426,12 @@ public class Network {
 
         c.solve();
 
-        return xValues;
+        for (int x = 0; x < zValuesSize; x++) {
+            zValuesList.add(c.getValue(zValues[x]));
+            //System.out.println(zValuesList.get(x));
+        }
+
+        return xValues; //xValues holds each of the vehicle/passenger assignments
 
     }
 
@@ -457,7 +494,7 @@ public class Network {
         }
         else {
             if (writerOn) simulationWriter.write("Vehicle #" + vehicle.getId() + " is beginning route to assigned passenger | Travel time: " + totalTravelTime + " seconds\n");
-            vehicle.setAlreadyBeginningRouteToPassenger(true);
+            vehicle.setBeginningRouteToPassenger(true);
 
             if (vehicle.getPath().size() > 0) {
                 printVehiclePath(vehicle);
@@ -506,20 +543,17 @@ public class Network {
                                 index_p++;
                         }
                         index_p = 0;
-                        /*if (v.isIdle()) { //vehicle is idle if it did not receive an assignment
-                            System.out.println("vehicle " +  availableVehiclesList.indexOf(v));
-                            System.exit(1);
-                            for (int i = 0; i < xValues.length; i++) {
-                                System.out.println(i + ": " + c.getValue(xValues[i]));
-                                if ((i + 1) % waitingList.size() == 0 && i != 0) {
-                                    System.out.println();
-                                }
-                            }
-                            System.exit(1);
-                            v.setIdle(true);
-                        }*/
                     }
                     //waitingList.remove(vehicle.getPassenger());
+
+                    /*int next = 0;
+                    for (Vehicle v : availableVehiclesList) {
+                        IloLinearNumExpr e = c.linearNumExpr();
+                        for (int z = next * nodesList.size(); z < nodesList.size(); z++) { //iterate through vehicle's node values
+                            if (zValues)
+                        }
+                    }*/
+
                     if (vehicle.passenger != null) {
                         vehicle.setRequested(true);
 
@@ -532,28 +566,22 @@ public class Network {
         } catch (IloException e) {
             e.printStackTrace();
         }
+    }
 
+    private void sendVehicleToEmptyNode () {
+        int iterator = 0;
+        int index;
+        for (int v = 0; v < zValuesList.size(); v += nodesList.size()) { //iterate for each vehicle
 
-
-
-       /* int indexVehicle = vehicleList.indexOf(vehicle);
-        int indexPassenger = passengers.indexOf(vehicle.getPassenger());
-        onePassengerToVehicle.set(indexVehicle, onePassengerToVehicle.get(indexVehicle)+1);
-        oneVehicleToPassenger.set(indexPassenger, oneVehicleToPassenger.get(indexPassenger)+1);
-
-        for (int x : onePassengerToVehicle) {
-            if (x > 1) {
-                System.out.println("break1");
+            for (int n = v; n < v + nodesList.size(); n++) { //iterate each node (for each vehicle)
+                if (zValuesList.get(n) == 1.0) {
+                    index = n - v;  // get index of node in nodesList
+                    availableVehiclesList.get(iterator).sentToNode = true;
+                    availableVehiclesList.get(iterator).node = nodesList.get(index);
+                }
             }
+            iterator++;
         }
-
-        for (int x : oneVehicleToPassenger) {
-            if (x > 1) {
-                System.out.println("break2");
-
-            }
-        }*/
-
     }
 
     public void removePassengersFromWaitingList () {
@@ -597,7 +625,6 @@ public class Network {
         n = ran.nextInt(zoneList.size());
         Zone l = zoneList.get(n); //zone cast
         Location loc = l;
-
         Vehicle v = new Vehicle(this, 100, l);
         vehicleList.add(v);
         availableVehiclesList.add(v);
@@ -842,99 +869,3 @@ public class Network {
         return System.getenv("RESOURCES_FOLDER")+"/"+fileName;
     }
 }
-
-
-
-
-/*
-public void constraints () {
-        try {
-            int i = 0;
-            int j = 0;
-            int originalJValue = 0;
-            int size = availableVehiclesList.size() * waitingList.size();
-            IloCplex c = new IloCplex();
-            IloIntVar[] xValues = c.intVarArray(size, 0, 1);
-
-            for (Vehicle vehicle : availableVehiclesList) { // constraint: each vehicle is assigned to <= 1 passenger [one vehicle to passenger]
-                IloLinearNumExpr e = c.linearNumExpr();
-                for (Passenger passenger : waitingList) {
-                    xValues[i] = c.intVar(0, 1);
-                    e.addTerm(1, xValues[i]);
-                    i++;
-
-                }
-                c.addLe(e, 1);
-            }
-
-
-            for (Passenger passenger : waitingList) {   //constraint: each passenger is assigned to <= 1 vehicle [one passenger to vehicle]
-                IloLinearNumExpr e = c.linearNumExpr();
-                for (Vehicle vehicle : availableVehiclesList) {
-                    if (j >= waitingList.size()) {
-                        break;
-                    }
-                    xValues[j] = c.intVar(0, 1);
-                    e.addTerm(1, xValues[j]);
-                    j += waitingList.size();
-                }
-                originalJValue++;
-                j = originalJValue;
-
-
-                c.addLe(e, 1);
-            }
-
-            int k = 0;
-            for (Node source : nodesList) { //objective: minimize the waiting list size (waiting list size - each passengersPerVehicle element for each passenger traveling from r to s)
-
-                for (Node  dest : nodesList) {
-                    //Node dest = destination.getDestination();
-                    IloLinearNumExpr summation = c.linearNumExpr();
-
-                    for (Vehicle vehicle : availableVehiclesList) {
-
-                        for (Passenger passenger : waitingList) {
-                            System.out.println("Source: " + source);
-                            System.out.println("Destination: " + dest);
-                            System.out.println("Passenger Origin: " + passenger.getOrigin());
-                            System.out.println("Passenger Destination: " + passenger.getDestination());
-                            if (passenger.getOrigin() == source && passenger.getDestination() == dest) {
-                                System.out.println("checker");
-                                xValues[k] = c.intVar(0, 1);
-                                summation.addTerm(1, xValues[k]);
-                                k++;
-
-                            }
-
-                        }
-
-
-                    }
-                    k = 0;
-                    IloObjective objective = c.maximize(summation);
-                    c.add(objective);
-                    c.solve();
-                    System.out.println();
-                    System.out.println("val: " + c.getValue(summation));
-                    System.out.println();
-                    c.remove(objective);
-
-
-
-
-
-                }
-            }
-
-
-
-        }
-        catch (IloException e) {
-            e.printStackTrace();
-        }
-
-
-    }
-
- */

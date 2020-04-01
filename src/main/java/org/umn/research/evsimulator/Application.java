@@ -21,6 +21,7 @@ public class Application {
             writeToFile = false;
         }
         alg.createPopulation();
+        alg.calculateArithmeticfactor();
         alg.survivalOfFittest();
 
 
@@ -28,7 +29,7 @@ public class Application {
 
     public static double runSimulation(double betaVal) throws IloException, IOException {
         Network network = Network.createNetwork();
-        int fleetSize = 50;
+        int fleetSize = 25;
         createFleet(fleetSize, network);
 
         //Scanner scanner = new Scanner(System.in);

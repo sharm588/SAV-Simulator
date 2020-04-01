@@ -10,18 +10,44 @@ public class GeneticAlgorithm {
 
     ArrayList<Organism> population = new ArrayList<>();
     ArrayList<Organism> sortedList = new ArrayList<>();
-    int generations = 1;
-    int populationSize = 10;
+    int generations = 50;
+    int populationSize = 100;
     int size = 0;
     float mutate = 0;
     double bestPercent = 0.1; //take top 10% of fittest organisms
+    double a1  = 0.005;
+    double arithmeticFactor = 0;
     Random r = new Random();
+    double ProbabilityValue = 0;
+
+    public void calculateArithmeticfactor () throws IloException, IOException
+    {
+        int divideby = (populationSize-1);
+        arithmeticFactor = -1 * ((2 / populationSize) - (2 * a1)) / (divideby);
+    }
 
     public void createPopulation () throws IloException, IOException { //create population of beta values
         for (int i = 0; i < populationSize; i++) {
             Organism organism = new Organism();
             population.add(organism);
         }
+    }
+
+    public int findParent() throws IloException, IOException
+    {
+
+        ProbabilityValue = r.nextDouble();
+        if (ProbabilityValue == 0) {
+            ProbabilityValue++;
+        }
+        double ArithmeticCounter= 0;
+        int NumberofValues = 0;
+        while(ArithmeticCounter<ProbabilityValue)
+        {
+            ArithmeticCounter+= a1 + (NumberofValues*arithmeticFactor);
+            NumberofValues++;
+        }
+        return NumberofValues;
     }
 
     public void survivalOfFittest () throws IloException, IOException {
@@ -43,22 +69,30 @@ public class GeneticAlgorithm {
                 bestOrganisms.add(population.get(x));
             }
 
-            size = population.size() - bestNumber; //set size to population - bestNumber since we are not considering best few
+            //size = population.size() - bestNumber; //set size to population - bestNumber since we are not considering best few
             //System.out.println("size: " + (size + 2)); //print original population size
 
-            for (int j = 0; j < size; j++) { //loop through population (minus first two)
+            for (int j = 0; j < populationSize; j++) { //loop through population (minus first two)
 
                 mutate = r.nextFloat();
 
-                if (mutate > 0.01f) { //mutate 1% of the time
+                if (mutate > 0.05f) { //mutate 5% of the time
 
-                    int parent1 = r.nextInt(size - 1) + bestNumber;  //assign parent randomly (disregarding first few organisms)
+
+                    int NumberofValues = findParent();
+                    int parent1 =  populationSize-(NumberofValues-1)-1;  //assign parent randomly (disregarding first few organisms)
                     double parent1_beta = population.get(parent1).randombeta; //first parent beta value
 
-                    int parent2 = r.nextInt(size - 1) + bestNumber;  //assign parent randomly (disregarding first few organisms)
+                    NumberofValues = findParent();
 
-                    while (parent2 == parent1) { //make sure parents aren't the same
-                        parent2 = r.nextInt(size - 1) + bestNumber;
+                    int parent2 = populationSize-(NumberofValues-1)-1;  //assign parent randomly (disregarding first few organisms)
+
+                    if (parent2 == parent1) { //make sure parents aren't the same
+                        if(parent2 == populationSize-1)
+                        {
+                            parent2--;
+                        }
+                        parent2++;
                     }
                     double parent2_beta = population.get(parent2).randombeta;   //second parent beta value
 
@@ -84,11 +118,11 @@ public class GeneticAlgorithm {
             }
             bestOrganisms.clear();
             tmp.clear();
-            System.out.println("Average Waiting Times (in seconds)");
+            //System.out.println("Average Waiting Times (in seconds)");
             Collections.sort(population);
-            for (Organism org : population) {
-                System.out.println(org.waitTime);
-            }
+            //for (Organism org : population) {
+            System.out.println(population.get(0).waitTime);
+            //}
 
         }
 
