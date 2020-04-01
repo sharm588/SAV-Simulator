@@ -63,7 +63,7 @@ Ensure the following are installed on your computer
     3. In the 'VM options' section under 'Configuration', type '-Djava.library.path=' followed by the path for the files for the CPLEX library
     
         a.) '-Djava.library.path=/.../CPLEX_Studio1210/cplex/bin/x86-64_osx' for macOS 
-        b.) '-Djava.library.path="C:\Program Files\IBM\ILOG\CPLEX_Studio1210\cplex\bin\x64_win64"' for Windows
+        b.) '-Djava.library.path="C:\...\CPLEX_Studio1210\cplex\bin\x64_win64"' for Windows
         
     4. Click the 'Apply' button then 'Ok'
     
