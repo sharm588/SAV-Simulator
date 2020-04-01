@@ -74,4 +74,4 @@ Ensure the following are installed on your computer
     1. 'compile files('/.../CPLEX_Studio1210/cplex/lib/cplex.jar')' for macOS
     2. 'compile files('C:\\...\\CPLEX_Studio1210\\cplex\\lib\\cplex.jar')' for Windows
 
-4.) Run the project by clicking the green play button in the top right hand corner
+4.) Run the simulation by clicking the green play button in the top right hand corner!
