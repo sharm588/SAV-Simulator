@@ -24,8 +24,8 @@ Ensure the following are installed on your computer
 
 3.) Install the Lombok plugin for IntelliJ IDE
     
-    1. Navigate to File -> Settings -> Plugins and search Lombok. 
-    2. Restart InelliJ and make sure to enable annotations processing when prompted in the bottom left corner
+    1. Navigate to File -> Settings -> Plugins and search Lombok
+    2. Restart IntelliJ and make sure to enable annotations processing when prompted in the bottom left corner
 
 4.)  Overwrite current IDE settings with provided settings to ensure project runs correctly
     
@@ -62,8 +62,8 @@ Ensure the following are installed on your computer
     2. Click 'Edit Configurations...'
     3. In the 'VM options' section under 'Configuration', type '-Djava.library.path=' followed by the path for the files for the CPLEX  library
     
-        a.) -Djava.library.path=/.../CPLEX_Studio1210/cplex/bin/x86-64_osx for macOS 
-        b.) -Djava.library.path="C:\Program Files\IBM\ILOG\CPLEX_Studio1210\cplex\bin\x64_win64" for Windows
+        a.) '-Djava.library.path=/.../CPLEX_Studio1210/cplex/bin/x86-64_osx' for macOS 
+        b.) '-Djava.library.path="C:\Program Files\IBM\ILOG\CPLEX_Studio1210\cplex\bin\x64_win64"' for Windows
         
     4. Click the 'Apply' button then 'Ok'
     
@@ -71,5 +71,5 @@ Ensure the following are installed on your computer
 
    *Note: Make sure to click the 'import changes' pop-up that may show up when using IntelliJ*
     
-    1. compile files('/.../CPLEX_Studio1210/cplex/lib/cplex.jar') for macOS
-    2. compile files('C:\\...\\CPLEX_Studio1210\\cplex\\lib\\cplex.jar') for Windows
+    1. 'compile files('/.../CPLEX_Studio1210/cplex/lib/cplex.jar')' for macOS
+    2. 'compile files('C:\\...\\CPLEX_Studio1210\\cplex\\lib\\cplex.jar')' for Windows
