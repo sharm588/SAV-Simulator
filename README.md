@@ -13,6 +13,8 @@ Ensure the following are installed on your computer
 3.) Git (https://git-scm.com/downloads)
 
 4.) CPLEX Optimizer (https://www.ibm.com/analytics/cplex-optimizer)
+
+*Note: Make sure to download IBM's Download Director before installing the CPLEX Optimizer*
     
 ### Setting Up IntelliJ Project
 
@@ -36,9 +38,9 @@ Ensure the following are installed on your computer
    
     1. Open the project directory on the left hand side (press the button on the left edge of IntelliJ with the folder icon)
     2. Navigate to src -> main -> java -> org -> umn -> research -> evsimulator
-    3. Right click on the Application class and select the option to create a configuration of Application.main(). Press 'Ok' when              prompted
+    3. Right click on the Application class and select the option to create a configuration of Application.main(). Press 'Ok' when   prompted
     4. Click 'Edit Configurations...' in the top right hand corner
-    5. In the 'Environment Variables' section under 'Configuration', type 'RESOURCES_FOLDER=' followed by the path for the resources            folder (right click the resources folder in the project directory and select 'Copy Path...')
+    5. In the 'Environment Variables' section under 'Configuration', type 'RESOURCES_FOLDER=' followed by the path for the resources     folder (right click the resources folder in the project directory and select 'Copy Path...')
     6. Click the 'Apply' button then 'Ok'
     
 ### Adding CPLEX Optimizer
@@ -58,7 +60,7 @@ Ensure the following are installed on your computer
 
     1. Click the box in the top right hand corner with the file's name
     2. Click 'Edit Configurations...'
-    3. In the 'VM options' section under 'Configuration', type '-Djava.library.path=' followed by the path for the files for the CPLEX          library
+    3. In the 'VM options' section under 'Configuration', type '-Djava.library.path=' followed by the path for the files for the CPLEX  library
     
         a.) -Djava.library.path=/.../CPLEX_Studio1210/cplex/bin/x86-64_osx for macOS 
         b.) -Djava.library.path="C:\Program Files\IBM\ILOG\CPLEX_Studio1210\cplex\bin\x64_win64" for Windows
