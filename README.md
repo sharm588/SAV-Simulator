@@ -38,9 +38,9 @@ Ensure the following are installed on your computer
    
     1. Open the project directory on the left hand side (press the button on the left edge of IntelliJ with the folder icon)
     2. Navigate to src -> main -> java -> org -> umn -> research -> evsimulator
-    3. Right click on the Application class and select the option to create a configuration of Application.main(). Press 'Ok' when   prompted
+    3. Right click on the Application class and select the option to create a configuration of Application.main(). Press 'Ok' when prompted
     4. Click 'Edit Configurations...' in the top right hand corner
-    5. In the 'Environment Variables' section under 'Configuration', type 'RESOURCES_FOLDER=' followed by the path for the resources     folder (right click the resources folder in the project directory and select 'Copy Path...')
+    5. In the 'Environment Variables' section under 'Configuration', type 'RESOURCES_FOLDER=' followed by the path for the resources folder (right click the resources folder in the project directory and select 'Copy Path...')
     6. Click the 'Apply' button then 'Ok'
     
 ### Adding CPLEX Optimizer
@@ -51,8 +51,8 @@ Ensure the following are installed on your computer
     2. Click the '+' button located above the list of libraries and click the 'Java' option
     3. Select the path for cplex.jar
         
-        a.) /.../CPLEX_Studio1210/cplex/lib/cplex.jar for macOS
-        b.) C:\...\CPLEX_Studio1210\cplex\lib\cplex.jar for Windows
+        a.) '/.../CPLEX_Studio1210/cplex/lib/cplex.jar' for macOS
+        b.) 'C:\...\CPLEX_Studio1210\cplex\lib\cplex.jar' for Windows
         
     4. Click the 'Apply' button then 'Ok'
 
