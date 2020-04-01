@@ -20,7 +20,7 @@ Ensure the following are installed on your computer
 
 2.) Enter Git URL (https://github.com/sharm588/SAEV-Simulator.git) and login credentials
 
-3.) Accept any installations needed for project to run. Install the Lombok plugin for IntelliJ IDE by navigating to File -> Settings -> Plugins
+3.) Install the Lombok plugin for IntelliJ IDE by navigating to File -> Settings -> Plugins. Make sure to enable annotations processing when prompted in the bottom left corner
 
 4.)  Overwrite current IDE settings with provided settings to ensure project runs correctly
     
@@ -34,9 +34,9 @@ Ensure the following are installed on your computer
     1. Open the project directory on the left hand side (press the button on the left edge of IntelliJ with the folder icon)
     2. Navigate to src -> main -> java -> org -> umn -> research -> evsimulator
     3. Right click on the Application class and select the option to create a configuration of Application.main(). Press 'Ok' when prompted
-    2. Click 'Edit Configurations...' in the top right hand corner
-    3. In the 'Environment Variables' section under 'Configuration', type 'RESOURCES_FOLDER=' followed by the path for the resources folder
-    4. Click the 'Apply' button then 'Ok'
+    4. Click 'Edit Configurations...' in the top right hand corner
+    5. In the 'Environment Variables' section under 'Configuration', type 'RESOURCES_FOLDER=' followed by the path for the resources folder
+    6. Click the 'Apply' button then 'Ok'
     
 ### Adding CPLEX Optimizer
 
