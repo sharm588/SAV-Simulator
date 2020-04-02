@@ -22,7 +22,7 @@ Ensure the following are installed on your computer
 
 2.) Enter Git URL (https://github.com/sharm588/SAEV-Simulator.git) and login credentials
 
-3.) Install the Lombok plugin for IntelliJ IDE
+3.) Wait for the project to open. Install the Lombok plugin for IntelliJ IDE
     
     1. Navigate to File -> Settings -> Plugins and search Lombok
     2. Restart IntelliJ and make sure to enable annotations processing when prompted in the bottom left corner
