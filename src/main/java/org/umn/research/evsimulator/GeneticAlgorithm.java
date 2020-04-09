@@ -2,6 +2,7 @@ package org.umn.research.evsimulator;
 
 import ilog.concert.IloException;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
 
@@ -9,20 +10,20 @@ public class GeneticAlgorithm {
 
     ArrayList<Organism> population = new ArrayList<>();
     ArrayList<Organism> sortedList = new ArrayList<>();
-    int generations = 1;
-    int populationSize = 1;
+    int generations = 50;
+    int populationSize = 100;
     int size = 0;
     float mutate = 0;
     double bestPercent = 0.1; //take top 10% of fittest organisms
-    double firstTerm = 0.05;
+    double a1  = 0.005;
     double arithmeticFactor = 0;
     Random r = new Random();
-    double probabilityValue = 0;
+    double ProbabilityValue = 0;
 
-    public void calculateArithmeticFactor() throws IloException, IOException
+    public void calculateArithmeticfactor () throws IloException, IOException
     {
-        int divisor = populationSize - 1;
-        arithmeticFactor = -1 * ((2 / populationSize) - (2 * firstTerm)) / divisor;
+        int divideby = (populationSize-1);
+        arithmeticFactor = -1 * ((2 / populationSize) - (2 * a1)) / (divideby);
     }
 
     public void createPopulation () throws IloException, IOException { //create population of beta values
@@ -35,18 +36,18 @@ public class GeneticAlgorithm {
     public int findParent() throws IloException, IOException
     {
 
-        probabilityValue = r.nextDouble();
-        if (probabilityValue == 0) {
-            probabilityValue++;
+        ProbabilityValue = r.nextDouble();
+        if (ProbabilityValue == 0) {
+            ProbabilityValue++;
         }
-        double arithmeticCounter = 0;
-        int numberOfValues = 0;
-        while(arithmeticCounter < probabilityValue)
+        double ArithmeticCounter= 0;
+        int NumberofValues = 0;
+        while(ArithmeticCounter<ProbabilityValue)
         {
-            arithmeticCounter += firstTerm + (numberOfValues * arithmeticFactor);
-            numberOfValues++;
+            ArithmeticCounter+= a1 + (NumberofValues*arithmeticFactor);
+            NumberofValues++;
         }
-        return numberOfValues;
+        return NumberofValues;
     }
 
     public void survivalOfFittest () throws IloException, IOException {
@@ -78,13 +79,13 @@ public class GeneticAlgorithm {
                 if (mutate > 0.05f) { //mutate 5% of the time
 
 
-                    int numberofValues = findParent();
-                    int parent1 =  populationSize - (numberofValues - 1) - 1;  //assign parent randomly (disregarding first few organisms)
-                    double parent1_beta = population.get(parent1).randomBeta; //first parent beta value
+                    int NumberofValues = findParent();
+                    int parent1 =  populationSize-(NumberofValues-1)-1;  //assign parent randomly (disregarding first few organisms)
+                    double parent1_beta = population.get(parent1).randombeta; //first parent beta value
 
-                    numberofValues = findParent();
+                    NumberofValues = findParent();
 
-                    int parent2 = populationSize - (numberofValues - 1) - 1;  //assign parent randomly (disregarding first few organisms)
+                    int parent2 = populationSize-(NumberofValues-1)-1;  //assign parent randomly (disregarding first few organisms)
 
                     if (parent2 == parent1) { //make sure parents aren't the same
                         if(parent2 == populationSize-1)
@@ -93,11 +94,11 @@ public class GeneticAlgorithm {
                         }
                         parent2++;
                     }
-                    double parent2_beta = population.get(parent2).randomBeta;   //second parent beta value
+                    double parent2_beta = population.get(parent2).randombeta;   //second parent beta value
 
                     Organism child = new Organism();    //create child
                     double averageBeta = (parent1_beta + parent2_beta) / 2;   //calculate average beta value between parents
-                    child.randomBeta = averageBeta; //set child's beta value
+                    child.randombeta = averageBeta; //set child's beta value
                     tmp.add(child); //add organism to temporary array list
 
                 } else {
@@ -126,5 +127,7 @@ public class GeneticAlgorithm {
         }
 
     }
+
+
 
 }
