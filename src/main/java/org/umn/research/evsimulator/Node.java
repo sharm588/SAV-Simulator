@@ -32,16 +32,6 @@ public class Node {
         return outgoing;
     }
 
-    public Zone identifyType(Node N) {
-        if (N.type == 1000) {
-            Zone z = new Zone(N.id, N.type);
-            return z;
-        } else {
-            Zone fake = new Zone(-1, 100);
-            return fake;
-        }
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

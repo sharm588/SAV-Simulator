@@ -29,6 +29,8 @@ public class Vehicle {
     public boolean idle = false; // checks if vehicle is not doing anything
     public boolean sentToNode = false; // checks if empty vehicle is sent to a different node
     public Node node; // node empty vehicle is sent to
+    public boolean enRouteToNode = false; // check if vehicle is en route to empty node
+    public boolean arrivedAtNode = false; // check if vehicle has arrived at empty node
     public double totalDistanceTraveled = 0.0;
     public int numberDroppedOff = 0;
 
@@ -58,7 +60,7 @@ public class Vehicle {
 
     }
 
-    public List<Passenger> step (List<Passenger> waitingList, List<Node> nodesList, Passenger P) {//assumes there is only one passenger on waiting list
+    public List<Passenger> step(List<Passenger> waitingList, Passenger P) {
 
 
         if (!this.pickedUp) {
@@ -99,10 +101,26 @@ public class Vehicle {
                 this.createTravelTime();
             }
         }
-
-
         return waitingList;
+    }
 
+    public void stepTowardsEmptyNode () {
+
+        if (this.getCurrentTravelTime() > 30) { //move forward 30 seconds
+            this.setCurrentTravelTime(this.getCurrentTravelTime() - 30);
+        }
+        else if (this.getPath().get(this.getCounter()).getDestination() == this.getNode()){ //if next node is destination and within 30 seconds, vehicle arrived at empty node
+            this.setArrivedAtNode(true);
+            this.setEnRouteToNode(false);
+            this.setSentToNode(false);
+        }
+        else { //otherwise, move to next node
+            Zone nextNode = net.matchLocationWithCorrespondingZone(this.getPath().get(this.getCounter()).getDestination());
+            this.loc = nextNode;
+            this.totalDistanceTraveled += this.getPath().get(this.getCounter()).getDistance();
+            this.counter++; //counter keeps track of node index in path array list
+            this.createTravelTime();
+        }
     }
 
 
@@ -110,12 +128,15 @@ public class Vehicle {
         Zone location = (Zone) loc;
         Node node = null;
 
-        if (location.getId() == dest.getId() && this.isRequested()) {                                                                                //check if vehicle is already at passenger location
+        if (location.getId() == dest.getId() && this.isRequested()) {                                                    //check if vehicle is already at passenger location
+            this.setAlreadyAtTarget(true);
+        }
+        else if (location.getId() == dest.getId() && this.isSentToNode()) {                                                    //check if vehicle is already at empty node
             this.setAlreadyAtTarget(true);
         }
 
         for (int i = 0; i < net.getNodesList().size(); i++) {
-                                                                                                                        //match vehicle location with node to get outgoing nodes
+                                                                                                                         //match vehicle location with node to get outgoing nodes
             if (location.getId() == net.getNodesList().get(i).getId()) {
                 node = net.getNodesList().get(i);
             }
@@ -128,7 +149,6 @@ public class Vehicle {
             this.setCurrentTravelTime(this.getPath().get(this.getCounter()).getTraveltime());
         }
         catch (IndexOutOfBoundsException e) {
-
             exit();
         }
     }
