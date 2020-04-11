@@ -9,8 +9,8 @@ public class GeneticAlgorithm {
 
     ArrayList<Organism> population = new ArrayList<>();
     ArrayList<Organism> sortedList = new ArrayList<>();
-    int generations = 1;
-    int populationSize = 1;
+    int generations = 10;
+    int populationSize = 50;
     int size = 0;
     float mutate = 0;
     double bestPercent = 0.1; //take top 10% of fittest organisms
@@ -25,34 +25,36 @@ public class GeneticAlgorithm {
         arithmeticFactor = -1 * ((2 / populationSize) - (2 * firstTerm)) / divisor;
     }
 
-    public void createPopulation () throws IloException, IOException { //create population of beta values
+    public void createPopulation () throws IloException, IOException { //create initial population of organisms
         for (int i = 0; i < populationSize; i++) {
             Organism organism = new Organism();
             population.add(organism);
         }
     }
 
-    public int findParent() throws IloException, IOException
+    public int assignParent() throws IloException, IOException
     {
 
-        probabilityValue = r.nextDouble();
-        if (probabilityValue == 0) {
+        probabilityValue = r.nextDouble(); //assign probability between 0 and 1
+
+        if (probabilityValue == 0) { //if probability is 0, set to 1
             probabilityValue++;
         }
+
         double arithmeticCounter = 0;
-        int numberOfValues = 0;
-        while(arithmeticCounter < probabilityValue)
-        {
-            arithmeticCounter += firstTerm + (numberOfValues * arithmeticFactor);
-            numberOfValues++;
+        int numberOfTerms = 0;
+
+        while(arithmeticCounter < probabilityValue) {   //loop until arithmetic sequence sum is greater than the random probability value
+            arithmeticCounter += firstTerm + (numberOfTerms * arithmeticFactor);
+            numberOfTerms++;
         }
-        return numberOfValues;
+        return numberOfTerms;
     }
 
     public void survivalOfFittest () throws IloException, IOException {
 
         ArrayList<Organism> bestOrganisms = new ArrayList<>();
-        ArrayList<Organism>tmp = new ArrayList<>();
+        ArrayList<Organism> nextGeneration = new ArrayList<>();
 
         for (int i = 0; i < generations; i++) { //loop through number of generations
 
@@ -78,50 +80,50 @@ public class GeneticAlgorithm {
                 if (mutate > 0.05f) { //mutate 5% of the time
 
 
-                    int numberofValues = findParent();
-                    int parent1 =  populationSize - (numberofValues - 1) - 1;  //assign parent randomly (disregarding first few organisms)
-                    double parent1_beta = population.get(parent1).randomBeta; //first parent beta value
+                    int numberofValues = assignParent();
+                    int parent1_index =  populationSize - (numberofValues - 1) - 1;  //assign parent
+                    double parent1_beta = population.get(parent1_index).randomBeta; //first parent beta value
+                    double parent1_alpha = population.get(parent1_index).randomAlpha;
 
-                    numberofValues = findParent();
+                    numberofValues = assignParent();
 
-                    int parent2 = populationSize - (numberofValues - 1) - 1;  //assign parent randomly (disregarding first few organisms)
+                    int parent2_index = populationSize - (numberofValues - 1) - 1;  //assign parent
 
-                    if (parent2 == parent1) { //make sure parents aren't the same
-                        if(parent2 == populationSize-1)
-                        {
-                            parent2--;
-                        }
-                        parent2++;
+                    if (parent2_index == parent1_index) { //make sure parents aren't the same
+                        if(parent2_index == populationSize-1) parent2_index--;
+                        parent2_index++;
                     }
-                    double parent2_beta = population.get(parent2).randomBeta;   //second parent beta value
+                    double parent2_beta = population.get(parent2_index).randomBeta;   //second parent beta value
+                    double parent2_alpha = population.get(parent2_index).randomAlpha;
 
-                    Organism child = new Organism();    //create child
                     double averageBeta = (parent1_beta + parent2_beta) / 2;   //calculate average beta value between parents
-                    child.randomBeta = averageBeta; //set child's beta value
-                    tmp.add(child); //add organism to temporary array list
+                    double averageAlpha = (parent1_alpha + parent2_alpha) / 2; //calculate average alpha value between parents
+                    Organism child = new Organism(averageBeta, averageAlpha);    //create child
+                    nextGeneration.add(child); //add organism to temporary array list
 
                 } else {
-                    Organism child = new Organism(); //create organism, beta value produced is random so it has mutated
-                    tmp.add(child);
+                    double high = 10;
+                    double betaVal = high * r.nextDouble();
+                    double alphaVal = high * r.nextDouble();
+                    Organism child = new Organism(betaVal, alphaVal); //create organism with random alpha and beta values (mutation)
+                    nextGeneration.add(child);
                 }
 
             }
 
-            for (int x = 0; x < bestNumber; x++) { //add best organisms to tmp
-                tmp.add(bestOrganisms.get(x));
+            Collections.sort(population);   //sort current population from lowest to highest waiting time
+            System.out.println(population.get(0).waitTime); //print best waiting time
+
+            for (int x = 0; x < bestNumber; x++) { //add best organisms from this generation to next generation
+                nextGeneration.add(bestOrganisms.get(x));
             }
 
             population.clear();
-            for (Organism org : tmp) {  //replace organisms with children of last population
+            for (Organism org : nextGeneration) {  //replace organisms of last generation with children
                 population.add(org);
             }
             bestOrganisms.clear();
-            tmp.clear();
-            //System.out.println("Average Waiting Times (in seconds)");
-            Collections.sort(population);
-            //for (Organism org : population) {
-            System.out.println(population.get(0).waitTime);
-            //}
+            nextGeneration.clear();
 
         }
 

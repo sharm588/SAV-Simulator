@@ -25,16 +25,14 @@ public class Application {
 
     }
 
-    public static double runSimulation(double betaVal, double alphaVal) throws IloException, IOException {
+    public static double runSimulation(double betaVal, double alphaVal, boolean child) throws IloException, IOException {
         Network network = Network.createNetwork();
+        double waitTime = 0;
         int fleetSize = 25;
         createFleet(fleetSize, network);
 
-        //Scanner scanner = new Scanner(System.in);
-
-        //System.out.println("Input beta value: ");
-        //double betaVal = scanner.nextFloat();
-        double waitTime = network.simulate(7200, betaVal, alphaVal, writeToFile);
+        if (child || !writeToFile) waitTime = network.simulate(7200, betaVal, alphaVal, false);
+        else if (writeToFile) waitTime = network.simulate(7200, betaVal, alphaVal, true);
 
         /*System.out.println("Waiting List after simulation (" + waitingList.size() + ")");
         System.out.println("-----------------------------");
