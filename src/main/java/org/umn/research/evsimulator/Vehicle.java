@@ -66,7 +66,7 @@ public class Vehicle {
 
     }
 
-    public List<Passenger> step(List<Passenger> waitingList, Passenger P) {
+    public List<Passenger> step (List<Passenger> waitingList, List<Node> nodesList, Passenger P) {//assumes there is only one passenger on waiting list
 
 
         if (!this.pickedUp) {
@@ -107,10 +107,7 @@ public class Vehicle {
                 this.createTravelTime();
             }
         }
-        return waitingList;
-    }
 
-    public void stepTowardsEmptyNode () {
 
         if (this.getCounter() >= this.getPath().size() && this.getPath().size() == 1 && this.getCurrentTravelTime() < 30) { //arrived at empty node if path is only one node and travel time < 30 and if the counter is going past bounds
             this.setArrivedAtNode(true);
@@ -149,7 +146,7 @@ public class Vehicle {
         }*/
 
         for (int i = 0; i < net.getNodesList().size(); i++) {
-                                                                                                                         //match vehicle location with node to get outgoing nodes
+                                                                                                                        //match vehicle location with node to get outgoing nodes
             if (location.getId() == net.getNodesList().get(i).getId()) {
                 node = net.getNodesList().get(i);
             }
@@ -162,6 +159,7 @@ public class Vehicle {
             this.setCurrentTravelTime(this.getPath().get(this.getCounter()).getTraveltime());
         }
         catch (IndexOutOfBoundsException e) {
+
             exit();
         }
     }
