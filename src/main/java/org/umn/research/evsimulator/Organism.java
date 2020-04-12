@@ -8,15 +8,28 @@ import java.util.Collections.*;
 import java.util.Comparator;
 import java.util.Random;
 
+import static org.umn.research.evsimulator.Application.runSimulation;
+
 public class Organism implements Comparable<Organism> {
 
     double high = 10.0;
     Random r = new Random();
-    double randombeta = high * r.nextDouble();
+    double randomBeta;
+    double randomAlpha;
     double waitTime;
 
+    //constructor for creating initial population
     public Organism () throws IloException, IOException {
-        waitTime = Application.runSimulation(randombeta);
+        randomBeta = high * r.nextDouble();
+        randomAlpha = high * r.nextDouble();
+        waitTime = runSimulation(randomBeta, randomAlpha, false);
+    }
+
+    //constructor for creating children
+    public Organism (double beta, double alpha) throws IloException, IOException {
+        randomBeta = beta;
+        randomAlpha = alpha;
+        waitTime = runSimulation(randomBeta, randomAlpha, true);
     }
 
     public int compareTo(Organism other) {
