@@ -45,16 +45,12 @@ Ensure the following are installed on your computer
     
 ### Adding CPLEX Optimizer
 
-1.) Add CPLEX library to project
+1.) Go to the *build.gradle* file and compile the cplex.jar file with your cplex.jar path under *dependencies*
+
+   *Note: Make sure to click the 'import changes' pop-up that may show up when using IntelliJ*
     
-    1. Select the 'Project Structure' folder icon in the top right hand corner and press the 'Libraries' tab
-    2. Click the '+' button located above the list of libraries and click the 'Java' option
-    3. Select the path for cplex.jar
-        
-        a.) '/.../CPLEX_Studio1210/cplex/lib/cplex.jar' for macOS
-        b.) 'C:\...\CPLEX_Studio1210\cplex\lib\cplex.jar' for Windows
-        
-    4. Click the 'Apply' button then 'Ok'
+    1. 'compile files('/.../CPLEX_Studio1210/cplex/lib/cplex.jar')' for macOS
+    2. 'compile files('C:\\...\\CPLEX_Studio1210\\cplex\\lib\\cplex.jar')' for Windows
 
 2.) Add the path for the CPLEX files to *VM options* in the main file *Application* 
 
@@ -66,12 +62,5 @@ Ensure the following are installed on your computer
         b.) '-Djava.library.path="C:\...\CPLEX_Studio1210\cplex\bin\x64_win64"' for Windows
         
     4. Click the 'Apply' button then 'Ok'
-    
-3.) Go to the *build.gradle* file and compile the cplex.jar file with your cplex.jar path under *dependencies*
-
-   *Note: Make sure to click the 'import changes' pop-up that may show up when using IntelliJ*
-    
-    1. 'compile files('/.../CPLEX_Studio1210/cplex/lib/cplex.jar')' for macOS
-    2. 'compile files('C:\\...\\CPLEX_Studio1210\\cplex\\lib\\cplex.jar')' for Windows
 
 4.) Run the simulation by clicking the green play button in the top right hand corner!
