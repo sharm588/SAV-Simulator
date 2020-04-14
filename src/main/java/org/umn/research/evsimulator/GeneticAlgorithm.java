@@ -10,7 +10,7 @@ public class GeneticAlgorithm {
     ArrayList<Organism> population = new ArrayList<>();
     ArrayList<Organism> sortedList = new ArrayList<>();
     int generations = 10;
-    int populationSize = 50;
+    int populationSize = 1;
     int size = 0;
     float mutate = 0;
     double bestPercent = 0.1; //take top 10% of fittest organisms
