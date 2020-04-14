@@ -2,9 +2,11 @@ package org.umn.research.evsimulator;
 
 import ilog.concert.IloException;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Application {
 
@@ -19,7 +21,7 @@ public class Application {
             writeToFile = false;
         }
         alg.createPopulation();
-        alg.calculateArithmeticFactor();
+        alg.calculateArithmeticfactor();
         alg.survivalOfFittest();
 
 
@@ -46,7 +48,7 @@ public class Application {
             System.out.println(passenger);
         }
         System.out.println();*/
-        return waitTime;
+        return network.avgWaitTime;
     }
 
     private static void createFleet (int size, Network network) {
