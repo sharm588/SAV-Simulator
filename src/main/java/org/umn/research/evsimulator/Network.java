@@ -1,17 +1,18 @@
 package org.umn.research.evsimulator;
 
-import ilog.concert.*;
+import ilog.concert.IloException;
+import ilog.concert.IloIntVar;
+import ilog.concert.IloLinearNumExpr;
+import ilog.concert.IloObjective;
+import ilog.cplex.IloCplex;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
-import java.lang.*;
-
-import ilog.cplex.IloCplex;
 
 @Data
 @EqualsAndHashCode

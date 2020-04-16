@@ -5,20 +5,14 @@ import ilog.concert.IloException;
 import java.io.IOException;
 import java.util.*;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-
-@Data
-@EqualsAndHashCode
-
 public class GeneticAlgorithm {
 
     ArrayList<Organism> population = new ArrayList<>();
     ArrayList<Organism> sortedList = new ArrayList<>();
-    int generations = 150;
-    int populationSize = 100;
+    int generations = 10;
+    int populationSize = 1;
     int size = 0;
-    double mutate = 0.04;
+    float mutate = 0;
     double bestPercent = 0.1; //take top 10% of fittest organisms
     double firstTerm = 0.05;
     double arithmeticFactor = 0;
