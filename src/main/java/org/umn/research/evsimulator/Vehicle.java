@@ -2,7 +2,6 @@ package org.umn.research.evsimulator;
 
 import lombok.Data;
 
-
 import java.util.List;
 
 import static javafx.application.Platform.exit;
