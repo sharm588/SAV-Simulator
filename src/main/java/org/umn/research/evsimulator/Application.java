@@ -13,12 +13,14 @@ public class Application {
     public static void main(String [] args) throws IloException, IOException
     {
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 5; i++) {
 
             GeneticAlgorithm alg = new GeneticAlgorithm();
-            if (i == 0) alg.setFirstTerm(0.0125);
-            if (i == 1) alg.setFirstTerm(0.025);
-            if (i == 2) alg.setFirstTerm(0.05);
+            if (i == 0) alg.setMutate(0.01);
+            if (i == 1) alg.setMutate(0.02);
+            if (i == 2) alg.setMutate(0.03);
+            if (i == 3) alg.setMutate(0.04);
+            if (i == 4) alg.setMutate(0.05);
 
             if (alg.populationSize > 10) {
                 writeToFile = false;

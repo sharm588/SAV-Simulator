@@ -15,15 +15,16 @@ public class GeneticAlgorithm {
 
     ArrayList<Organism> population = new ArrayList<>();
     ArrayList<Organism> sortedList = new ArrayList<>();
-    int generations = 150;
+    int generations = 50;
     int populationSize = 100;
     int size = 0;
     double mutate = 0.04;
     double bestPercent = 0.1; //take top 10% of fittest organisms
-    double firstTerm = 0.05;
+    double firstTerm = 0.008;
     double arithmeticFactor = 0;
     Random r = new Random();
     double probabilityValue = 0;
+    double avgPopulationWaitTime = 0;
 
     public void calculateArithmeticFactor() throws IloException, IOException
     {
@@ -79,8 +80,8 @@ public class GeneticAlgorithm {
             //size = population.size() - bestNumber; //set size to population - bestNumber since we are not considering best few
             //System.out.println("size: " + (size + 2)); //print original population size
 
-            for (int j = 0; j < populationSize; j++) { //loop through population (minus first two)
-
+            for (int j = 0; j < populationSize; j++) { //loop through population
+                avgPopulationWaitTime += population.get(j).waitTime;
                 mutate = r.nextFloat();
 
                 if (mutate > 0.05f) { //mutate 5% of the time
@@ -118,7 +119,9 @@ public class GeneticAlgorithm {
             }
 
             Collections.sort(population);   //sort current population from lowest to highest waiting time
-            System.out.println(population.get(0).waitTime); //print best waiting time
+            avgPopulationWaitTime /= population.size();
+            System.out.println(population.get(0).waitTime + " " + avgPopulationWaitTime); //print best waiting time
+            avgPopulationWaitTime = 0;
 
             for (int x = 0; x < bestNumber; x++) { //add best organisms from this generation to next generation
                 nextGeneration.add(bestOrganisms.get(x));
