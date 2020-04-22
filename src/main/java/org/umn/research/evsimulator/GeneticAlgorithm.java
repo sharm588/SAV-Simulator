@@ -15,10 +15,10 @@ public class GeneticAlgorithm {
 
     ArrayList<Organism> population = new ArrayList<>();
     ArrayList<Organism> sortedList = new ArrayList<>();
-    int generations = 50;
+    int generations = 150;
     int populationSize = 100;
     int size = 0;
-    double mutate = 0.04;
+    double mutate = 0.00;
     double mutateValue = 0.05f;
     double bestPercent = 0.1; //take top 10% of fittest organisms
     double firstTerm = 0.008;
