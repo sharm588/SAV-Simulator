@@ -121,7 +121,7 @@ public class GeneticAlgorithm {
 
             Collections.sort(population);   //sort current population from lowest to highest waiting time
             avgPopulationWaitTime /= population.size();
-            System.out.println(population.get(0).waitTime + " " + avgPopulationWaitTime); //print best waiting time
+            System.out.println(population.get(0).waitTime); //print best waiting time
             avgPopulationWaitTime = 0;
 
             for (int x = 0; x < bestNumber; x++) { //add best organisms from this generation to next generation
