@@ -39,7 +39,7 @@ Ensure the following are installed on your computer
     1. Open the project directory on the left hand side (press the button on the left edge of IntelliJ with the folder icon)
     2. Navigate to src -> main -> java -> org -> umn -> research -> evsimulator
     3. Right click on the Application class and select the option to create a configuration of Application.main(). Press 'Ok' when prompted
-    4. Click the class 'Application' in the top right hand corner next to the build button. Then select 'Edit Configurations...'
+    4. Click 'Edit Configurations...' in the top right hand corner
     5. In the 'Environment Variables' section under 'Configuration', type 'RESOURCES_FOLDER=' followed by the path for the resources folder (right click the resources folder in the project directory and select 'Copy Path...')
     6. Click the 'Apply' button then 'Ok'
     
@@ -63,4 +63,4 @@ Ensure the following are installed on your computer
         
     4. Click the 'Apply' button then 'Ok'
 
-3.) Run the simulation by clicking the green play button in the top right hand corner!
+4.) Run the simulation by clicking the green play button in the top right hand corner!

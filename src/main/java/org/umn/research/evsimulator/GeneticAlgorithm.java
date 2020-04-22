@@ -19,6 +19,7 @@ public class GeneticAlgorithm {
     int populationSize = 100;
     int size = 0;
     double mutate = 0.04;
+    double mutateValue = 0.05f;
     double bestPercent = 0.1; //take top 10% of fittest organisms
     double firstTerm = 0.008;
     double arithmeticFactor = 0;
@@ -84,7 +85,7 @@ public class GeneticAlgorithm {
                 avgPopulationWaitTime += population.get(j).waitTime;
                 mutate = r.nextFloat();
 
-                if (mutate > 0.05f) { //mutate 5% of the time
+                if (mutate > mutateValue) { //mutate mutateValue% of the time
 
 
                     int numberofValues = assignParent();

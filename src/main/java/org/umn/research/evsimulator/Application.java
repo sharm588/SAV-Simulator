@@ -16,11 +16,11 @@ public class Application {
         for (int i = 0; i < 5; i++) {
 
             GeneticAlgorithm alg = new GeneticAlgorithm();
-            if (i == 0) alg.setMutate(0.01);
-            if (i == 1) alg.setMutate(0.02);
-            if (i == 2) alg.setMutate(0.03);
-            if (i == 3) alg.setMutate(0.04);
-            if (i == 4) alg.setMutate(0.05);
+            if (i == 0) alg.setMutateValue(0.01f);
+            if (i == 1) alg.setMutateValue(0.02f);
+            if (i == 2) alg.setMutateValue(0.03f);
+            if (i == 3) alg.setMutateValue(0.04f);
+            if (i == 4) alg.setMutateValue(0.05f);
 
             if (alg.populationSize > 10) {
                 writeToFile = false;
