@@ -12,15 +12,17 @@ public class Application {
 
     public static void main(String [] args) throws IloException, IOException
     {
-
-        for (int i = 0; i < 5; i++) {
+        double ratio = 1.0/6;
+        double scale = 0.7;
+        for (int i = 0; i < 1; i++) {
+            double percent = scale * 100;
+            System.out.println("Demand Scale: " + percent + "%");
+            runSimulation(5.966902378318867, 7.6254545181893942, scale, ratio);
+            scale += 0.05;
+        }
+        /*for (int i = 0; i < 1; i++) {
 
             GeneticAlgorithm alg = new GeneticAlgorithm();
-            if (i == 0) alg.setMutateValue(0.01f);
-            if (i == 1) alg.setMutateValue(0.02f);
-            if (i == 2) alg.setMutateValue(0.03f);
-            if (i == 3) alg.setMutateValue(0.04f);
-            if (i == 4) alg.setMutateValue(0.05f);
 
             if (alg.populationSize > 10) {
                 writeToFile = false;
@@ -29,7 +31,7 @@ public class Application {
             alg.calculateArithmeticFactor();
             alg.survivalOfFittest();
             System.out.println();
-        }
+        }*/
 
 
     }
@@ -55,6 +57,30 @@ public class Application {
             System.out.println(passenger);
         }
         System.out.println();*/
+        return waitTime;
+    }
+
+    public static double runSimulation(double betaVal, double alphaVal, double scale, double ratio) throws IloException, IOException {
+        Network network = Network.createNetwork(scale);
+        int time = 7200;
+        double waitTime = 0;
+        int numberOfPassengers = network.getPassengers().size();
+        for (Passenger passenger : network.getPassengers()) {
+            if (passenger.getDeparturetime() > time) {
+                numberOfPassengers--;
+            }
+        }
+
+        int fleetSize = (int) (ratio * numberOfPassengers);
+        createFleet(fleetSize, network);
+
+        if (!writeToFile) waitTime = network.simulate(time, betaVal, alphaVal, false);
+        else waitTime = network.simulate(7200, betaVal, alphaVal, true);
+
+        for (Vehicle vehicle : network.getVehicleList()) {
+            System.out.println("Vehicle " + vehicle.getId() + ": Total travel distance of " + vehicle.getTotalDistanceTraveled() + " miles; total time with passenger in-vehicle of " + vehicle.getInVehicleTravelTime() + " seconds; total travel time of " + vehicle.getTotalTravelTime() + " seconds");
+        }
+        System.out.println("Average Wait Time: " + waitTime);
         return waitTime;
     }
 

@@ -35,7 +35,7 @@ public class Network {
     private int endTime = 0;
     private int officialTime = 0;
     private int totalNumberOfPassengers = 0;
-    private double sumOfWaitTimes = 0;
+    private double sumOfWaitTimes = 0; //waiting time from when passenger is assigned to vehicle to when passenger is picked up
     private int originalWaitingListSize = 0;
     private double beta = 1;
     private double alpha = 1;
@@ -52,8 +52,21 @@ public class Network {
         network.readLinks(getFilePath("links.txt"));
         network.scanDemand(getFilePath("dynamic_od.txt"));
         network.readDepartureTimes(getFilePath("demand_profile.txt"));
-        network.createPassengers(getFilePath("dynamic_od.txt"));
+        network.createPassengers(getFilePath("dynamic_od.txt"), 1.0);
        // network.simulationWriter = new FileWriter(getFilePath("simulation_log.txt"), false);
+
+        return network;
+    }
+
+    public static Network createNetwork(double scale) throws IOException{
+        Network network = new Network();
+        network.scanNodes(getFilePath("nodes.txt"));
+        network.createNodeMap();
+        network.readLinks(getFilePath("links.txt"));
+        network.scanDemand(getFilePath("dynamic_od.txt"));
+        network.readDepartureTimes(getFilePath("demand_profile.txt"));
+        network.createPassengers(getFilePath("dynamic_od.txt"), scale);
+        // network.simulationWriter = new FileWriter(getFilePath("simulation_log.txt"), false);
 
         return network;
     }
@@ -234,7 +247,7 @@ public class Network {
                     }
 
                     if (vehicle.isAlreadyAtNode()) {
-                        if (writerOn) simulationWriter.write("Vehicle #" + vehicle.getId() + " is already at empty node" + "counter: " + vehicle.getCounter() + "\n");
+                        if (writerOn) simulationWriter.write("Vehicle #" + vehicle.getId() + " is already at empty node\n");
                         vehicle.setAlreadyAtNode(false);
                         vehicle.setSentToNode(false);
                         vehicle.setEnRouteToNode(false);
@@ -252,7 +265,7 @@ public class Network {
 
                         if (vehicle.isArrivedAtNode()) {
                             if (writerOn)
-                                simulationWriter.write("Vehicle #" + vehicle.getId() + " has arrived at empty node" + "counter: " + vehicle.getCounter() + "\n");
+                                simulationWriter.write("Vehicle #" + vehicle.getId() + " has arrived at empty node\n");
                             vehicle.setArrivedAtNode(false);
                             vehicle.setSentToNode(false);
                             vehicle.setEnRouteToNode(false);
@@ -260,16 +273,16 @@ public class Network {
                             vehicle.setCounter(0); //reset counter (keeps track of node index in path array list)
                         } else if (vehicle.isEnRouteToNode()) {
                             if (writerOn)
-                                simulationWriter.write("Vehicle #" + vehicle.getId() + " is driving to empty node" + "counter: " + vehicle.getCounter() + "\n");
+                                simulationWriter.write("Vehicle #" + vehicle.getId() + " is driving to empty node\n");
                         }
                     }
                 } else {
                     vehicle.setCounter(0); //reset counter (keeps track of node index in path array list)
                     if (vehicle.isAssignedSameNode()) {
-                        if (writerOn) simulationWriter.write("Vehicle #" + vehicle.getId() + " is stationary at empty node [assigned to same empty node " + vehicle.getNode() + "] counter: " + vehicle.getCounter() + "\n");
+                        if (writerOn) simulationWriter.write("Vehicle #" + vehicle.getId() + " is stationary at empty node [assigned to same empty node " + vehicle.getNode() + "\n");
                         vehicle.setAssignedSameNode(false);
                     }
-                    else if (writerOn) simulationWriter.write("Vehicle #" + vehicle.getId() + " is stationary at empty node " + vehicle.getNode() + "counter: " + vehicle.getCounter() + "\n");
+                    else if (writerOn) simulationWriter.write("Vehicle #" + vehicle.getId() + " is stationary at empty node " + vehicle.getNode() + "\n");
                 }
             }
 
@@ -569,6 +582,7 @@ public class Network {
                         vehicle.setRequested(true);
 
                         if (writerOn) simulationWriter.write("(!) Vehicle #" + vehicle.getId() + " has been assigned to passenger " + "[" + vehicle.getPassenger() + "]\n");
+                        //totalNumberOfPassengers++;
                     }
                    // availableVehiclesList.remove(vehicle);
                 }
@@ -604,7 +618,7 @@ public class Network {
 
         for (Vehicle vehicle : availableVehiclesList) {
             if (vehicle.isSentToNode() && !vehicle.isEnRouteToNode()) {
-                if (writerOn && !vehicle.isAssignedSameNode()) simulationWriter.write("Vehicle #" + vehicle.getId() + " sent to node " + vehicle.getNode() + "counter: " + vehicle.getCounter() + "\n");
+                if (writerOn && !vehicle.isAssignedSameNode()) simulationWriter.write("Vehicle #" + vehicle.getId() + " sent to node " + vehicle.getNode() + "\n");
                 vehicle.setEnRouteToNode(true);
             }
         }
@@ -783,7 +797,7 @@ public class Network {
     }
 
     //reads in passenger data and creates passengers and put them into passenger array list
-    private void createPassengers(String fileName) //call scanDemand before using this func and above func
+    private void createPassengers(String fileName, double scale) //call scanDemand before using this func and above func
     {
         File file = new File(fileName);
         try {
@@ -808,6 +822,7 @@ public class Network {
                 int end = start + (departureIdMap.get(ast)[1]);
                 Random r = new Random();
                 double demandval = demand.get(i);
+                demandval *= scale; //scale demand by 'scale' value
                 i++;
                 double floor = Math.floor(demandval);
                 double ceiling = Math.ceil(demandval);

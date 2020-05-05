@@ -15,13 +15,13 @@ public class GeneticAlgorithm {
 
     ArrayList<Organism> population = new ArrayList<>();
     ArrayList<Organism> sortedList = new ArrayList<>();
-    int generations = 150;
+    int generations = 100;
     int populationSize = 100;
     int size = 0;
     double mutate = 0.00;
-    double mutateValue = 0.05f;
+    double mutateValue = 0.015f;
     double bestPercent = 0.1; //take top 10% of fittest organisms
-    double firstTerm = 0.008;
+    double firstTerm = 0.0075;
     double arithmeticFactor = 0;
     Random r = new Random();
     double probabilityValue = 0;
@@ -122,6 +122,7 @@ public class GeneticAlgorithm {
             Collections.sort(population);   //sort current population from lowest to highest waiting time
             avgPopulationWaitTime /= population.size();
             System.out.println(population.get(0).waitTime); //print best waiting time
+            System.out.println("Best Beta: " + population.get(0).randomBeta + " Best Alpha: " + population.get(0).randomAlpha);
             avgPopulationWaitTime = 0;
 
             for (int x = 0; x < bestNumber; x++) { //add best organisms from this generation to next generation
