@@ -84,7 +84,7 @@ public class Network {
                 if (initialThreshold >= p.getDeparturetime()) {
                     waitingList.add(p);
                     p.setDispatched(true);
-                    totalNumberOfPassengers += 1;
+                    //totalNumberOfPassengers += 1;
                 }
             }
 
@@ -124,7 +124,7 @@ public class Network {
                 if (i >= p.getDeparturetime()) {
                     waitingList.add(p);
                     p.setDispatched(true);
-                    totalNumberOfPassengers += 1;
+                    //totalNumberOfPassengers += 1;
                 }
             }
             removePassengersFromPassengerList();
@@ -582,7 +582,7 @@ public class Network {
                         vehicle.setRequested(true);
 
                         if (writerOn) simulationWriter.write("(!) Vehicle #" + vehicle.getId() + " has been assigned to passenger " + "[" + vehicle.getPassenger() + "]\n");
-                        //totalNumberOfPassengers++;
+                        totalNumberOfPassengers++;
                     }
                    // availableVehiclesList.remove(vehicle);
                 }

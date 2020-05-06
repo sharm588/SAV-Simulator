@@ -4,7 +4,6 @@ import ilog.concert.IloException;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Application {
 
@@ -14,7 +13,7 @@ public class Application {
     {
         double ratio = 1.0/6;
         double scale = 0.7;
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 13; i++) {
             double percent = scale * 100;
             System.out.println("Demand Scale: " + percent + "%");
             runSimulation(5.966902378318867, 7.6254545181893942, scale, ratio);
@@ -65,22 +64,29 @@ public class Application {
         int time = 7200;
         double waitTime = 0;
         int numberOfPassengers = network.getPassengers().size();
-        for (Passenger passenger : network.getPassengers()) {
+        for (Passenger passenger : network.getPassengers()) {   //number of passengers is approximately the number of people picked up + the rest on the waitinglist
             if (passenger.getDeparturetime() > time) {
                 numberOfPassengers--;
             }
         }
-
         int fleetSize = (int) (ratio * numberOfPassengers);
         createFleet(fleetSize, network);
 
         if (!writeToFile) waitTime = network.simulate(time, betaVal, alphaVal, false);
         else waitTime = network.simulate(7200, betaVal, alphaVal, true);
 
+        double sumOfInVehicleSeconds = 0;
+        double sumOfTotalTravelSeconds = 0;
+        double sumOfTotalDistanceTravelled = 0;
         for (Vehicle vehicle : network.getVehicleList()) {
-            System.out.println("Vehicle " + vehicle.getId() + ": Total travel distance of " + vehicle.getTotalDistanceTraveled() + " miles; total time with passenger in-vehicle of " + vehicle.getInVehicleTravelTime() + " seconds; total travel time of " + vehicle.getTotalTravelTime() + " seconds");
+            sumOfInVehicleSeconds += vehicle.getInVehicleTravelTime();
+            sumOfTotalTravelSeconds += vehicle.getTotalTravelTime();
+            sumOfTotalDistanceTravelled += vehicle.getTotalDistanceTravelled();
         }
         System.out.println("Average Wait Time: " + waitTime);
+        System.out.println("Average in-vehicle travel time: " + (sumOfInVehicleSeconds / network.getVehicleList().size()));
+        System.out.println("Average total vehicle travel time: " + (sumOfTotalTravelSeconds / network.getVehicleList().size()));
+        System.out.println("Total miles travelled in fleet: " + sumOfTotalDistanceTravelled);
         return waitTime;
     }
 
