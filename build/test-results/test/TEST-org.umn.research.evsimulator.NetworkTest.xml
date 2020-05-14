@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="org.umn.research.evsimulator.NetworkTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2019-12-26T00:18:58" hostname="Rohits-MBP-2.hsd1.mn.comcast.net" time="0.279">
+  <properties/>
+  <testcase name="simulate" classname="org.umn.research.evsimulator.NetworkTest" time="0.279"/>
+  <system-out><![CDATA[Vehicle Position ID: 9021
+Heading towards ID 9023
+Total Travel Time: 300.0227
+Reached Passenger Origin ID: 9023
+Vehicle Position ID: 9023
+Heading towards ID 9007
+Reached Passenger Destination ID: 9007
+EV ridesharing simulated
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

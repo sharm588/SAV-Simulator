@@ -2,6 +2,7 @@ package org.umn.research.evsimulator;
 
 import lombok.Data;
 
+
 import java.util.List;
 
 import static javafx.application.Platform.exit;
@@ -32,7 +33,9 @@ public class Vehicle {
     public boolean arrivedAtNode = false; // check if vehicle has arrived at empty node
     public boolean assignedSameNode = false; // checks if vehicle is assigned to the same empty node as before
     public boolean alreadyAtNode = false; // checks if vehicle is already at empty node
-    public double totalDistanceTraveled = 0.0;
+    public double totalDistanceTravelled = 0.0;
+    public double totalTravelTime = 0.0;
+    public double inVehicleTravelTime = 0.0; // travel time with passenger in vehicle
     public int numberDroppedOff = 0;
 
     private int id;
@@ -71,15 +74,19 @@ public class Vehicle {
         if (!this.pickedUp) {
             if (this.getCurrentTravelTime() > 30) { //move forward 30 seconds
                 this.setCurrentTravelTime(this.getCurrentTravelTime() - 30);
+                this.setTotalTravelTime(this.getTotalTravelTime() + 30);
             }
             else if (this.getPath().get(this.getCounter()).getDestination() == P.getOrigin()){ //if next node is destination and within 30 seconds, passenger is picked up
+                this.setTotalTravelTime(this.getTotalTravelTime() + this.getCurrentTravelTime());
+                this.totalDistanceTravelled += this.getPath().get(this.getCounter()).getDistance();
                 this.setJustPickedUp(true);
                 this.pickedUp = true;
             }
             else { //otherwise, move to next node
                 Zone nextNode = net.matchLocationWithCorrespondingZone(this.getPath().get(this.getCounter()).getDestination());
                 this.loc = nextNode;
-                this.totalDistanceTraveled += this.getPath().get(this.getCounter()).getDistance();
+                this.totalDistanceTravelled += this.getPath().get(this.getCounter()).getDistance();
+                this.setTotalTravelTime(this.getTotalTravelTime() + this.getCurrentTravelTime());
                 this.counter++; //counter keeps track of node index in path array list
                 this.createTravelTime();
             }
@@ -88,10 +95,13 @@ public class Vehicle {
 
             if (this.getCurrentTravelTime() > 30) {
                 this.setCurrentTravelTime(this.getCurrentTravelTime() - 30);
+                this.setTotalTravelTime(this.getTotalTravelTime() + 30);
+                this.setInVehicleTravelTime(this.getInVehicleTravelTime() + 30);
             }
             else if (this.getPath().get(this.getCounter()).getDestination() == P.getDestination()){ //set droppedOff to true for next potential passenger
                 this.setDroppedOff(true);
-
+                this.setTotalTravelTime(this.getTotalTravelTime() + this.getCurrentTravelTime());
+                this.setInVehicleTravelTime(this.getInVehicleTravelTime() + this.getCurrentTravelTime());
             }
             else {
                 Zone nextNode = net.matchLocationWithCorrespondingZone(this.getPath().get(this.getCounter()).getDestination());
@@ -101,7 +111,9 @@ public class Vehicle {
                     }
                 }*/
                 this.loc = nextNode;
-                this.totalDistanceTraveled += this.getPath().get(this.getCounter()).getDistance();
+                this.totalDistanceTravelled += this.getPath().get(this.getCounter()).getDistance();
+                this.setTotalTravelTime(this.getTotalTravelTime() + this.getCurrentTravelTime());
+                this.setInVehicleTravelTime(this.getInVehicleTravelTime() + this.getCurrentTravelTime());
                 this.counter++;
                 this.createTravelTime();
             }
@@ -120,8 +132,11 @@ public class Vehicle {
 
         if (this.getCurrentTravelTime() > 30) { //move forward 30 seconds
             this.setCurrentTravelTime(this.getCurrentTravelTime() - 30);
+            this.setTotalTravelTime(this.getTotalTravelTime() + 30);
         }
         else if (this.getPath().get(this.getCounter()).getDestination() == this.getNode()){ //if next node is destination and within 30 seconds, vehicle arrived at empty node
+            this.totalDistanceTravelled += this.getPath().get(this.getCounter()).getDistance();
+            this.setTotalTravelTime(this.getTotalTravelTime() + this.getCurrentTravelTime());
             this.setArrivedAtNode(true);
             this.setEnRouteToNode(false);
             this.setSentToNode(false);
@@ -129,7 +144,8 @@ public class Vehicle {
         else { //otherwise, move to next node
             Zone nextNode = net.matchLocationWithCorrespondingZone(this.getPath().get(this.getCounter()).getDestination());
             this.loc = nextNode;
-            this.totalDistanceTraveled += this.getPath().get(this.getCounter()).getDistance();
+            this.totalDistanceTravelled += this.getPath().get(this.getCounter()).getDistance();
+            this.setTotalTravelTime(this.getTotalTravelTime() + this.getCurrentTravelTime());
             this.counter++; //counter keeps track of node index in path array list
             this.createTravelTime();
         }

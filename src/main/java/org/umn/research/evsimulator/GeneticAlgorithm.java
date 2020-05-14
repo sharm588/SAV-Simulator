@@ -5,19 +5,27 @@ import ilog.concert.IloException;
 import java.io.IOException;
 import java.util.*;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+@Data
+@EqualsAndHashCode
+
 public class GeneticAlgorithm {
 
     ArrayList<Organism> population = new ArrayList<>();
     ArrayList<Organism> sortedList = new ArrayList<>();
-    int generations = 10;
-    int populationSize = 1;
+    int generations = 100;
+    int populationSize = 100;
     int size = 0;
-    float mutate = 0;
+    double mutate = 0.00;
+    double mutateValue = 0.015f;
     double bestPercent = 0.1; //take top 10% of fittest organisms
-    double firstTerm = 0.05;
+    double firstTerm = 0.0075;
     double arithmeticFactor = 0;
     Random r = new Random();
     double probabilityValue = 0;
+    double avgPopulationWaitTime = 0;
 
     public void calculateArithmeticFactor() throws IloException, IOException
     {
@@ -73,11 +81,11 @@ public class GeneticAlgorithm {
             //size = population.size() - bestNumber; //set size to population - bestNumber since we are not considering best few
             //System.out.println("size: " + (size + 2)); //print original population size
 
-            for (int j = 0; j < populationSize; j++) { //loop through population (minus first two)
-
+            for (int j = 0; j < populationSize; j++) { //loop through population
+                avgPopulationWaitTime += population.get(j).waitTime;
                 mutate = r.nextFloat();
 
-                if (mutate > 0.05f) { //mutate 5% of the time
+                if (mutate > mutateValue) { //mutate mutateValue% of the time
 
 
                     int numberofValues = assignParent();
@@ -112,7 +120,9 @@ public class GeneticAlgorithm {
             }
 
             Collections.sort(population);   //sort current population from lowest to highest waiting time
+            avgPopulationWaitTime /= population.size();
             System.out.println(population.get(0).waitTime); //print best waiting time
+            avgPopulationWaitTime = 0;
 
             for (int x = 0; x < bestNumber; x++) { //add best organisms from this generation to next generation
                 nextGeneration.add(bestOrganisms.get(x));
