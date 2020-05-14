@@ -63,4 +63,4 @@ Ensure the following are installed on your computer
         
     4. Click the 'Apply' button then 'Ok'
 
-4.) Run the simulation by clicking the green play button in the top right hand corner!
+3.) Run the simulation by clicking the green play button in the top right hand corner!
