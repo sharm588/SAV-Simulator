@@ -11,16 +11,16 @@ public class Application {
 
     public static void main(String [] args) throws IloException, IOException
     {
-        /*double ratio = 1.0/6;
-        double scale = 0.7;
+        double ratio = 1.0/6;
+        double scale = 5.0;
         int size = 10;
         for (int i = 0; i < 10; i++) {
             double percent = scale * 100;
             System.out.println("Fleet Size: " + size);
             runSimulation(5.966902378318867, 7.6254545181893942, scale, size);
             size += 5;
-        }*/
-        for (int i = 0; i < 1; i++) {
+        }
+        /*for (int i = 0; i < 1; i++) {
 
             GeneticAlgorithm alg = new GeneticAlgorithm();
 
@@ -36,12 +36,12 @@ public class Application {
 
             System.out.println("Best Beta: " + alg.population.get(0).randomBeta + " Best Alpha: " + alg.population.get(0).randomAlpha);
             System.out.println();
-        }
+        }*/
 
 
     }
 
-    public static double runSimulation(double betaVal, double alphaVal, boolean child) throws IloException, IOException {
+    public static double runSimulation(double betaVal, double alphaVal, boolean child) throws IloException, IOException { // constructor for genetic algorithm
         Network network = Network.createNetwork();
         double waitTime = 0;
         int fleetSize = 25;
@@ -65,7 +65,7 @@ public class Application {
         return waitTime;
     }
 
-    public static double runSimulation(double betaVal, double alphaVal, double scale, double ratio) throws IloException, IOException {
+    public static double runSimulation(double betaVal, double alphaVal, double scale, double ratio) throws IloException, IOException { // constructor for specific fleet to passenger ratio
         Network network = Network.createNetwork(scale);
         int time = 7200;
         double waitTime = 0;
@@ -96,23 +96,32 @@ public class Application {
         return waitTime;
     }
 
-    public static double runSimulation(double betaVal, double alphaVal, double scale, int size) throws IloException, IOException {
-        Network network = Network.createNetwork(scale);
+    public static void runSimulation(double betaVal, double alphaVal, double scale, int size) throws IloException, IOException { // constructor for specific fleet size
+
         int time = 7200;
         double waitTime = 0;
-        int fleetSize = size;
-        createFleet(fleetSize, network);
-
-        if (!writeToFile) waitTime = network.simulate(time, betaVal, alphaVal, false);
-        else waitTime = network.simulate(7200, betaVal, alphaVal, true);
-
         double sumOfInVehicleSeconds = 0;
-        for (Vehicle vehicle : network.getVehicleList()) {
-            sumOfInVehicleSeconds += vehicle.getInVehicleTravelTime();
+        double totalNumberOfPassengers = 0;
+        int fleetSize = size;
+
+        for (int i = 0; i < 10; i++) {
+
+            Network network = Network.createNetwork(scale);
+            createFleet(fleetSize, network);
+
+            if (!writeToFile) waitTime = network.simulate(time, betaVal, alphaVal, false);
+            else waitTime = network.simulate(7200, betaVal, alphaVal, true);
+
+            for (Vehicle vehicle : network.getVehicleList()) {
+                sumOfInVehicleSeconds += vehicle.getInVehicleTravelTime();
+            }
+            totalNumberOfPassengers += network.getTotalNumberOfPassengers();
+            scale += 5.0;
         }
+
+
         System.out.println("Average Wait Time: " + waitTime);
-        System.out.println("Average in-vehicle travel time: " + (sumOfInVehicleSeconds / network.getTotalNumberOfPassengers()));
-        return waitTime;
+        System.out.println("Average in-vehicle travel time: " + (sumOfInVehicleSeconds / totalNumberOfPassengers));
     }
 
     private static void createFleet (int size, Network network) {
