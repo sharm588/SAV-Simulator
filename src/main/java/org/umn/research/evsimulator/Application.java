@@ -12,12 +12,12 @@ public class Application {
     public static void main(String [] args) throws IloException, IOException
     {
         double ratio = 1.0/6;
-        double scale = 5.0;
+        double scale = 1.0;
         int size = 10;
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 13; i++) {
             double percent = scale * 100;
-            System.out.println("Fleet Size: " + size);
-            runSimulation(5.966902378318867, 7.6254545181893942, scale, size);
+            System.out.println("Fleet size: " + size);
+            runSimulation(5.539512878, 5.254875176, scale, size);
             size += 5;
         }
         /*for (int i = 0; i < 1; i++) {
@@ -65,35 +65,40 @@ public class Application {
         return waitTime;
     }
 
-    public static double runSimulation(double betaVal, double alphaVal, double scale, double ratio) throws IloException, IOException { // constructor for specific fleet to passenger ratio
-        Network network = Network.createNetwork(scale);
-        int time = 7200;
+    public static void runSimulation(double betaVal, double alphaVal, double scale, double ratio) throws IloException, IOException { // constructor for specific fleet to passenger ratio
         double waitTime = 0;
-        int numberOfPassengers = network.getPassengers().size();
-        for (Passenger passenger : network.getPassengers()) {   //number of passengers is approximately the number of people picked up + the rest on the waitinglist
-            if (passenger.getDeparturetime() > time) {
-                numberOfPassengers--;
-            }
-        }
-        int fleetSize = (int) (ratio * numberOfPassengers);
-        createFleet(fleetSize, network);
-
-        if (!writeToFile) waitTime = network.simulate(time, betaVal, alphaVal, false);
-        else waitTime = network.simulate(7200, betaVal, alphaVal, true);
-
         double sumOfInVehicleSeconds = 0;
         double sumOfTotalTravelSeconds = 0;
         double sumOfTotalDistanceTravelled = 0;
-        for (Vehicle vehicle : network.getVehicleList()) {
-            sumOfInVehicleSeconds += vehicle.getInVehicleTravelTime();
-            sumOfTotalTravelSeconds += vehicle.getTotalTravelTime();
-            sumOfTotalDistanceTravelled += vehicle.getTotalDistanceTravelled();
+        double totalPassengers = 0;
+        for (int i = 0; i < 10; i++) {
+            Network network = Network.createNetwork(scale);
+            int time = 7200;
+
+            int numberOfPassengers = network.getPassengers().size();
+            for (Passenger passenger : network.getPassengers()) {   //number of passengers is approximately the number of people picked up + the rest on the waitinglist
+                if (passenger.getDeparturetime() > time) {
+                    numberOfPassengers--;
+                }
+            }
+            int fleetSize = (int) (ratio * numberOfPassengers);
+            createFleet(fleetSize, network);
+
+            if (!writeToFile) waitTime = network.simulate(time, betaVal, alphaVal, false);
+            else waitTime = network.simulate(7200, betaVal, alphaVal, true);
+
+            for (Vehicle vehicle : network.getVehicleList()) {
+                sumOfInVehicleSeconds += vehicle.getInVehicleTravelTime();
+                sumOfTotalTravelSeconds += vehicle.getTotalTravelTime();
+                sumOfTotalDistanceTravelled += vehicle.getTotalDistanceTravelled();
+            }
+            totalPassengers += network.getTotalNumberOfPassengers();
         }
+
         System.out.println("Average Wait Time: " + waitTime);
-        System.out.println("Average in-vehicle travel time: " + (sumOfInVehicleSeconds / network.getTotalNumberOfPassengers()));
-        System.out.println("Average total vehicle travel time: " + (sumOfTotalTravelSeconds / network.getTotalNumberOfPassengers()));
+        System.out.println("Average in-vehicle travel time: " + (sumOfInVehicleSeconds / totalPassengers));
+        System.out.println("Average total vehicle travel time: " + (sumOfTotalTravelSeconds / totalPassengers));
         System.out.println("Total miles travelled in fleet: " + sumOfTotalDistanceTravelled);
-        return waitTime;
     }
 
     public static void runSimulation(double betaVal, double alphaVal, double scale, int size) throws IloException, IOException { // constructor for specific fleet size
