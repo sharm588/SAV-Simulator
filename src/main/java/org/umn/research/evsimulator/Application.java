@@ -16,9 +16,16 @@ public class Application {
         int size = 10;
         for (int i = 0; i < 13; i++) {
             double percent = scale * 100;
-            System.out.println("Fleet size: " + size);
+            System.out.println("Fleet Size: " + size);
             runSimulation(5.539512878, 5.254875176, scale, size);
             size += 5;
+            /*runSimulation(5.539512878, 5.254875176, scale, ratio);
+
+            if (scale != 1.0) {
+                scale += 10.0;
+            } else {
+                scale += 9.0;
+            }*/
         }
         /*for (int i = 0; i < 1; i++) {
 
@@ -66,12 +73,14 @@ public class Application {
     }
 
     public static void runSimulation(double betaVal, double alphaVal, double scale, double ratio) throws IloException, IOException { // constructor for specific fleet to passenger ratio
-        double waitTime = 0;
+        double[] waitTime = new double[10];
+        double sumOfWaitTimes = 0;
         double sumOfInVehicleSeconds = 0;
         double sumOfTotalTravelSeconds = 0;
         double sumOfTotalDistanceTravelled = 0;
         double totalPassengers = 0;
-        for (int i = 0; i < 10; i++) {
+        double standardDev = 0;
+        for (int i = 0; i < waitTime.length; i++) {
             Network network = Network.createNetwork(scale);
             int time = 7200;
 
@@ -84,9 +93,10 @@ public class Application {
             int fleetSize = (int) (ratio * numberOfPassengers);
             createFleet(fleetSize, network);
 
-            if (!writeToFile) waitTime = network.simulate(time, betaVal, alphaVal, false);
-            else waitTime = network.simulate(7200, betaVal, alphaVal, true);
+            if (!writeToFile) waitTime[i] = network.simulate(time, betaVal, alphaVal, false);
+            else waitTime[i] = network.simulate(7200, betaVal, alphaVal, true);
 
+            sumOfWaitTimes += waitTime[i];
             for (Vehicle vehicle : network.getVehicleList()) {
                 sumOfInVehicleSeconds += vehicle.getInVehicleTravelTime();
                 sumOfTotalTravelSeconds += vehicle.getTotalTravelTime();
@@ -95,38 +105,49 @@ public class Application {
             totalPassengers += network.getTotalNumberOfPassengers();
         }
 
-        System.out.println("Average Wait Time: " + waitTime);
-        System.out.println("Average in-vehicle travel time: " + (sumOfInVehicleSeconds / totalPassengers));
-        System.out.println("Average total vehicle travel time: " + (sumOfTotalTravelSeconds / totalPassengers));
-        System.out.println("Total miles travelled in fleet: " + sumOfTotalDistanceTravelled);
+        double avgWaitTime = sumOfWaitTimes / waitTime.length;
+
+        for (int i = 0; i < waitTime.length; i++) {
+            standardDev += Math.pow(waitTime[i] - avgWaitTime, 2);
+        }
+        standardDev = Math.sqrt(standardDev / waitTime.length);
+        //System.out.println("Average Wait Time | Average in-vehicle travel time | Average total vehicle travel time | Total miles travelled in fleet | Standard deviation" + waitTime);
+        System.out.println(avgWaitTime + " " + (sumOfInVehicleSeconds / totalPassengers) + " " + (sumOfTotalTravelSeconds / totalPassengers) + " " + sumOfTotalDistanceTravelled + " " + standardDev);
     }
 
     public static void runSimulation(double betaVal, double alphaVal, double scale, int size) throws IloException, IOException { // constructor for specific fleet size
 
         int time = 7200;
-        double waitTime = 0;
+        double[] waitTime = new double[10];
+        double sumOfWaitTimes = 0;
+        double sumOfPassengersNotPicked = 0;
         double sumOfInVehicleSeconds = 0;
         double totalNumberOfPassengers = 0;
         int fleetSize = size;
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < waitTime.length; i++) {
 
             Network network = Network.createNetwork(scale);
             createFleet(fleetSize, network);
 
-            if (!writeToFile) waitTime = network.simulate(time, betaVal, alphaVal, false);
-            else waitTime = network.simulate(7200, betaVal, alphaVal, true);
+            if (!writeToFile) waitTime[i] = network.simulate(time, betaVal, alphaVal, false);
+            else waitTime[i] = network.simulate(7200, betaVal, alphaVal, true);
 
             for (Vehicle vehicle : network.getVehicleList()) {
                 sumOfInVehicleSeconds += vehicle.getInVehicleTravelTime();
             }
             totalNumberOfPassengers += network.getTotalNumberOfPassengers();
-            scale += 5.0;
+            sumOfWaitTimes += waitTime[i];
+            sumOfPassengersNotPicked += network.getWaitingList().size();
         }
 
-
-        System.out.println("Average Wait Time: " + waitTime);
+        double avgWaitTime = sumOfWaitTimes / waitTime.length;
+        double avgNumberPicked = totalNumberOfPassengers / waitTime.length;
+        double avgNumberNotPicked = sumOfPassengersNotPicked / waitTime.length;
+        System.out.println("Average Wait Time: " + avgWaitTime);
         System.out.println("Average in-vehicle travel time: " + (sumOfInVehicleSeconds / totalNumberOfPassengers));
+        System.out.println("Average # of Passengers Picked: " + avgNumberPicked);
+        System.out.println("Average # of Passengers Not Picked: " + avgNumberNotPicked);
     }
 
     private static void createFleet (int size, Network network) {
