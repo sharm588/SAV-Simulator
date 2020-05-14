@@ -279,7 +279,7 @@ public class Network {
                 } else {
                     vehicle.setCounter(0); //reset counter (keeps track of node index in path array list)
                     if (vehicle.isAssignedSameNode()) {
-                        if (writerOn) simulationWriter.write("Vehicle #" + vehicle.getId() + " is stationary at empty node [assigned to same empty node " + vehicle.getNode() + "\n");
+                        if (writerOn) simulationWriter.write("Vehicle #" + vehicle.getId() + " is stationary at empty node [assigned to same empty node " + vehicle.getNode() + "]\n");
                         vehicle.setAssignedSameNode(false);
                     }
                     else if (writerOn) simulationWriter.write("Vehicle #" + vehicle.getId() + " is stationary at empty node " + vehicle.getNode() + "\n");

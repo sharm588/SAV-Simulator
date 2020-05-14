@@ -11,17 +11,21 @@ public class Application {
 
     public static void main(String [] args) throws IloException, IOException
     {
-        double ratio = 1.0/6;
+        /*double ratio = 1.0/6;
         double scale = 0.7;
-        for (int i = 0; i < 13; i++) {
+        int size = 10;
+        for (int i = 0; i < 10; i++) {
             double percent = scale * 100;
-            System.out.println("Demand Scale: " + percent + "%");
-            runSimulation(5.966902378318867, 7.6254545181893942, scale, ratio);
-            scale += 0.05;
-        }
-        /*for (int i = 0; i < 1; i++) {
+            System.out.println("Fleet Size: " + size);
+            runSimulation(5.966902378318867, 7.6254545181893942, scale, size);
+            size += 5;
+        }*/
+        for (int i = 0; i < 1; i++) {
 
             GeneticAlgorithm alg = new GeneticAlgorithm();
+
+            alg.setMutateValue(0.025);
+            alg.setFirstTerm(0.008);
 
             if (alg.populationSize > 10) {
                 writeToFile = false;
@@ -29,8 +33,10 @@ public class Application {
             alg.createPopulation();
             alg.calculateArithmeticFactor();
             alg.survivalOfFittest();
+
+            System.out.println("Best Beta: " + alg.population.get(0).randomBeta + " Best Alpha: " + alg.population.get(0).randomAlpha);
             System.out.println();
-        }*/
+        }
 
 
     }
@@ -84,9 +90,28 @@ public class Application {
             sumOfTotalDistanceTravelled += vehicle.getTotalDistanceTravelled();
         }
         System.out.println("Average Wait Time: " + waitTime);
-        System.out.println("Average in-vehicle travel time: " + (sumOfInVehicleSeconds / network.getVehicleList().size()));
-        System.out.println("Average total vehicle travel time: " + (sumOfTotalTravelSeconds / network.getVehicleList().size()));
+        System.out.println("Average in-vehicle travel time: " + (sumOfInVehicleSeconds / network.getTotalNumberOfPassengers()));
+        System.out.println("Average total vehicle travel time: " + (sumOfTotalTravelSeconds / network.getTotalNumberOfPassengers()));
         System.out.println("Total miles travelled in fleet: " + sumOfTotalDistanceTravelled);
+        return waitTime;
+    }
+
+    public static double runSimulation(double betaVal, double alphaVal, double scale, int size) throws IloException, IOException {
+        Network network = Network.createNetwork(scale);
+        int time = 7200;
+        double waitTime = 0;
+        int fleetSize = size;
+        createFleet(fleetSize, network);
+
+        if (!writeToFile) waitTime = network.simulate(time, betaVal, alphaVal, false);
+        else waitTime = network.simulate(7200, betaVal, alphaVal, true);
+
+        double sumOfInVehicleSeconds = 0;
+        for (Vehicle vehicle : network.getVehicleList()) {
+            sumOfInVehicleSeconds += vehicle.getInVehicleTravelTime();
+        }
+        System.out.println("Average Wait Time: " + waitTime);
+        System.out.println("Average in-vehicle travel time: " + (sumOfInVehicleSeconds / network.getTotalNumberOfPassengers()));
         return waitTime;
     }
 
