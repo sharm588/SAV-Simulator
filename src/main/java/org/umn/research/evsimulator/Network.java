@@ -43,6 +43,7 @@ public class Network {
     public FileWriter simulationWriter;
     private int initialThreshold = 300;
     private List<Double> zValuesList = new ArrayList<>();
+    private int incrementer = 0;
 
 
     public static Network createNetwork() throws IOException{
@@ -178,7 +179,7 @@ public class Network {
                         vehicle.setNotMoving(false); //vehicle should be ready to move at this point, so notMoving is false
                     }
 
-                    if (vehicle.passenger == null) {    // double check vehicle has an assigned passenger
+                    if (vehicle.passenger == null) {    // error check vehicle has an assigned passenger
                         System.out.println("Time: " + i);
                         System.out.println("Vehicle #" + vehicle.getId() + " passenger is null");
                         simulationWriter.close();
@@ -214,6 +215,7 @@ public class Network {
                                 vehicle.setAlreadyPrintedDropOff(true);
                             }
                             vehicle.numberDroppedOff++;
+                            vehicle.getPassenger().setDroppedOff(true);
 
                         }
                         availableVehiclesList.add(vehicle);
@@ -227,6 +229,7 @@ public class Network {
 
                         if (writerOn) simulationWriter.write("Vehicle #" + vehicle.getId() + " is heading towards passenger\n");
                         sumOfWaitTimes += 30;
+                        incrementer += 1;
 
                     } else if (vehicle.isPickedUp() && !vehicle.isAlreadyBeginningRouteToDestination()) { // otherwise if vehicle has picked up passenger and not already printed info
 
@@ -320,6 +323,7 @@ public class Network {
             simulationWriter.write("Average passenger wait time: " + avgWaitTime + " seconds\n");
             simulationWriter.close();
         }
+        System.out.println(incrementer);
         return avgWaitTime;
     }
 

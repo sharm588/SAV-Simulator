@@ -14,7 +14,15 @@ public class Application {
         double ratio = 1.0/6;
         double scale = 1.0;
         int size = 10;
-        for (int i = 0; i < 13; i++) {
+
+        Network network = Network.createNetwork();
+        double waitTime = 0;
+        int fleetSize = 50;
+        createFleet(fleetSize, network);
+
+        waitTime = network.simulate(7200, 5.539512878, 5.254875176, true);
+
+        /*for (int i = 0; i < 13; i++) {
             double percent = scale * 100;
             System.out.println("Fleet Size: " + size);
             runSimulation(5.539512878, 5.254875176, scale, size);
@@ -26,7 +34,7 @@ public class Application {
             } else {
                 scale += 9.0;
             }*/
-        }
+        //}
         /*for (int i = 0; i < 1; i++) {
 
             GeneticAlgorithm alg = new GeneticAlgorithm();
@@ -120,6 +128,7 @@ public class Application {
         int time = 7200;
         double[] waitTime = new double[10];
         double sumOfWaitTimes = 0;
+        double waitTimeSum = 0;
         double sumOfPassengersNotPicked = 0;
         double sumOfInVehicleSeconds = 0;
         double totalNumberOfPassengers = 0;
@@ -138,6 +147,7 @@ public class Application {
             }
             totalNumberOfPassengers += network.getTotalNumberOfPassengers();
             sumOfWaitTimes += waitTime[i];
+            waitTimeSum += network.getSumOfWaitTimes();
             sumOfPassengersNotPicked += network.getWaitingList().size();
         }
 
@@ -148,6 +158,7 @@ public class Application {
         System.out.println("Average in-vehicle travel time: " + (sumOfInVehicleSeconds / totalNumberOfPassengers));
         System.out.println("Average # of Passengers Picked: " + avgNumberPicked);
         System.out.println("Average # of Passengers Not Picked: " + avgNumberNotPicked);
+        System.out.println("Sum of Wait Times " + (waitTimeSum / waitTime.length));
     }
 
     private static void createFleet (int size, Network network) {
