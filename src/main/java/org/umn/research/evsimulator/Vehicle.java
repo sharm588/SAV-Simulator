@@ -37,6 +37,7 @@ public class Vehicle {
     public double totalTravelTime = 0.0;
     public double inVehicleTravelTime = 0.0; // travel time with passenger in vehicle
     public int numberDroppedOff = 0;
+    public boolean used = false; //checks if vehicle has been used
 
     private int id;
 
