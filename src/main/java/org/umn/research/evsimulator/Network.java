@@ -107,6 +107,18 @@ public class Network {
             simulationWriter.write("\n");
         }
 
+        /*for (Vehicle vehicle : vehicleList) {
+            System.out.println("Vehicle " + vehicle.getId());
+            for (Passenger p : waitingList) {
+                double timeToPassenger = 0;
+                vehicle.createPath(vehicle.getLoc(), p.getOrigin());
+                for (int y = 0; y < vehicle.getPath().size(); y++) {
+                    timeToPassenger += vehicle.getPath().get(y).getTraveltime(); //calculate total travel time from vehicle location to passenger origin
+                }
+                System.out.println("Time to passenger " + p.getId() + ": " + timeToPassenger);
+            }
+
+        }*/
 
         IloCplex c = new IloCplex();
 
@@ -390,7 +402,7 @@ public class Network {
                 numberOfUsedVehicles++;
             }
         }
-        System.out.println("Avg travel time: " + sumOfTravelTimes / totalNumberOfPassengers);
+        //System.out.println("Avg travel time: " + sumOfTravelTimes / totalNumberOfPassengers);
         return avgWaitTime;
     }
 
@@ -515,7 +527,7 @@ public class Network {
                         int index = waitingList.indexOf(passenger);
 
                         for (int p = index; p < xValues.length; p += waitingList.size()) {  //if passenger is on designated route, add its xValues value to summation
-                            summation.addTerm(beta * 1, xValues[p]); // -1 is used since terms are being subtracted
+                            summation.addTerm(beta * 1 * 20, xValues[p]); // -1 is used since terms are being subtracted
                         }
 
                     }
@@ -532,7 +544,7 @@ public class Network {
                 for (int y = 0; y < v.getPath().size(); y++) {
                     travelTimeCombo += v.getPath().get(y).getTraveltime(); //calculate total travel time from vehicle location to passenger origin
                 }
-                summation.addTerm(travelTimexValues[iterator], beta * travelTimeCombo * -1); // -1 is used since terms are being subtracted
+                summation.addTerm(xValues[iterator], beta * travelTimeCombo * -1 * 0.01); // -1 is used since terms are being subtracted
                 iterator++;
             }
             travelTimeCombo = 0;

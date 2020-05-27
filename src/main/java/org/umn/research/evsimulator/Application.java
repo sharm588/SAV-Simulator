@@ -13,17 +13,17 @@ public class Application {
     {
         double ratio = 1.0/6;
         double scale = 1.0;
-        int size = 30;
+        int size = 40;
 
         Network network = Network.createNetwork();
         double waitTime = 0;
         int fleetSize = 60;
         createFleet(fleetSize, network);
 
-        waitTime = network.simulate(7200, 5.539512878, 5.254875176, true);
-        System.out.println("Avg wait time: " + network.avgWaitTime);
+       // waitTime = network.simulate(7200, 5.539512878, 5.254875176, true);
+       // System.out.println("Avg wait time: " + network.avgWaitTime);
 
-      /*  while (size != 60) {
+        while (size != 100) {
             double percent = scale * 100;
             System.out.println("Fleet Size: " + size);
             runSimulation(5.539512878, 5.254875176, scale, size);
@@ -35,7 +35,7 @@ public class Application {
             } else {
                 scale += 9.0;
             }*/
-        //}
+        }
         /*for (int i = 0; i < 1; i++) {
 
             GeneticAlgorithm alg = new GeneticAlgorithm();
