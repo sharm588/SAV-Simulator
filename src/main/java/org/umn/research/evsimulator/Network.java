@@ -396,7 +396,7 @@ public class Network {
             System.exit(0);
         }*/
         //System.out.println("# of passengers: " + totalNumberOfPassengers + " alpha: " + alpha + " beta: " + beta);
-        //if (totalNumberOfPassengers >= 120) validSim++;
+        //if (totalNumberOfPassengers >= 130) validSim++;
         //System.out.println(validSim);
         return avgWaitTime;
     }

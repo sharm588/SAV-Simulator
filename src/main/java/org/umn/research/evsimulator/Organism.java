@@ -26,10 +26,14 @@ public class Organism implements Comparable<Organism> {
 
     //constructor for creating children
     public Organism (double beta, double alpha) throws IloException, IOException {
+        randomBeta = beta;
+        randomAlpha = alpha;
         do {
-            randomBeta = beta;
-            randomAlpha = alpha;
             waitTime = runSimulation(randomBeta, randomAlpha, true);
+            if (waitTime == -1) {
+                randomBeta = high * r.nextDouble();
+                randomAlpha = high * r.nextDouble();
+            }
         } while (waitTime == -1);
     }
 

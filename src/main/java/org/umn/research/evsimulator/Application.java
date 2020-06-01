@@ -77,7 +77,7 @@ public class Application {
         if (child || !writeToFile) waitTime = network.simulate(7200, betaVal, alphaVal, false);
         else if (writeToFile) waitTime = network.simulate(7200, betaVal, alphaVal, true);
 
-        if (network.getTotalNumberOfPassengers() < 120) { // for a fleet size of 25, at least 120 passengers must be picked to use alpha/beta values
+        if (network.getTotalNumberOfPassengers() < 130) { // for a fleet size of 25, at least 130 passengers must be picked to use alpha/beta values
             waitTime = -1;
         }
 
