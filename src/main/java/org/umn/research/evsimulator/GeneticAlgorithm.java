@@ -38,7 +38,7 @@ public class GeneticAlgorithm {
             Organism organism = new Organism();
             population.add(organism);
         }
-        System.out.println("done");
+        //System.out.println("done");
     }
 
     public int assignParent() throws IloException, IOException
@@ -138,7 +138,7 @@ public class GeneticAlgorithm {
             nextGeneration.clear();
 
         }
-        System.out.println("done1");
+        //System.out.println("done1");
 
     }
 
