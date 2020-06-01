@@ -13,17 +13,17 @@ public class Application {
     {
         double ratio = 1.0/6;
         double scale = 1.0;
-        int size = 40;
+        int size = 20;
 
         Network network = Network.createNetwork();
         double waitTime = 0;
-        int fleetSize = 60;
+        int fleetSize = 25;
         createFleet(fleetSize, network);
 
-       // waitTime = network.simulate(7200, 5.539512878, 5.254875176, true);
-       // System.out.println("Avg wait time: " + network.avgWaitTime);
+        //waitTime = network.simulate(7200, 5.539512878, 5.254875176, true);
+        //System.out.println("Avg wait time: " + network.avgWaitTime);
 
-        while (size != 100) {
+        /*while (size != 45) {
             double percent = scale * 100;
             System.out.println("Fleet Size: " + size);
             runSimulation(5.539512878, 5.254875176, scale, size);
@@ -35,13 +35,24 @@ public class Application {
             } else {
                 scale += 9.0;
             }*/
-        }
-        /*for (int i = 0; i < 1; i++) {
+        //}
+        for (int i = 0; i < 3; i++) {
 
             GeneticAlgorithm alg = new GeneticAlgorithm();
+            if (i == 0) {
+                alg.setMutateValue(0.025);
+                alg.setFirstTerm(0.007);
+            }
 
-            alg.setMutateValue(0.025);
-            alg.setFirstTerm(0.008);
+            if (i == 1) {
+                alg.setMutateValue(0.025);
+                alg.setFirstTerm(0.008);
+            }
+
+            if (i == 2) {
+                alg.setMutateValue(0.025);
+                alg.setFirstTerm(0.009);
+            }
 
             if (alg.populationSize > 10) {
                 writeToFile = false;
@@ -52,7 +63,7 @@ public class Application {
 
             System.out.println("Best Beta: " + alg.population.get(0).randomBeta + " Best Alpha: " + alg.population.get(0).randomAlpha);
             System.out.println();
-        }*/
+        }
 
 
     }
@@ -65,6 +76,10 @@ public class Application {
 
         if (child || !writeToFile) waitTime = network.simulate(7200, betaVal, alphaVal, false);
         else if (writeToFile) waitTime = network.simulate(7200, betaVal, alphaVal, true);
+
+        if (network.getTotalNumberOfPassengers() < 120) { // for a fleet size of 25, at least 120 passengers must be picked to use alpha/beta values
+            waitTime = -1;
+        }
 
         /*System.out.println("Waiting List after simulation (" + waitingList.size() + ")");
         System.out.println("-----------------------------");

@@ -17,16 +17,20 @@ public class Organism implements Comparable<Organism> {
 
     //constructor for creating initial population
     public Organism () throws IloException, IOException {
-        randomBeta = high * r.nextDouble();
-        randomAlpha = high * r.nextDouble();
-        waitTime = runSimulation(randomBeta, randomAlpha, false);
+        do {
+            randomBeta = high * r.nextDouble();
+            randomAlpha = high * r.nextDouble();
+            waitTime = runSimulation(randomBeta, randomAlpha, false);
+        } while (waitTime == -1);
     }
 
     //constructor for creating children
     public Organism (double beta, double alpha) throws IloException, IOException {
-        randomBeta = beta;
-        randomAlpha = alpha;
-        waitTime = runSimulation(randomBeta, randomAlpha, true);
+        do {
+            randomBeta = beta;
+            randomAlpha = alpha;
+            waitTime = runSimulation(randomBeta, randomAlpha, true);
+        } while (waitTime == -1);
     }
 
     public int compareTo(Organism other) {

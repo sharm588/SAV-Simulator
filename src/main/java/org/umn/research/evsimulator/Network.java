@@ -49,6 +49,7 @@ public class Network {
     public int numberOfUsedVehicles = 0;
     public int sumOfTravelTimes = 0;
     private ArrayList<Vehicle> justAssignedVehicles = new ArrayList<>();
+    private static int validSim = 0;
 
 
     public static Network createNetwork() throws IOException{
@@ -368,21 +369,6 @@ public class Network {
                 simulationWriter.write("\n");
             }
 
-            if (waitingList.isEmpty()) {
-
-                //if (writerOn) simulationWriter.write("(!) Waiting list is empty\n");
-
-                boolean done = true;
-                //for (Vehicle vehicle : vehicleList) {
-                if (availableVehiclesList.size() != vehicleList.size()) {
-                    done = false;
-                }
-               // }
-                if (done) {
-                    break;
-                }
-            }
-
             endTime = i;
             if (writerOn) simulationWriter.write("\n");
         }
@@ -402,7 +388,16 @@ public class Network {
                 numberOfUsedVehicles++;
             }
         }
-        //System.out.println("Avg travel time: " + sumOfTravelTimes / totalNumberOfPassengers);
+       // System.out.println("Avg travel time: " + sumOfTravelTimes / totalNumberOfPassengers);
+      //  System.out.println(endTime);
+       /* if (totalNumberOfPassengers == 0) {
+            simulationWriter.close();
+            System.out.println("No passengers picked - alpha: " + alpha + " beta: " + beta);
+            System.exit(0);
+        }*/
+        //System.out.println("# of passengers: " + totalNumberOfPassengers + " alpha: " + alpha + " beta: " + beta);
+        //if (totalNumberOfPassengers >= 120) validSim++;
+        //System.out.println(validSim);
         return avgWaitTime;
     }
 

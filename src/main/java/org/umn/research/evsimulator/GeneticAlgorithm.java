@@ -38,6 +38,7 @@ public class GeneticAlgorithm {
             Organism organism = new Organism();
             population.add(organism);
         }
+        System.out.println("done");
     }
 
     public int assignParent() throws IloException, IOException
@@ -89,7 +90,7 @@ public class GeneticAlgorithm {
 
 
                     int numberofValues = assignParent();
-                    int parent1_index =  populationSize - (numberofValues - 1) - 1;  //assign parent
+                    int parent1_index = populationSize - (numberofValues - 1) - 1;  //assign parent
                     double parent1_beta = population.get(parent1_index).randomBeta; //first parent beta value
                     double parent1_alpha = population.get(parent1_index).randomAlpha;
 
@@ -98,7 +99,7 @@ public class GeneticAlgorithm {
                     int parent2_index = populationSize - (numberofValues - 1) - 1;  //assign parent
 
                     if (parent2_index == parent1_index) { //make sure parents aren't the same
-                        if(parent2_index == populationSize-1) parent2_index--;
+                        if (parent2_index == populationSize - 1) parent2_index--;
                         parent2_index++;
                     }
                     double parent2_beta = population.get(parent2_index).randomBeta;   //second parent beta value
@@ -119,6 +120,7 @@ public class GeneticAlgorithm {
 
             }
 
+            
             Collections.sort(population);   //sort current population from lowest to highest waiting time
             avgPopulationWaitTime /= population.size();
             System.out.println(population.get(0).waitTime); //print best waiting time
@@ -136,6 +138,7 @@ public class GeneticAlgorithm {
             nextGeneration.clear();
 
         }
+        System.out.println("done1");
 
     }
 
