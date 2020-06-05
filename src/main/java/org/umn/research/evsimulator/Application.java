@@ -13,46 +13,43 @@ public class Application {
     {
         double ratio = 1.0/6;
         double scale = 1.0;
-        int size = 20;
+        int size = 50;
 
-        Network network = Network.createNetwork();
-        double waitTime = 0;
-        int fleetSize = 25;
-        createFleet(fleetSize, network);
+       /* double betaVals[] = new double[576];
+        double alphaVals[] = new double[24];
 
-        //waitTime = network.simulate(7200, 5.539512878, 5.254875176, true);
+        for (int i = 0; i < betaVals.length; i++) {
+            betaVals[i] = 4.339385779264273;
+        }
+
+        for (int i = 0; i < alphaVals.length; i++) {
+            alphaVals[i] = 5.311728677228018;
+        }
+
+
+        runSimulation(betaVals, alphaVals, scale, size);*/
+        //waitTime = network.simulate(7200, 4.339385779264273, 5.311728677228018, true);
         //System.out.println("Avg wait time: " + network.avgWaitTime);
 
-        /*while (size != 45) {
+        /*while (size != 60) {
             double percent = scale * 100;
-            System.out.println("Fleet Size: " + size);
-            runSimulation(5.539512878, 5.254875176, scale, size);
-            size += 5;
-            /*runSimulation(5.539512878, 5.254875176, scale, ratio);
+            System.out.println("Scale: " + scale);
+            //runSimulation(4.339385779264273, 5.311728677228018, scale, size);
+            //size += 5;
+            runSimulation(4.339385779264273, 5.311728677228018, scale, ratio);
 
             if (scale != 1.0) {
                 scale += 10.0;
             } else {
                 scale += 9.0;
-            }*/
-        //}
-        for (int i = 0; i < 3; i++) {
+            }
+        }*/
+        for (int i = 0; i < 1; i++) {
 
             GeneticAlgorithm alg = new GeneticAlgorithm();
-            if (i == 0) {
-                alg.setMutateValue(0.025);
-                alg.setFirstTerm(0.007);
-            }
 
-            if (i == 1) {
-                alg.setMutateValue(0.025);
-                alg.setFirstTerm(0.008);
-            }
-
-            if (i == 2) {
-                alg.setMutateValue(0.025);
-                alg.setFirstTerm(0.009);
-            }
+            alg.setMutateValue(0.025);
+            alg.setFirstTerm(0.008);
 
             if (alg.populationSize > 10) {
                 writeToFile = false;
@@ -68,7 +65,7 @@ public class Application {
 
     }
 
-    public static double runSimulation(double betaVal, double alphaVal, boolean child) throws IloException, IOException { // constructor for genetic algorithm
+    public static double runSimulation(double betaVal[], double alphaVal[], boolean child) throws IloException, IOException { // constructor for genetic algorithm
         Network network = Network.createNetwork();
         double waitTime = 0;
         int fleetSize = 25;
@@ -96,7 +93,7 @@ public class Application {
         return waitTime;
     }
 
-    public static void runSimulation(double betaVal, double alphaVal, double scale, double ratio) throws IloException, IOException { // constructor for specific fleet to passenger ratio
+    public static void runSimulation(double betaVal[], double alphaVal[], double scale, double ratio) throws IloException, IOException { // constructor for specific fleet to passenger ratio
         double[] waitTime = new double[10];
         double sumOfWaitTimes = 0;
         double sumOfInVehicleSeconds = 0;
@@ -139,7 +136,7 @@ public class Application {
         System.out.println(avgWaitTime + " " + (sumOfInVehicleSeconds / totalPassengers) + " " + (sumOfTotalTravelSeconds / totalPassengers) + " " + sumOfTotalDistanceTravelled + " " + standardDev);
     }
 
-    public static void runSimulation(double betaVal, double alphaVal, double scale, int size) throws IloException, IOException { // constructor for specific fleet size
+    public static void runSimulation(double betaVal[], double alphaVal[], double scale, int size) throws IloException, IOException { // constructor for specific fleet size
 
         int time = 7200;
         double[] waitTime = new double[10];

@@ -38,8 +38,8 @@ public class Network {
     private int totalNumberOfPassengers = 0;
     private double sumOfWaitTimes = 0; //waiting time from when passenger is assigned to vehicle to when passenger is picked up
     private int originalWaitingListSize = 0;
-    private double beta = 1;
-    private double alpha = 1;
+    private double[] beta;
+    private double[] alpha;
     public double avgWaitTime;
     public FileWriter simulationWriter;
     private int initialThreshold = 300;
@@ -78,7 +78,7 @@ public class Network {
         return network;
     }
 
-    public double simulate(float time, double betaVal, double alphaVal, boolean writerOn) throws IloException, IOException {
+    public double simulate(float time, double betaVal[], double alphaVal[], boolean writerOn) throws IloException, IOException {
 
         if (writerOn) simulationWriter = new FileWriter(getFilePath("simulation_log.txt"), false);
         beta = betaVal; //initialize beta
@@ -521,8 +521,10 @@ public class Network {
                     if (passenger.getOrigin() == source && passenger.getDestination() == destination) {
                         int index = waitingList.indexOf(passenger);
 
+                        int betaIndex = matchPassengerRouteWithBetaIndex(passenger);
+
                         for (int p = index; p < xValues.length; p += waitingList.size()) {  //if passenger is on designated route, add its xValues value to summation
-                            summation.addTerm(beta * 1 * 20, xValues[p]); // -1 is used since terms are being subtracted
+                            summation.addTerm(beta[betaIndex] * 1 * 20, xValues[p]);
                         }
 
                     }
@@ -539,7 +541,8 @@ public class Network {
                 for (int y = 0; y < v.getPath().size(); y++) {
                     travelTimeCombo += v.getPath().get(y).getTraveltime(); //calculate total travel time from vehicle location to passenger origin
                 }
-                summation.addTerm(xValues[iterator], beta * travelTimeCombo * -1 * 0.01); // -1 is used since terms are being subtracted
+                int betaIndex = matchPassengerRouteWithBetaIndex(p);
+                summation.addTerm(xValues[iterator], beta[betaIndex] * travelTimeCombo * -1 * 0.01); // -1 is used since terms are being subtracted
                 iterator++;
             }
             travelTimeCombo = 0;
@@ -548,7 +551,7 @@ public class Network {
         i = 0;
         for (Vehicle vehicle : availableVehiclesList) { //objective: minimize preemptive vehicle relocation
             for (Node node : relocatableNodesList) {
-                summation.addTerm(alpha * 1, zValues[i]);
+                summation.addTerm(alpha[relocatableNodesList.indexOf(node)] * 1, zValues[i]);
                 i++;
             }
         }
@@ -1019,6 +1022,18 @@ public class Network {
             }
         }
         return location;
+    }
+
+    public int matchPassengerRouteWithBetaIndex (Passenger passenger) {
+
+        int originIndex = passenger.getOrigin().getId() % 1000 - 1; // mod 1000 to get individual ID, subtract one to get index
+        int destinationIndex = passenger.getDestination().getId() % 1000 - 1;
+
+        int index = originIndex * 24 + destinationIndex;
+
+        //System.out.println("Origin: " + passenger.getOrigin().getId() + " Destination: " + passenger.getDestination().getId() + " Index: " + index);
+
+        return index;
     }
 
     private void printVehiclePath (Vehicle vehicle) {
