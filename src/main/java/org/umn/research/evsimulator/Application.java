@@ -4,6 +4,7 @@ import ilog.concert.IloException;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Application {
 
@@ -58,7 +59,7 @@ public class Application {
             alg.calculateArithmeticFactor();
             alg.survivalOfFittest();
 
-            System.out.println("Best Beta: " + alg.population.get(0).randomBeta + " Best Alpha: " + alg.population.get(0).randomAlpha);
+            System.out.println("Best Beta: " + Arrays.toString(alg.population.get(0).betaValues) + " Best Alpha: " + Arrays.toString(alg.population.get(0).alphaValues));
             System.out.println();
         }
 
