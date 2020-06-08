@@ -27,7 +27,8 @@ public class Network {
     private List<Link> linksList = new ArrayList<>();
     private List<Vehicle> vehicleList = new ArrayList<>();
     private List<Zone> zoneList = new ArrayList<>();
-    public static List<Node> relocatableNodesList = new ArrayList<>();
+    private List<Node> relocatableNodesList = new ArrayList<>();
+    public static List<Node> mainNodesList = new ArrayList<>();
     private List<Zone> fakeZoneList = new ArrayList<>();
     private List<Passenger> waitingList = new ArrayList<>();
     private List<Vehicle>availableVehiclesList = new ArrayList<>();
@@ -808,6 +809,7 @@ public class Network {
                 if (temp.getType() == 1000) {
                     zoneList.add(temp);
                     relocatableNodesList.add(n);
+                    mainNodesList.add(n);
                 } else {
                     fakeZoneList.add(temp);
                 }
