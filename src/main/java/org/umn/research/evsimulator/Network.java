@@ -27,7 +27,7 @@ public class Network {
     private List<Link> linksList = new ArrayList<>();
     private List<Vehicle> vehicleList = new ArrayList<>();
     private List<Zone> zoneList = new ArrayList<>();
-    private List<Node> relocatableNodesList = new ArrayList<>();
+    public static List<Node> relocatableNodesList = new ArrayList<>();
     private List<Zone> fakeZoneList = new ArrayList<>();
     private List<Passenger> waitingList = new ArrayList<>();
     private List<Vehicle>availableVehiclesList = new ArrayList<>();
@@ -61,7 +61,6 @@ public class Network {
         network.readDepartureTimes(getFilePath("demand_profile.txt"));
         network.createPassengers(getFilePath("dynamic_od.txt"), 1.0);
        // network.simulationWriter = new FileWriter(getFilePath("simulation_log.txt"), false);
-
         return network;
     }
 
