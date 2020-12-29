@@ -61,7 +61,7 @@ public class Network {
         network.scanDemand(getFilePath("dynamic_od.txt"));
         network.readDepartureTimes(getFilePath("demand_profile.txt"));
         network.createPassengers(getFilePath("dynamic_od.txt"), 1.0);
-       // network.simulationWriter = new FileWriter(getFilePath("simulation_log.txt"), false);
+        // network.simulationWriter = new FileWriter(getFilePath("simulation_log.txt"), false);
         return network;
     }
 
@@ -118,7 +118,6 @@ public class Network {
                 }
                 System.out.println("Time to passenger " + p.getId() + ": " + timeToPassenger);
             }
-
         }*/
 
         IloCplex c = new IloCplex();
@@ -388,8 +387,8 @@ public class Network {
                 numberOfUsedVehicles++;
             }
         }
-       // System.out.println("Avg travel time: " + sumOfTravelTimes / totalNumberOfPassengers);
-      //  System.out.println(endTime);
+        // System.out.println("Avg travel time: " + sumOfTravelTimes / totalNumberOfPassengers);
+        //  System.out.println(endTime);
        /* if (totalNumberOfPassengers == 0) {
             simulationWriter.close();
             System.out.println("No passengers picked - alpha: " + alpha + " beta: " + beta);
@@ -430,7 +429,7 @@ public class Network {
 
         for (Vehicle vehicle : availableVehiclesList) { // constraint: each vehicle is assigned to <= 1 passenger [one vehicle to passenger]
             IloLinearNumExpr e = c.linearNumExpr();
-           // IloLinearNumExpr e1 = c.linearNumExpr();
+            // IloLinearNumExpr e1 = c.linearNumExpr();
             for (Passenger passenger : waitingList) {
                 xValues[i] = c.intVar(0, 1);
                 e.addTerm(1, xValues[i]);
@@ -440,7 +439,7 @@ public class Network {
 
             }
             c.addLe(e, 1);
-          //  c.addLe(e1, 1);
+            //  c.addLe(e1, 1);
         }
 
         int next = 0;
@@ -449,11 +448,11 @@ public class Network {
             //IloLinearNumExpr e1 = c.linearNumExpr();
             for (int p = next; p < xValues.length; p += waitingList.size()) {
                 e.addTerm(1, xValues[p]);
-           //     e1.addTerm(1, travelTimexValues[p]);
+                //     e1.addTerm(1, travelTimexValues[p]);
             }
             next++;
             c.addLe(e, 1);
-          //  c.addLe(e1, 1);
+            //  c.addLe(e1, 1);
         }
 
         double travelTime = 0;
@@ -498,7 +497,6 @@ public class Network {
             for (int z = vehicleNodesStart; z < vehicleNodesStart + relocatableNodesList.size(); z++) { //iterate through vehicle's node values
                 e.addTerm(1, zValues[z]);
             }
-
             int vehiclePassengersStart = next * waitingList.size();
             for (int p = vehiclePassengersStart; p < vehiclePassengersStart + waitingList.size(); p++) { //iterate through vehicle's passenger assignments
                 e.addTerm(1, travelTimexValues[p]);
@@ -561,7 +559,7 @@ public class Network {
         c.add(objective);
 
         //try (FileOutputStream log = new FileOutputStream(getFilePath("cplex_log.txt"))) {
-            c.setOut(null);
+        c.setOut(null);
         //}
 
         c.solve();
@@ -612,8 +610,8 @@ public class Network {
 
         float totalTravelTime = 0;
 
-       // System.out.println(vehicle.getLoc());
-       // System.out.println(vehicle.getPassenger());
+        // System.out.println(vehicle.getLoc());
+        // System.out.println(vehicle.getPassenger());
 
         vehicle.createPath(vehicle.getLoc(), vehicle.getPassenger().getOrigin());
 
@@ -671,11 +669,11 @@ public class Network {
                     int index_p = 0;    //iterate through waiting list indexes
 
                     for (Vehicle v : availableVehiclesList) {   //iterate through vehicles
-                       // System.out.println("current waiting list: " + waitingList.size());
+                        // System.out.println("current waiting list: " + waitingList.size());
                         //System.out.println("(!) Vehicle #" + v.getId());
                         v.setIdle(true);
                         int offset = availableVehiclesList.indexOf(v)*waitingList.size();   //calculate beginning offset into xValues
-                       // System.out.println("offset: " + offset);
+                        // System.out.println("offset: " + offset);
                         iterator = offset;
                         for (int p = 0; p < waitingList.size(); p++) {
                             if (c.getValue(xValues[iterator]) == 1.0) { //check if specific vehicle is assigned to specific passenger
@@ -688,8 +686,8 @@ public class Network {
                                 //System.out.println("(!!) Vehicle #" + v.getId() + " has been assigned to passenger " + "[" + v.getPassenger() + "]");
 
                             }
-                                iterator++;
-                                index_p++;
+                            iterator++;
+                            index_p++;
                         }
                         index_p = 0;
                     }
@@ -701,7 +699,7 @@ public class Network {
                         totalNumberOfPassengers++;
                         justAssignedVehicles.add(vehicle);
                     }
-                   // availableVehiclesList.remove(vehicle);
+                    // availableVehiclesList.remove(vehicle);
                 }
             }
 
@@ -955,8 +953,8 @@ public class Network {
                         id++;
                         passengers.add(p);
                     }
-                //  if(demandval>checker)
-                //{
+                    //  if(demandval>checker)
+                    //{
                 }
                 // }
                 //s.nextLine();
@@ -1038,14 +1036,14 @@ public class Network {
     }
 
     private void printVehiclePath (Vehicle vehicle) {
-            System.out.print("Path: " + vehicle.getPath().get(0).getSource().getId());
-            for (Link link : vehicle.getPath()) {
-                if (vehicle.getPath().indexOf(link) != 0) {
-                    System.out.print(" -> ");
-                }
-                System.out.print(link.getDestination().getId());
+        System.out.print("Path: " + vehicle.getPath().get(0).getSource().getId());
+        for (Link link : vehicle.getPath()) {
+            if (vehicle.getPath().indexOf(link) != 0) {
+                System.out.print(" -> ");
             }
-            System.out.println();
+            System.out.print(link.getDestination().getId());
+        }
+        System.out.println();
     }
 
     private static String getFilePath(String fileName) {

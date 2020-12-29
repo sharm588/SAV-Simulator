@@ -15,7 +15,7 @@ public class GeneticAlgorithm {
 
     ArrayList<Organism> population = new ArrayList<>();
     ArrayList<Organism> sortedList = new ArrayList<>();
-    int generations = 100;
+    int generations = 50;
     int populationSize = 100;
     int size = 0;
     double mutate = 0.00;
