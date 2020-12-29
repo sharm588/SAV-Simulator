@@ -11,11 +11,14 @@ public class Passenger {
     private int departuretime;
     public boolean dispatched = false;
     public boolean assigned = false;
+    public boolean droppedOff = false;
+    public int id;
 
-    public Passenger(Node origin, Node destination, int departuretime) {
+    public Passenger(Node origin, Node destination, int departuretime, int id) {
         this.destination = destination;
         this.origin = origin;
         this.departuretime = departuretime;
+        this.id = id;
     }
 
     public String toString() {

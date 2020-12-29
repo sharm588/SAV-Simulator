@@ -15,17 +15,21 @@ public class GeneticAlgorithm {
 
     ArrayList<Organism> population = new ArrayList<>();
     ArrayList<Organism> sortedList = new ArrayList<>();
-    int generations = 100;
+    int generations = 50;
     int populationSize = 100;
     int size = 0;
     double mutate = 0.00;
-    double mutateValue = 0.015f;
+    double mutateValue = 0.025f;
     double bestPercent = 0.1; //take top 10% of fittest organisms
-    double firstTerm = 0.0075;
+    double firstTerm = 0.009;
     double arithmeticFactor = 0;
     Random r = new Random();
     double probabilityValue = 0;
     double avgPopulationWaitTime = 0;
+    int alphaLength = 24;
+    int betaLength = 576;
+    double parentChecker = 0.0;
+
 
     public void calculateArithmeticFactor() throws IloException, IOException
     {
@@ -38,6 +42,7 @@ public class GeneticAlgorithm {
             Organism organism = new Organism();
             population.add(organism);
         }
+        //System.out.println("done");
     }
 
     public int assignParent() throws IloException, IOException
@@ -89,39 +94,76 @@ public class GeneticAlgorithm {
 
 
                     int numberofValues = assignParent();
-                    int parent1_index =  populationSize - (numberofValues - 1) - 1;  //assign parent
-                    double parent1_beta = population.get(parent1_index).randomBeta; //first parent beta value
-                    double parent1_alpha = population.get(parent1_index).randomAlpha;
+                    int parent1_index = populationSize - (numberofValues - 1) - 1;  //assign parent
 
                     numberofValues = assignParent();
 
                     int parent2_index = populationSize - (numberofValues - 1) - 1;  //assign parent
 
                     if (parent2_index == parent1_index) { //make sure parents aren't the same
-                        if(parent2_index == populationSize-1) parent2_index--;
+                        if (parent2_index == populationSize - 1) parent2_index--;
                         parent2_index++;
                     }
-                    double parent2_beta = population.get(parent2_index).randomBeta;   //second parent beta value
-                    double parent2_alpha = population.get(parent2_index).randomAlpha;
+                    //Set alpha array for child
+                    double [] childAlpha = new double[alphaLength];
+                    for(int k =0; k<alphaLength; k++)
+                    {
+                        parentChecker = r.nextFloat();
+                        if(parentChecker>0.50)
+                        {
+                            childAlpha[k] = population.get(parent1_index).alphaValues[k];
+                        }
+                        else
+                        {
+                            childAlpha[k] = population.get(parent2_index).alphaValues[k];
+                        }
 
-                    double averageBeta = (parent1_beta + parent2_beta) / 2;   //calculate average beta value between parents
-                    double averageAlpha = (parent1_alpha + parent2_alpha) / 2; //calculate average alpha value between parents
-                    Organism child = new Organism(averageBeta, averageAlpha);    //create child
+                    }
+                    //set Child beta array
+                    double [] childBeta = new double[betaLength];
+                    for(int z = 0; z<betaLength; z++)
+                    {
+                        parentChecker = r.nextFloat();
+                        if(parentChecker>0.50)
+                        {
+                            childBeta[z] = population.get(parent1_index).betaValues[z];
+                        }
+                        else
+                        {
+                            childBeta[z] = population.get(parent2_index).betaValues[z];
+                        }
+                    }
+                    Organism child = new Organism(childBeta, childAlpha);    //create child
                     nextGeneration.add(child); //add organism to temporary array list
 
                 } else {
                     double high = 10;
-                    double betaVal = high * r.nextDouble();
-                    double alphaVal = high * r.nextDouble();
-                    Organism child = new Organism(betaVal, alphaVal); //create organism with random alpha and beta values (mutation)
+                    double [] childAlpha = new double[alphaLength];
+                    for(int a = 0; a<alphaLength; a++)
+                    {
+                        double alphaVal = high * r.nextDouble();
+                        childAlpha[a] = alphaVal;
+                    }
+                    double [] childBeta = new double[betaLength];
+                    for(int b = 0; b<betaLength; b++)
+                    {
+                        double betaVal = high * r.nextDouble();
+                        childBeta[b] = betaVal;
+                    }
+
+
+                    Organism child = new Organism(childBeta, childAlpha); //create organism with random alpha and beta values (mutation)
                     nextGeneration.add(child);
                 }
 
             }
 
+
             Collections.sort(population);   //sort current population from lowest to highest waiting time
             avgPopulationWaitTime /= population.size();
-            System.out.println(population.get(0).waitTime); //print best waiting time
+            System.out.println((i+1) + ": " + population.get(0).waitTime); //print best waiting time
+            System.out.println("Beta values: " + Arrays.toString(population.get(0).betaValues));
+            System.out.println("Alpha values: " + Arrays.toString(population.get(0).alphaValues));
             avgPopulationWaitTime = 0;
 
             for (int x = 0; x < bestNumber; x++) { //add best organisms from this generation to next generation
@@ -136,6 +178,7 @@ public class GeneticAlgorithm {
             nextGeneration.clear();
 
         }
+        //System.out.println("done1");
 
     }
 
