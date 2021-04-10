@@ -21,7 +21,7 @@ public class GeneticAlgorithm {
     double mutate = 0.00;
     double mutateValue = 0.025f;
     double bestPercent = 0.1; //take top 10% of fittest organisms
-    double firstTerm = 0.009;
+    double firstTerm = 0.008;
     double arithmeticFactor = 0;
     Random r = new Random();
     double probabilityValue = 0;
@@ -126,7 +126,7 @@ public class GeneticAlgorithm {
                 }
 
                 mutate = r.nextDouble();
-                if(mutate<mutateValue) {
+                if(mutate<=mutateValue) {
                     int randomAlphaIndex = r.nextInt(alphaLength);
                     int randomBetaIndex = r.nextInt(betaLength);
                     double newAlphaValue = 10* r.nextDouble();
@@ -142,9 +142,9 @@ public class GeneticAlgorithm {
 
             Collections.sort(population);   //sort current population from lowest to highest waiting time
             avgPopulationWaitTime /= population.size();
-            System.out.println((i+1) + ": " + population.get(0).waitTime); //print best waiting time
-            System.out.println("Beta values: " + Arrays.toString(population.get(0).betaValues));
-            System.out.println("Alpha values: " + Arrays.toString(population.get(0).alphaValues));
+            System.out.println(population.get(0).waitTime); //print best waiting time
+//            System.out.println("Beta values: " + Arrays.toString(population.get(0).betaValues));
+//            System.out.println("Alpha values: " + Arrays.toString(population.get(0).alphaValues));
             avgPopulationWaitTime = 0;
 
             for (int x = 0; x < bestNumber; x++) { //add best organisms from this generation to next generation

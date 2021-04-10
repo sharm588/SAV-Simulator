@@ -51,6 +51,7 @@ public class Network {
     public int sumOfTravelTimes = 0;
     private ArrayList<Vehicle> justAssignedVehicles = new ArrayList<>();
     private static int validSim = 0;
+    public int totalNumberOfTrips = 0;
 
 
     public static Network createNetwork() throws IOException{
@@ -610,8 +611,7 @@ public class Network {
 
         float totalTravelTime = 0;
 
-        // System.out.println(vehicle.getLoc());
-        // System.out.println(vehicle.getPassenger());
+        totalNumberOfTrips++;
 
         vehicle.createPath(vehicle.getLoc(), vehicle.getPassenger().getOrigin());
 
