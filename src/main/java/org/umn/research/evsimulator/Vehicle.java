@@ -165,13 +165,14 @@ public class Vehicle {
         }*/
 
         for (int i = 0; i < net.getNodesList().size(); i++) {
-                                                                                                                         //match vehicle location with node to get outgoing nodes
+            //match vehicle location with node to get outgoing nodes
             if (location.getId() == net.getNodesList().get(i).getId()) {
                 node = net.getNodesList().get(i);
             }
         }
         this.setPath(net.shortestPath(node, dest));
     }
+
 
     public void createTravelTime () {
         try {

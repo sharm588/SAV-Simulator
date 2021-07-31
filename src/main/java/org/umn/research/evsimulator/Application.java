@@ -4,7 +4,6 @@ import ilog.concert.IloException;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Application {
 
@@ -701,7 +700,7 @@ public class Application {
         double sumOfTotalTravelSeconds = 0;
         double sumOfTotalDistanceTravelled = 0;
         double totalPassengers = 0;
-        double sumOfTotalNumberOfTripsPerHour = 0;
+        double sumOfTotalNumberOfRequestsPerHour = 0;
 
         double standardDevWaitTime = 0;
         double standardDevInVehicleTravelTime = 0;
@@ -729,7 +728,7 @@ public class Application {
             else waitTime[i] = network.simulate(7200, betaVal, alphaVal, true);
 
             sumOfWaitTimes += waitTime[i];
-            sumOfTotalNumberOfTripsPerHour += network.getTotalNumberOfTrips() / 2; //simulation is 2 hours, so trips per hour is the total in those 2 hours divided by 2
+            sumOfTotalNumberOfRequestsPerHour += network.getTotalNumberOfRequests() / 2;
 
             for (Vehicle vehicle : network.getVehicleList()) {
                 sumOfInVehicleSeconds += vehicle.getInVehicleTravelTime(); //sum for all iterations
@@ -758,7 +757,7 @@ public class Application {
         double avgTotalTravelTime = sumOfTotalTravelTimes / waitTime.length;
         double avgTotalMilesTravelled = sumOfMilesTravelled / waitTime.length;
 
-        double avgTotalTripsPerHour = sumOfTotalNumberOfTripsPerHour / waitTime.length;
+        double avgTotalRequestsPerHour = sumOfTotalNumberOfRequestsPerHour / waitTime.length;
 
         for (int i = 0; i < waitTime.length; i++) {
             standardDevWaitTime += Math.pow(waitTime[i] - avgWaitTime, 2);
@@ -772,7 +771,7 @@ public class Application {
         standardDevMilesTravelled = Math.sqrt(standardDevMilesTravelled / waitTime.length);
 
         //System.out.println("Average Wait Time | Average in-vehicle travel time (per passenger) | Average total vehicle travel time (per passenger) | Total miles travelled in fleet);
-        System.out.println(avgTotalTripsPerHour + ": " + avgWaitTime + " " + (sumOfInVehicleSeconds / totalPassengers) + " " + (sumOfTotalTravelSeconds / totalPassengers) + " " + sumOfTotalDistanceTravelled);
+        System.out.println(avgTotalRequestsPerHour + ": " + avgWaitTime + " " + (sumOfInVehicleSeconds / totalPassengers) + " " + (sumOfTotalTravelSeconds / totalPassengers) + " " + sumOfTotalDistanceTravelled);
         System.out.println(standardDevWaitTime + " " + standardDevInVehicleTravelTime + " " + standardDevTotalVehicleTravelTime + " " + standardDevMilesTravelled);
     }
 
