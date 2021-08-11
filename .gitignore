@@ -1,14 +1,4 @@
-Thumbs.db
-.DS_Store
-.gradle
-build/
-docs/
-target/
-out/
-.idea
-*.iml
-*.ipr
-*.iws
-.project
-.settings
-.classpath
+#Nonessential Files
+/build/classes/java/main/org/umn/research/evsimulator/*.class
+/.idea/workspace.xml
+/src/main/java/resources/simulation_log.txt

@@ -1,18 +1,18 @@
 package org.umn.research.evsimulator;
 
-import ilog.concert.IloException;
-import ilog.concert.IloIntVar;
-import ilog.concert.IloLinearNumExpr;
-import ilog.concert.IloObjective;
-import ilog.cplex.IloCplex;
+import ilog.concert.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.*;
+import java.lang.*;
+
+import ilog.cplex.IloCplex;
 
 @Data
 @EqualsAndHashCode
@@ -28,6 +28,7 @@ public class Network {
     private List<Vehicle> vehicleList = new ArrayList<>();
     private List<Zone> zoneList = new ArrayList<>();
     private List<Node> relocatableNodesList = new ArrayList<>();
+    public static List<Node> mainNodesList = new ArrayList<>();
     private List<Zone> fakeZoneList = new ArrayList<>();
     private List<Passenger> waitingList = new ArrayList<>();
     private List<Vehicle>availableVehiclesList = new ArrayList<>();
@@ -36,15 +37,23 @@ public class Network {
     private int endTime = 0;
     private int officialTime = 0;
     private int totalNumberOfPassengers = 0;
-    private double sumOfWaitTimes = 0;
+    private double sumOfWaitTimes = 0; //waiting time from when passenger is assigned to vehicle to when passenger is picked up
     private int originalWaitingListSize = 0;
-    private double beta = 1;
-    private double alpha = 1;
+    private double[] beta;
+    private double[] alpha;
     public double avgWaitTime;
     public FileWriter simulationWriter;
     private int initialThreshold = 300;
     private List<Double> zValuesList = new ArrayList<>();
-
+    private List<Double> rValuesList = new ArrayList<>();
+    private int incrementer = 0;
+    private ArrayList<Passenger> droppedPassengersList = new ArrayList<>();
+    public int numberOfUsedVehicles = 0;
+    public int sumOfTravelTimes = 0;
+    private ArrayList<Vehicle> justAssignedVehicles = new ArrayList<>();
+    private static int validSim = 0;
+    public int totalNumberOfRequests = 0;
+    public double travelTimes[] = new double[relocatableNodesList.size() * relocatableNodesList.size()]; //travel times for each possible route
 
     public static Network createNetwork() throws IOException{
         Network network = new Network();
@@ -53,13 +62,25 @@ public class Network {
         network.readLinks(getFilePath("links.txt"));
         network.scanDemand(getFilePath("dynamic_od.txt"));
         network.readDepartureTimes(getFilePath("demand_profile.txt"));
-        network.createPassengers(getFilePath("dynamic_od.txt"));
-       // network.simulationWriter = new FileWriter(getFilePath("simulation_log.txt"), false);
+        network.createPassengers(getFilePath("dynamic_od.txt"), 1.0);
+        // network.simulationWriter = new FileWriter(getFilePath("simulation_log.txt"), false);
+        return network;
+    }
+
+    public static Network createNetwork(double scale) throws IOException{
+        Network network = new Network();
+        network.scanNodes(getFilePath("nodes.txt"));
+        network.createNodeMap();
+        network.readLinks(getFilePath("links.txt"));
+        network.scanDemand(getFilePath("dynamic_od.txt"));
+        network.readDepartureTimes(getFilePath("demand_profile.txt"));
+        network.createPassengers(getFilePath("dynamic_od.txt"), scale);
+        // network.simulationWriter = new FileWriter(getFilePath("simulation_log.txt"), false);
 
         return network;
     }
 
-    public double simulate(float time, double betaVal, double alphaVal, boolean writerOn) throws IloException, IOException {
+    public double simulate(float time, double betaVal[], double alphaVal[], boolean writerOn) throws IloException, IOException {
 
         if (writerOn) simulationWriter = new FileWriter(getFilePath("simulation_log.txt"), false);
         beta = betaVal; //initialize beta
@@ -72,7 +93,7 @@ public class Network {
                 if (initialThreshold >= p.getDeparturetime()) {
                     waitingList.add(p);
                     p.setDispatched(true);
-                    totalNumberOfPassengers += 1;
+                    //totalNumberOfPassengers += 1;
                 }
             }
 
@@ -89,18 +110,54 @@ public class Network {
             simulationWriter.write("\n");
         }
 
+        /*for (Vehicle vehicle : vehicleList) {
+            System.out.println("Vehicle " + vehicle.getId());
+            for (Passenger p : waitingList) {
+                double timeToPassenger = 0;
+                vehicle.createPath(vehicle.getLoc(), p.getOrigin());
+                for (int y = 0; y < vehicle.getPath().size(); y++) {
+                    timeToPassenger += vehicle.getPath().get(y).getTraveltime(); //calculate total travel time from vehicle location to passenger origin
+                }
+                System.out.println("Time to passenger " + p.getId() + ": " + timeToPassenger);
+            }
+        }*/
 
         IloCplex c = new IloCplex();
+        IloCplex r = new IloCplex();
+        r.setOut(null);
+        IloIntVar[] initialAssignment = generateRepositioningAssignments(c);
+        //IloIntVar[] initialAssignment = generateAssignments(c); //initialize initial assignments
 
-        IloIntVar[] initialAssignment = generateAssignments(c); //initialize initial assignments
-
-        sendVehiclesToEmptyNodes(writerOn);
+        RepositioningMethod(r);
+        sendVehiclesRepositioningToEmptyNodes(writerOn);
+        //sendVehiclesToEmptyNodes(writerOn);
 
         for (Vehicle vehicle : vehicleList) { //assign a passenger to each vehicle of fleet
             assignPassengerToVehicle(vehicle, initialAssignment, c, writerOn);
         }
         removeVehiclesFromList();
         removePassengersFromWaitingList();
+
+        for (Vehicle v : justAssignedVehicles) {
+            double timeCombo = 0;
+
+            v.createPath(v.getLoc(), v.getPassenger().getOrigin());
+            for (int y = 0; y < v.getPath().size(); y++) {
+                timeCombo += v.getPath().get(y).getTraveltime(); //calculate total travel time from vehicle location to passenger origin
+            }
+            for (Vehicle v1 : availableVehiclesList) {
+
+                double travelTimeCombo = 0;
+                v1.createPath(v.getLoc(), v.getPassenger().getOrigin());
+                for (int y = 0; y < v.getPath().size(); y++) {
+                    travelTimeCombo += v1.getPath().get(y).getTraveltime(); //calculate total travel time from vehicle location to passenger origin
+                }
+                if (travelTimeCombo < timeCombo) {
+                    System.out.println("Vehicle " + v1.getId() + " [" + travelTimeCombo + "] is a better choice than vehicle " + v.getId() + " [" + timeCombo + "]");
+                }
+            }
+        }
+        justAssignedVehicles.clear();
 
         if (writerOn) simulationWriter.write("\n");
 
@@ -112,7 +169,7 @@ public class Network {
                 if (i >= p.getDeparturetime()) {
                     waitingList.add(p);
                     p.setDispatched(true);
-                    totalNumberOfPassengers += 1;
+                    totalNumberOfRequests += 1;
                 }
             }
             removePassengersFromPassengerList();
@@ -133,9 +190,11 @@ public class Network {
                 }
             }
 
-            IloIntVar[] newAssignment = generateAssignments(c); //generate new assignments for vehicles
+            //IloIntVar[] newAssignment = generateAssignments(c); //generate new assignments for vehicles
+            IloIntVar[] newAssignment = generateRepositioningAssignments(c);
 
-            sendVehiclesToEmptyNodes(writerOn);
+            RepositioningMethod(r);
+            sendVehiclesRepositioningToEmptyNodes(writerOn);
 
             for (Vehicle vehicle : availableVehiclesList) { //assign vehicles to passengers based on assignment above
                 assignPassengerToVehicle(vehicle, newAssignment, c, writerOn);
@@ -147,6 +206,27 @@ public class Network {
             }
             removeVehiclesFromList();
             removePassengersFromWaitingList();
+
+            for (Vehicle v : justAssignedVehicles) {
+                double timeCombo = 0;
+
+                v.createPath(v.getLoc(), v.getPassenger().getOrigin());
+                for (int y = 0; y < v.getPath().size(); y++) {
+                    timeCombo += v.getPath().get(y).getTraveltime(); //calculate total travel time from vehicle location to passenger origin
+                }
+                for (Vehicle v1 : availableVehiclesList) {
+
+                    double travelTimeCombo = 0;
+                    v1.createPath(v.getLoc(), v.getPassenger().getOrigin());
+                    for (int y = 0; y < v.getPath().size(); y++) {
+                        travelTimeCombo += v1.getPath().get(y).getTraveltime(); //calculate total travel time from vehicle location to passenger origin
+                    }
+                    if (travelTimeCombo < timeCombo) {
+                        System.out.println("Vehicle " + v1.getId() + " [" + travelTimeCombo + "] is a better choice than vehicle " + v.getId() + " [" + timeCombo + "]");
+                    }
+                }
+            }
+            justAssignedVehicles.clear();
 
             for (Vehicle vehicle : vehicleList) {   // do for each vehicle
 
@@ -166,7 +246,7 @@ public class Network {
                         vehicle.setNotMoving(false); //vehicle should be ready to move at this point, so notMoving is false
                     }
 
-                    if (vehicle.passenger == null) {    // double check vehicle has an assigned passenger
+                    if (vehicle.passenger == null) {    // error check vehicle has an assigned passenger
                         System.out.println("Time: " + i);
                         System.out.println("Vehicle #" + vehicle.getId() + " passenger is null");
                         simulationWriter.close();
@@ -202,6 +282,7 @@ public class Network {
                                 vehicle.setAlreadyPrintedDropOff(true);
                             }
                             vehicle.numberDroppedOff++;
+                            vehicle.getPassenger().setDroppedOff(true);
 
                         }
                         availableVehiclesList.add(vehicle);
@@ -214,7 +295,22 @@ public class Network {
                     } else if (!vehicle.isPickedUp() && !vehicle.isBeginningRouteToPassenger() && vehicle.isRequested()) { // otherwise if vehicle has not picked up passenger and vehicle is requested (and vehicle hasn't already begun route to passenger
 
                         if (writerOn) simulationWriter.write("Vehicle #" + vehicle.getId() + " is heading towards passenger\n");
-                        sumOfWaitTimes += 30;
+
+                        boolean addToSum = true;
+
+                        for (Vehicle v: vehicleList) {
+                            if (v.getPassenger() != null) {
+                                if (vehicle.getPassenger().getId() == v.getPassenger().getId() && vehicle.getId() != v.getId()) {
+                                    System.out.println("Same passenger: " + vehicle.getPassenger());
+                                    addToSum = false;
+                                }
+                            }
+                        }
+
+                        if (addToSum) {
+                            sumOfWaitTimes += 30;
+                            incrementer += 1;
+                        }
 
                     } else if (vehicle.isPickedUp() && !vehicle.isAlreadyBeginningRouteToDestination()) { // otherwise if vehicle has picked up passenger and not already printed info
 
@@ -235,7 +331,7 @@ public class Network {
                     }
 
                     if (vehicle.isAlreadyAtNode()) {
-                        if (writerOn) simulationWriter.write("Vehicle #" + vehicle.getId() + " is already at empty node" + "counter: " + vehicle.getCounter() + "\n");
+                        if (writerOn) simulationWriter.write("Vehicle #" + vehicle.getId() + " is already at empty node\n");
                         vehicle.setAlreadyAtNode(false);
                         vehicle.setSentToNode(false);
                         vehicle.setEnRouteToNode(false);
@@ -253,7 +349,7 @@ public class Network {
 
                         if (vehicle.isArrivedAtNode()) {
                             if (writerOn)
-                                simulationWriter.write("Vehicle #" + vehicle.getId() + " has arrived at empty node" + "counter: " + vehicle.getCounter() + "\n");
+                                simulationWriter.write("Vehicle #" + vehicle.getId() + " has arrived at empty node\n");
                             vehicle.setArrivedAtNode(false);
                             vehicle.setSentToNode(false);
                             vehicle.setEnRouteToNode(false);
@@ -261,16 +357,16 @@ public class Network {
                             vehicle.setCounter(0); //reset counter (keeps track of node index in path array list)
                         } else if (vehicle.isEnRouteToNode()) {
                             if (writerOn)
-                                simulationWriter.write("Vehicle #" + vehicle.getId() + " is driving to empty node" + "counter: " + vehicle.getCounter() + "\n");
+                                simulationWriter.write("Vehicle #" + vehicle.getId() + " is driving to empty node\n");
                         }
                     }
                 } else {
                     vehicle.setCounter(0); //reset counter (keeps track of node index in path array list)
                     if (vehicle.isAssignedSameNode()) {
-                        if (writerOn) simulationWriter.write("Vehicle #" + vehicle.getId() + " is stationary at empty node [assigned to same empty node " + vehicle.getNode() + "] counter: " + vehicle.getCounter() + "\n");
+                        if (writerOn) simulationWriter.write("Vehicle #" + vehicle.getId() + " is stationary at empty node [assigned to same empty node " + vehicle.getNode() + "]\n");
                         vehicle.setAssignedSameNode(false);
                     }
-                    else if (writerOn) simulationWriter.write("Vehicle #" + vehicle.getId() + " is stationary at empty node " + vehicle.getNode() + "counter: " + vehicle.getCounter() + "\n");
+                    else if (writerOn) simulationWriter.write("Vehicle #" + vehicle.getId() + " is stationary at empty node " + vehicle.getNode() + "\n");
                 }
             }
 
@@ -278,21 +374,6 @@ public class Network {
                 simulationWriter.write("\n");
                 simulationWriter.write("Available vehicles: " + availableVehiclesList.size() + "\n");
                 simulationWriter.write("\n");
-            }
-
-            if (waitingList.isEmpty()) {
-
-                //if (writerOn) simulationWriter.write("(!) Waiting list is empty\n");
-
-                boolean done = true;
-                //for (Vehicle vehicle : vehicleList) {
-                if (availableVehiclesList.size() != vehicleList.size()) {
-                    done = false;
-                }
-               // }
-                if (done) {
-                    break;
-                }
             }
 
             endTime = i;
@@ -308,7 +389,137 @@ public class Network {
             simulationWriter.write("Average passenger wait time: " + avgWaitTime + " seconds\n");
             simulationWriter.close();
         }
+
+        for (Vehicle v: vehicleList) {
+            if (v.isUsed()) {
+                numberOfUsedVehicles++;
+            }
+        }
+        // System.out.println("Avg travel time: " + sumOfTravelTimes / totalNumberOfPassengers);
+        //  System.out.println(endTime);
+       /* if (totalNumberOfPassengers == 0) {
+            simulationWriter.close();
+            System.out.println("No passengers picked - alpha: " + alpha + " beta: " + beta);
+            System.exit(0);
+        }*/
+        //System.out.println("# of passengers: " + totalNumberOfPassengers + " alpha: " + alpha + " beta: " + beta);
+        //if (totalNumberOfPassengers >= 130) validSim++;
+        //System.out.println(validSim);
+        c.end();
         return avgWaitTime;
+    }
+
+    public void fillTravelTimesArray() {
+        //filling travel times array with values
+        int iterator = 0;
+        for (int i = 0; i < relocatableNodesList.size(); i++) {
+            for (int j = 0; j < relocatableNodesList.size(); j++) {
+                Vehicle fakeVehicle = new Vehicle(this, 100, zoneList.get(i)); //zoneList should be same as size of relocatableNodesList
+                fakeVehicle.net = this;
+                Node node = null;
+                for (int index = 0; index < nodesList.size(); index++) {
+                    if (zoneList.get(j).getId() == nodesList.get(index).getId()) {
+                        node = nodesList.get(index);
+                    }
+                }
+                double travelTimeValue = 0;
+                fakeVehicle.createPath(fakeVehicle.getLoc(), node);
+                for (int x = 0; x < fakeVehicle.getPath().size(); x++) {
+                    travelTimeValue += fakeVehicle.getPath().get(x).getTraveltime();
+                }
+                travelTimes[iterator] = travelTimeValue;
+                iterator++;
+            }
+        }
+    }
+    //Testing reposotioning method to compare to another paper
+    public IloIntVar[] RepositioningMethod(IloCplex r) throws IloException, IOException {
+        IloLinearNumExpr summation = r.linearNumExpr();
+        int size = relocatableNodesList.size() * relocatableNodesList.size(); //all routes
+        IloIntVar[] rValues = r.intVarArray(size, 0, availableVehiclesList.size()); //vehicles that relocates from zone i to zone j
+        double numberOfVehiclesAtGivenNode[] = new double[relocatableNodesList.size()];
+        double numberOfVehiclesRelocatingtoGivenNode[] = new double[relocatableNodesList.size()];
+
+        //gets number of idle vehicles at a given node (vi)
+        for (int node = 0; node < relocatableNodesList.size(); node++) {
+            int numberOfVehiclesAtNode = 0;
+            for (int v = 0; v < availableVehiclesList.size(); v++) {
+                Zone location = (Zone)(availableVehiclesList.get(v).getLoc()); //gets location of available vehicle
+
+                if (relocatableNodesList.get(node).getId() == location.getId()) { //checks if vehicle is at given node
+                    numberOfVehiclesAtNode++;
+                }
+            }
+            numberOfVehiclesAtGivenNode[node] = numberOfVehiclesAtNode;
+        }
+
+        //constraint: x i,j < vi
+        for (int i = 0; i < numberOfVehiclesAtGivenNode.length; i++) { //iterate through v
+            for (int j = 0; j < relocatableNodesList.size(); j++) { //iterate through j
+                r.addLe(rValues[i*relocatableNodesList.size()+j], numberOfVehiclesAtGivenNode[i]);
+            }
+        }
+
+        IloLinearNumExpr e = r.linearNumExpr();
+
+        //x j,i - x i,j
+        for (int i = 0; i < relocatableNodesList.size(); i++) {
+            for (int j = 0; j < relocatableNodesList.size(); j++) {
+                e.addTerm(1, rValues[relocatableNodesList.size()*j+i]);
+                e.addTerm(-1, rValues[relocatableNodesList.size()*i+j]);
+            }
+        }
+
+        //vi + number of vehicles relocating to i
+        double[] vehicleSupplyAtNode = new double[relocatableNodesList.size()];
+        for (int node = 0; node < relocatableNodesList.size(); node++) {
+            int numberOfVehiclesDroppingPassenger = 0;
+            for (int v = 0; v < vehicleList.size(); v++) {
+                if (vehicleList.get(v).isRequested() && !vehicleList.get(v).isDroppedOff()) {
+                    Location loc = matchLocationWithCorrespondingZone(vehicleList.get(v).getPassenger().getDestination());
+                    Zone location = (Zone)(loc); //gets location of available vehicle
+
+                    if (relocatableNodesList.get(node).getId() == location.getId()) { //checks if vehicle is at given node
+                        numberOfVehiclesDroppingPassenger++;
+                    }
+                }
+            }
+            numberOfVehiclesRelocatingtoGivenNode[node] = numberOfVehiclesDroppingPassenger;
+        }
+
+        for (int i = 0; i < numberOfVehiclesAtGivenNode.length; i++) {
+            vehicleSupplyAtNode[i] = numberOfVehiclesRelocatingtoGivenNode[i] + numberOfVehiclesAtGivenNode[i];
+        }
+
+        int vehicleNumber = 0;
+        int sum = 0;
+        for (int i = 0; i < relocatableNodesList.size(); i++) {
+
+            e.setConstant(vehicleSupplyAtNode[i]);
+
+            r.addLe(e, demandForNode(i));
+        }
+
+        r.solve();
+
+        rValuesList.clear();
+        for (int x = 0; x < size; x++) {
+            rValuesList.add(r.getValue(rValues[x]));
+        }
+
+        return rValues;
+    }
+    //Gets minimum supply (f value) for each node in repositioning constraint equation
+    public double demandForNode (int node) throws IOException{
+        double total = 0.0;
+        int iterationSize = demand.size() / 24;
+        for (int i = node*iterationSize; i < node*iterationSize + iterationSize; i++) {
+            if (i > demand.size()) {
+                return total/(i-(node*280));
+            }
+            total += demand.get(i);
+        }
+        return (total/280);
     }
 
     public IloIntVar[] generateAssignments(IloCplex c) throws IloException, IOException {
@@ -316,6 +527,7 @@ public class Network {
         c.clearModel();
         int size = availableVehiclesList.size() * waitingList.size();
         IloIntVar[] xValues = c.intVarArray(size, 0, 1);
+        IloIntVar[] travelTimexValues = c.intVarArray(size, 1, 1);
         ArrayList<Node>sources = new ArrayList<>();
         ArrayList<Node>destinations = new ArrayList<>();
 
@@ -339,23 +551,30 @@ public class Network {
 
         for (Vehicle vehicle : availableVehiclesList) { // constraint: each vehicle is assigned to <= 1 passenger [one vehicle to passenger]
             IloLinearNumExpr e = c.linearNumExpr();
+            // IloLinearNumExpr e1 = c.linearNumExpr();
             for (Passenger passenger : waitingList) {
                 xValues[i] = c.intVar(0, 1);
                 e.addTerm(1, xValues[i]);
+                travelTimexValues[i] = c.intVar(1,1);
+                //e1.addTerm(1, travelTimexValues[i]);
                 i++;
 
             }
             c.addLe(e, 1);
+            //  c.addLe(e1, 1);
         }
 
         int next = 0;
         for (Passenger passenger : waitingList) { // constraint: each passenger is assigned to <= 1 vehicle [one passenger to vehicle]
             IloLinearNumExpr e = c.linearNumExpr();
+            //IloLinearNumExpr e1 = c.linearNumExpr();
             for (int p = next; p < xValues.length; p += waitingList.size()) {
                 e.addTerm(1, xValues[p]);
+                //     e1.addTerm(1, travelTimexValues[p]);
             }
             next++;
             c.addLe(e, 1);
+            //  c.addLe(e1, 1);
         }
 
         double travelTime = 0;
@@ -393,6 +612,21 @@ public class Network {
             next++;
         }
 
+        /*next = 0;
+        for (Vehicle vehicle : availableVehiclesList) { //constraint: vehicle can either be assigned to one passenger or to travel empty to one node (mimick for travelTimexValues)
+            IloLinearNumExpr e = c.linearNumExpr();
+            int vehicleNodesStart = next * relocatableNodesList.size();
+            for (int z = vehicleNodesStart; z < vehicleNodesStart + relocatableNodesList.size(); z++) { //iterate through vehicle's node values
+                e.addTerm(1, zValues[z]);
+            }
+            int vehiclePassengersStart = next * waitingList.size();
+            for (int p = vehiclePassengersStart; p < vehiclePassengersStart + waitingList.size(); p++) { //iterate through vehicle's passenger assignments
+                e.addTerm(1, travelTimexValues[p]);
+            }
+            c.addLe(e, 1); //sum of both must be <= 1
+            next++;
+        }*/
+
 
 
 
@@ -407,8 +641,10 @@ public class Network {
                     if (passenger.getOrigin() == source && passenger.getDestination() == destination) {
                         int index = waitingList.indexOf(passenger);
 
+                        int betaIndex = matchPassengerRouteWithBetaIndex(passenger);
+
                         for (int p = index; p < xValues.length; p += waitingList.size()) {  //if passenger is on designated route, add its xValues value to summation
-                            summation.addTerm(beta * -1, xValues[p]); // -1 is used since terms are being subtracted
+                            summation.addTerm(beta[betaIndex] * 1 * 20, xValues[p]);
                         }
 
                     }
@@ -425,7 +661,8 @@ public class Network {
                 for (int y = 0; y < v.getPath().size(); y++) {
                     travelTimeCombo += v.getPath().get(y).getTraveltime(); //calculate total travel time from vehicle location to passenger origin
                 }
-                summation.addTerm(xValues[iterator], beta * travelTimeCombo * -1); // -1 is used since terms are being subtracted
+                int betaIndex = matchPassengerRouteWithBetaIndex(p);
+                summation.addTerm(xValues[iterator], beta[betaIndex] * travelTimeCombo * -1 * 0.01); // -1 is used since terms are being subtracted
                 iterator++;
             }
             travelTimeCombo = 0;
@@ -434,17 +671,17 @@ public class Network {
         i = 0;
         for (Vehicle vehicle : availableVehiclesList) { //objective: minimize preemptive vehicle relocation
             for (Node node : relocatableNodesList) {
-                summation.addTerm(alpha * -1, zValues[i]);
+                summation.addTerm(alpha[relocatableNodesList.indexOf(node)] * 1, zValues[i]);
                 i++;
             }
         }
 
 
-        IloObjective objective = c.minimize(summation); // did not add waitingList size since size is just a constant offset
+        IloObjective objective = c.maximize(summation); // did not add waitingList size since size is just a constant offset
         c.add(objective);
 
         //try (FileOutputStream log = new FileOutputStream(getFilePath("cplex_log.txt"))) {
-            c.setOut(null);
+        c.setOut(null);
         //}
 
         c.solve();
@@ -454,6 +691,148 @@ public class Network {
             zValuesList.add(c.getValue(zValues[x]));
             //System.out.println(zValuesList.get(x));
         }
+
+        /*int place = 0;
+        for (Vehicle v: availableVehiclesList) {
+            for (Passenger p: waitingList) {
+                if (c.getValue(xValues[place]) != c.getValue(travelTimexValues[place])) {
+                    System.out.println("Different");
+                }
+                place++;
+            }
+        }*/
+
+        return xValues; //xValues holds each of the vehicle/passenger assignments
+
+    }
+
+    public IloIntVar[] generateRepositioningAssignments(IloCplex c) throws IloException, IOException {
+
+        c.clearModel();
+        int size = availableVehiclesList.size() * waitingList.size();
+        IloIntVar[] xValues = c.intVarArray(size, 0, 1);
+        IloIntVar[] travelTimexValues = c.intVarArray(size, 1, 1);
+        ArrayList<Node>sources = new ArrayList<>();
+        ArrayList<Node>destinations = new ArrayList<>();
+
+        for (Passenger passenger : waitingList) {   //get passenger sources / destinations
+            Node passengerSource = passenger.getOrigin();
+            Node passengerDestination = passenger.getDestination();
+
+            if (!sources.contains(passengerSource)) {
+                sources.add(passengerSource);
+            }
+
+            if (!destinations.contains(passengerDestination)) {
+                destinations.add(passengerDestination);
+            }
+        }
+
+        int i = 0;
+
+        for (Vehicle vehicle : availableVehiclesList) { // constraint: each vehicle is assigned to <= 1 passenger [one vehicle to passenger]
+            IloLinearNumExpr e = c.linearNumExpr();
+            // IloLinearNumExpr e1 = c.linearNumExpr();
+            for (Passenger passenger : waitingList) {
+                xValues[i] = c.intVar(0, 1);
+                e.addTerm(1, xValues[i]);
+                travelTimexValues[i] = c.intVar(1,1);
+                //e1.addTerm(1, travelTimexValues[i]);
+                i++;
+
+            }
+            c.addLe(e, 1);
+            //  c.addLe(e1, 1);
+        }
+
+        int next = 0;
+        for (Passenger passenger : waitingList) { // constraint: each passenger is assigned to <= 1 vehicle [one passenger to vehicle]
+            IloLinearNumExpr e = c.linearNumExpr();
+            //IloLinearNumExpr e1 = c.linearNumExpr();
+            for (int p = next; p < xValues.length; p += waitingList.size()) {
+                e.addTerm(1, xValues[p]);
+                //     e1.addTerm(1, travelTimexValues[p]);
+            }
+            next++;
+            c.addLe(e, 1);
+            //  c.addLe(e1, 1);
+        }
+
+        /*next = 0;
+        for (Vehicle vehicle : availableVehiclesList) { //constraint: vehicle can either be assigned to one passenger or to travel empty to one node (mimick for travelTimexValues)
+            IloLinearNumExpr e = c.linearNumExpr();
+            int vehicleNodesStart = next * relocatableNodesList.size();
+            for (int z = vehicleNodesStart; z < vehicleNodesStart + relocatableNodesList.size(); z++) { //iterate through vehicle's node values
+                e.addTerm(1, zValues[z]);
+            }
+            int vehiclePassengersStart = next * waitingList.size();
+            for (int p = vehiclePassengersStart; p < vehiclePassengersStart + waitingList.size(); p++) { //iterate through vehicle's passenger assignments
+                e.addTerm(1, travelTimexValues[p]);
+            }
+            c.addLe(e, 1); //sum of both must be <= 1
+            next++;
+        }*/
+
+
+
+
+        IloLinearNumExpr summation = c.linearNumExpr();
+        for (Node source : sources) { //objective: minimize the waiting list size (waiting list size - each passengersPerVehicle element for each passenger traveling from r to s)
+
+            for (Node  destination : destinations) {
+                //Node dest = destination.getDestination();
+
+                for (Passenger passenger : waitingList) {
+
+                    if (passenger.getOrigin() == source && passenger.getDestination() == destination) {
+                        int index = waitingList.indexOf(passenger);
+
+                        int betaIndex = matchPassengerRouteWithBetaIndex(passenger);
+
+                        for (int p = index; p < xValues.length; p += waitingList.size()) {  //if passenger is on designated route, add its xValues value to summation
+                            summation.addTerm(beta[betaIndex] * 1 * 20, xValues[p]);
+                        }
+
+                    }
+                }
+            }
+        }
+
+        int travelTimeCombo = 0;
+        int iterator = 0;
+        for (Vehicle v : availableVehiclesList) {
+            for (Passenger p : waitingList) {
+
+                v.createPath(v.getLoc(), p.getOrigin());
+                for (int y = 0; y < v.getPath().size(); y++) {
+                    travelTimeCombo += v.getPath().get(y).getTraveltime(); //calculate total travel time from vehicle location to passenger origin
+                }
+                int betaIndex = matchPassengerRouteWithBetaIndex(p);
+                summation.addTerm(xValues[iterator], beta[betaIndex] * travelTimeCombo * -1 * 0.01); // -1 is used since terms are being subtracted
+                iterator++;
+            }
+            travelTimeCombo = 0;
+        }
+
+
+        IloObjective objective = c.maximize(summation); // did not add waitingList size since size is just a constant offset
+        c.add(objective);
+
+        //try (FileOutputStream log = new FileOutputStream(getFilePath("cplex_log.txt"))) {
+        c.setOut(null);
+        //}
+
+        c.solve();
+
+        /*int place = 0;
+        for (Vehicle v: availableVehiclesList) {
+            for (Passenger p: waitingList) {
+                if (c.getValue(xValues[place]) != c.getValue(travelTimexValues[place])) {
+                    System.out.println("Different");
+                }
+                place++;
+            }
+        }*/
 
         return xValues; //xValues holds each of the vehicle/passenger assignments
 
@@ -485,8 +864,8 @@ public class Network {
 
         float totalTravelTime = 0;
 
-       // System.out.println(vehicle.getLoc());
-       // System.out.println(vehicle.getPassenger());
+        // System.out.println(vehicle.getLoc());
+        // System.out.println(vehicle.getPassenger());
 
         vehicle.createPath(vehicle.getLoc(), vehicle.getPassenger().getOrigin());
 
@@ -517,6 +896,7 @@ public class Network {
         else {
             if (writerOn) simulationWriter.write("Vehicle #" + vehicle.getId() + " is beginning route to assigned passenger | Travel time: " + totalTravelTime + " seconds\n");
             vehicle.setBeginningRouteToPassenger(true);
+            sumOfTravelTimes += totalTravelTime;
 
             if (vehicle.getPath().size() > 0) {
                 if (vehicle.getPath().get(vehicle.getPath().size() - 1).getDestination().getId() != vehicle.getPassenger().getOrigin().getId()) { //check if path destination and actual destination match
@@ -543,11 +923,11 @@ public class Network {
                     int index_p = 0;    //iterate through waiting list indexes
 
                     for (Vehicle v : availableVehiclesList) {   //iterate through vehicles
-                       // System.out.println("current waiting list: " + waitingList.size());
+                        // System.out.println("current waiting list: " + waitingList.size());
                         //System.out.println("(!) Vehicle #" + v.getId());
                         v.setIdle(true);
                         int offset = availableVehiclesList.indexOf(v)*waitingList.size();   //calculate beginning offset into xValues
-                       // System.out.println("offset: " + offset);
+                        // System.out.println("offset: " + offset);
                         iterator = offset;
                         for (int p = 0; p < waitingList.size(); p++) {
                             if (c.getValue(xValues[iterator]) == 1.0) { //check if specific vehicle is assigned to specific passenger
@@ -560,18 +940,20 @@ public class Network {
                                 //System.out.println("(!!) Vehicle #" + v.getId() + " has been assigned to passenger " + "[" + v.getPassenger() + "]");
 
                             }
-                                iterator++;
-                                index_p++;
+                            iterator++;
+                            index_p++;
                         }
                         index_p = 0;
                     }
 
                     if (vehicle.passenger != null) {
                         vehicle.setRequested(true);
-
+                        vehicle.used = true;
                         if (writerOn) simulationWriter.write("(!) Vehicle #" + vehicle.getId() + " has been assigned to passenger " + "[" + vehicle.getPassenger() + "]\n");
+                        totalNumberOfPassengers++;
+                        justAssignedVehicles.add(vehicle);
                     }
-                   // availableVehiclesList.remove(vehicle);
+                    // availableVehiclesList.remove(vehicle);
                 }
             }
 
@@ -579,6 +961,7 @@ public class Network {
             e.printStackTrace();
         }
     }
+
 
     private void sendVehiclesToEmptyNodes(boolean writerOn) throws IOException {
         int iterator = 0;
@@ -605,7 +988,48 @@ public class Network {
 
         for (Vehicle vehicle : availableVehiclesList) {
             if (vehicle.isSentToNode() && !vehicle.isEnRouteToNode()) {
-                if (writerOn && !vehicle.isAssignedSameNode()) simulationWriter.write("Vehicle #" + vehicle.getId() + " sent to node " + vehicle.getNode() + "counter: " + vehicle.getCounter() + "\n");
+                if (writerOn && !vehicle.isAssignedSameNode()) simulationWriter.write("Vehicle #" + vehicle.getId() + " sent to node " + vehicle.getNode() + "\n");
+                vehicle.setEnRouteToNode(true);
+            }
+        }
+    }
+    private void sendVehiclesRepositioningToEmptyNodes(boolean writerOn) throws IOException {
+        int iterator = 0;
+        int index;
+        int size = 0;
+
+        for (int r = 0; r < rValuesList.size(); r+= relocatableNodesList.size()) { //iterate through all origins
+            ArrayList<Integer> vehicleIndexes = new ArrayList<>();
+            for (int v = 0; v < availableVehiclesList.size(); v++) { //iterate through all vehicles
+                Vehicle vehicle = availableVehiclesList.get(v);
+                Zone vehicleLocation = (Zone) vehicle.getLoc();
+                if (vehicleLocation.getId() == relocatableNodesList.get(iterator).getId()) { //check if given vehicle is at given origin
+                    vehicleIndexes.add(v); //add vehicle index to array
+                }
+            }
+            for (int d = iterator*relocatableNodesList.size(); d < iterator*relocatableNodesList.size() + relocatableNodesList.size(); d++) { //iterates through possible destinations for given origin
+                int node = d - iterator*relocatableNodesList.size();
+                for (int v = 0; v < vehicleIndexes.size(); v++) {
+                    Vehicle vehicle = availableVehiclesList.get(v);
+                    if (rValuesList.get(d) > 0 && !vehicle.isSentToNode() && !vehicle.isRequested()) { //assign vehicle to node, check if node assigned and if vehicle is not already en route to empty node
+                        if (vehicle.getNode() == relocatableNodesList.get(node)) {
+                            vehicle.setAssignedSameNode(true);
+                        }
+                        else {
+                            rValuesList.set(d, rValuesList.get(d)-1); // updated the rvalues after a vehicle is assigned
+                            vehicle.sentToNode = true;
+                            vehicle.setAssignedSameNode(false);
+                            vehicle.setNode(relocatableNodesList.get(node));
+                        }
+                    }
+                }
+            }
+            iterator++;
+        }
+
+        for (Vehicle vehicle : availableVehiclesList) {
+            if (vehicle.isSentToNode() && !vehicle.isEnRouteToNode()) {
+                if (writerOn && !vehicle.isAssignedSameNode()) simulationWriter.write("Vehicle #" + vehicle.getId() + " sent to node " + vehicle.getNode() + "\n");
                 vehicle.setEnRouteToNode(true);
             }
         }
@@ -679,6 +1103,7 @@ public class Network {
                 if (temp.getType() == 1000) {
                     zoneList.add(temp);
                     relocatableNodesList.add(n);
+                    mainNodesList.add(n);
                 } else {
                     fakeZoneList.add(temp);
                 }
@@ -784,12 +1209,13 @@ public class Network {
     }
 
     //reads in passenger data and creates passengers and put them into passenger array list
-    private void createPassengers(String fileName) //call scanDemand before using this func and above func
+    private void createPassengers(String fileName, double scale) //call scanDemand before using this func and above func
     {
         File file = new File(fileName);
         try {
             Scanner s = new Scanner(file);
             int i = 0;
+            int id = 0;
             s.nextLine();
             while (passengers.size() < 200/*s.hasNextLine()*/) {   //reads passengers in file
                 //System.out.println(i);
@@ -809,6 +1235,7 @@ public class Network {
                 int end = start + (departureIdMap.get(ast)[1]);
                 Random r = new Random();
                 double demandval = demand.get(i);
+                demandval *= scale; //scale demand by 'scale' value
                 i++;
                 double floor = Math.floor(demandval);
                 double ceiling = Math.ceil(demandval);
@@ -818,11 +1245,12 @@ public class Network {
 
                     if (value == ceiling) { //if value rounded to ceiling, create passenger. If it rounded to floor, do not create passenger
                         departuretime = r.nextInt(end - start) + start;
-                        Passenger p = new Passenger(origin, dest, departuretime);
+                        Passenger p = new Passenger(origin, dest, departuretime, id);
+                        id++;
                         passengers.add(p);
                     }
-                //  if(demandval>checker)
-                //{
+                    //  if(demandval>checker)
+                    //{
                 }
                 // }
                 //s.nextLine();
@@ -891,15 +1319,27 @@ public class Network {
         return location;
     }
 
+    public int matchPassengerRouteWithBetaIndex (Passenger passenger) {
+
+        int originIndex = passenger.getOrigin().getId() % 1000 - 1; // mod 1000 to get individual ID, subtract one to get index
+        int destinationIndex = passenger.getDestination().getId() % 1000 - 1;
+
+        int index = originIndex * 24 + destinationIndex;
+
+        //System.out.println("Origin: " + passenger.getOrigin().getId() + " Destination: " + passenger.getDestination().getId() + " Index: " + index);
+
+        return index;
+    }
+
     private void printVehiclePath (Vehicle vehicle) {
-            System.out.print("Path: " + vehicle.getPath().get(0).getSource().getId());
-            for (Link link : vehicle.getPath()) {
-                if (vehicle.getPath().indexOf(link) != 0) {
-                    System.out.print(" -> ");
-                }
-                System.out.print(link.getDestination().getId());
+        System.out.print("Path: " + vehicle.getPath().get(0).getSource().getId());
+        for (Link link : vehicle.getPath()) {
+            if (vehicle.getPath().indexOf(link) != 0) {
+                System.out.print(" -> ");
             }
-            System.out.println();
+            System.out.print(link.getDestination().getId());
+        }
+        System.out.println();
     }
 
     private static String getFilePath(String fileName) {
