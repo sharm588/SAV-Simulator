@@ -125,12 +125,12 @@ public class Network {
         IloCplex c = new IloCplex();
         IloCplex r = new IloCplex();
         r.setOut(null);
-        IloIntVar[] initialAssignment = generateRepositioningAssignments(c);
-        //IloIntVar[] initialAssignment = generateAssignments(c); //initialize initial assignments
+        //IloIntVar[] initialAssignment = generateRepositioningAssignments(c);
+        IloIntVar[] initialAssignment = generateAssignments(c); //initialize initial assignments
 
-        RepositioningMethod(r);
-        sendVehiclesRepositioningToEmptyNodes(writerOn);
-        //sendVehiclesToEmptyNodes(writerOn);
+        //RepositioningMethod(r);
+        //sendVehiclesRepositioningToEmptyNodes(writerOn);
+        sendVehiclesToEmptyNodes(writerOn);
 
         for (Vehicle vehicle : vehicleList) { //assign a passenger to each vehicle of fleet
             assignPassengerToVehicle(vehicle, initialAssignment, c, writerOn);
@@ -190,11 +190,12 @@ public class Network {
                 }
             }
 
-            //IloIntVar[] newAssignment = generateAssignments(c); //generate new assignments for vehicles
-            IloIntVar[] newAssignment = generateRepositioningAssignments(c);
+            IloIntVar[] newAssignment = generateAssignments(c); //generate new assignments for vehicles
+            //IloIntVar[] newAssignment = generateRepositioningAssignments(c);
 
-            RepositioningMethod(r);
-            sendVehiclesRepositioningToEmptyNodes(writerOn);
+            //RepositioningMethod(r);
+            //sendVehiclesRepositioningToEmptyNodes(writerOn);
+            sendVehiclesToEmptyNodes(writerOn);
 
             for (Vehicle vehicle : availableVehiclesList) { //assign vehicles to passengers based on assignment above
                 assignPassengerToVehicle(vehicle, newAssignment, c, writerOn);
