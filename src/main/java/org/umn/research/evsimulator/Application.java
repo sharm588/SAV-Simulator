@@ -621,18 +621,19 @@ public class Application {
         //waitTime = network.simulate(7200, 4.339385779264273, 5.311728677228018, true);
         //System.out.println("Avg wait time: " + network.avgWaitTime);
 
-        while (scale != 130) {
+        while (size != 60) {
             double percent = scale * 100;
-            System.out.println("Scale: " + scale);
-            //runSimulation(betaVals, alphaVals, scale, size);
-            runSimulation(betaVals, alphaVals, scale, ratio);
-            //size += 5;
+            //System.out.println("Scale: " + scale);
+            System.out.println("Size: " + size);
+            runSimulation(betaVals, alphaVals, scale, size);
+            //runSimulation(betaVals, alphaVals, scale, ratio);
+            size += 5;
 
-            if (scale != 1.0) {
-                scale += 10.0;
-            } else {
-                scale += 9.0;
-            }
+//            if (size != 1.0) {
+//                scale += 10.0;
+//            } else {
+//                scale += 9.0;
+//            }
         }
 //        for (int i = 0; i < 1; i++) {
 //

@@ -53,6 +53,7 @@ public class Network {
     private ArrayList<Vehicle> justAssignedVehicles = new ArrayList<>();
     private static int validSim = 0;
     public int totalNumberOfRequests = 0;
+    public double travelTimes[] = new double[relocatableNodesList.size() * relocatableNodesList.size()]; //travel times for each possible route
 
     public static Network createNetwork() throws IOException{
         Network network = new Network();
@@ -123,7 +124,7 @@ public class Network {
 
         IloCplex c = new IloCplex();
         IloCplex r = new IloCplex();
-
+        r.setOut(null);
         IloIntVar[] initialAssignment = generateRepositioningAssignments(c);
         //IloIntVar[] initialAssignment = generateAssignments(c); //initialize initial assignments
 
@@ -407,14 +408,8 @@ public class Network {
         c.end();
         return avgWaitTime;
     }
-    //Testing reposotioning method to compare to another paper
-    public IloIntVar[] RepositioningMethod(IloCplex r) throws IloException, IOException {
-        IloLinearNumExpr summation = r.linearNumExpr();
-        int size = relocatableNodesList.size() * relocatableNodesList.size(); //all routes
-        IloIntVar[] rValues = r.intVarArray(size, 0, availableVehiclesList.size()); //vehicles that relocates from zone i to zone j
-        double travelTimes[] = new double[relocatableNodesList.size() * relocatableNodesList.size()]; //travel times for each possible route
-        double numberOfVehiclesAtGivenNode[] = new double[relocatableNodesList.size()];
-        double numberOfVehiclesRelocatingtoGivenNode[] = new double[relocatableNodesList.size()];
+
+    public void fillTravelTimesArray() {
         //filling travel times array with values
         int iterator = 0;
         for (int i = 0; i < relocatableNodesList.size(); i++) {
@@ -436,6 +431,14 @@ public class Network {
                 iterator++;
             }
         }
+    }
+    //Testing reposotioning method to compare to another paper
+    public IloIntVar[] RepositioningMethod(IloCplex r) throws IloException, IOException {
+        IloLinearNumExpr summation = r.linearNumExpr();
+        int size = relocatableNodesList.size() * relocatableNodesList.size(); //all routes
+        IloIntVar[] rValues = r.intVarArray(size, 0, availableVehiclesList.size()); //vehicles that relocates from zone i to zone j
+        double numberOfVehiclesAtGivenNode[] = new double[relocatableNodesList.size()];
+        double numberOfVehiclesRelocatingtoGivenNode[] = new double[relocatableNodesList.size()];
 
         //gets number of idle vehicles at a given node (vi)
         for (int node = 0; node < relocatableNodesList.size(); node++) {
@@ -469,7 +472,7 @@ public class Network {
 
         //vi + number of vehicles relocating to i
         double[] vehicleSupplyAtNode = new double[relocatableNodesList.size()];
-        for (int node = 0; node < relocatableNodesList.size(); node++){
+        for (int node = 0; node < relocatableNodesList.size(); node++) {
             int numberOfVehiclesDroppingPassenger = 0;
             for (int v = 0; v < vehicleList.size(); v++) {
                 if (vehicleList.get(v).isRequested() && !vehicleList.get(v).isDroppedOff()) {
@@ -1024,26 +1027,6 @@ public class Network {
             iterator++;
         }
 
-
-/**
- for (int v = 0; v < zValuesList.size(); v += relocatableNodesList.size()) { //iterate for each vehicle
-     Vehicle vehicle = availableVehiclesList.get(iterator);
-     for (int n = v; n < v + relocatableNodesList.size(); n++) { //iterate each node (for each vehicle)
-         if (zValuesList.get(n) == 1.0 && !vehicle.isSentToNode() && !vehicle.isRequested()) { //check if node assigned and if vehicle is not already en route to empty node
-             index = n - v;  // get nodesList index of node in zValueslist
-             if (vehicle.getNode() == relocatableNodesList.get(index)) {
-                 vehicle.setAssignedSameNode(true);
-             } else {
-                 vehicle.sentToNode = true;
-                 vehicle.setAssignedSameNode(false);
-                 //System.out.println("vehicle #" + vehicle.getId() + " assigned to " + nodesList.get(index));
-                 vehicle.setNode(relocatableNodesList.get(index));
-             }
-         }
-     }
-     iterator++;
- }
- ***/
         for (Vehicle vehicle : availableVehiclesList) {
             if (vehicle.isSentToNode() && !vehicle.isEnRouteToNode()) {
                 if (writerOn && !vehicle.isAssignedSameNode()) simulationWriter.write("Vehicle #" + vehicle.getId() + " sent to node " + vehicle.getNode() + "\n");
