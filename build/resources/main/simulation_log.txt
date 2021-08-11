@@ -1,0 +1,2573 @@
+Fleet size: 10
+Waiting List size: 3
+
+(!) Vehicle #1 has been assigned to passenger [Origin id: 9023 destination id: 9022 Departure time: 253]
+(!) Vehicle #5 has been assigned to passenger [Origin id: 9023 destination id: 9022 Departure time: 294]
+(!) Vehicle #8 has been assigned to passenger [Origin id: 9023 destination id: 9021 Departure time: 10]
+
+Time: 0 seconds
+
+Waiting List size: 0
+
+Vehicle #0 is stationary at empty node null
+Vehicle #1 is beginning route to assigned passenger | Travel time: 240.02272 seconds
+Vehicle #2 is stationary at empty node null
+Vehicle #3 is stationary at empty node null
+Vehicle #4 is stationary at empty node null
+Vehicle #5 is beginning route to assigned passenger | Travel time: 240.02272 seconds
+Vehicle #6 is stationary at empty node null
+Vehicle #7 is stationary at empty node null
+Vehicle #8 is beginning route to assigned passenger | Travel time: 420.0227 seconds
+Vehicle #9 is stationary at empty node null
+
+Available vehicles: 7
+
+
+Time: 30 seconds
+
+Waiting List size: 0
+
+Vehicle #0 is stationary at empty node null
+Vehicle #1 is heading towards passenger
+Vehicle #2 is stationary at empty node null
+Vehicle #3 is stationary at empty node null
+Vehicle #4 is stationary at empty node null
+Vehicle #5 is heading towards passenger
+Vehicle #6 is stationary at empty node null
+Vehicle #7 is stationary at empty node null
+Vehicle #8 is heading towards passenger
+Vehicle #9 is stationary at empty node null
+
+Available vehicles: 7
+
+
+Time: 60 seconds
+
+Waiting List size: 0
+
+Vehicle #0 is stationary at empty node null
+Vehicle #1 is heading towards passenger
+Vehicle #2 is stationary at empty node null
+Vehicle #3 is stationary at empty node null
+Vehicle #4 is stationary at empty node null
+Vehicle #5 is heading towards passenger
+Vehicle #6 is stationary at empty node null
+Vehicle #7 is stationary at empty node null
+Vehicle #8 is heading towards passenger
+Vehicle #9 is stationary at empty node null
+
+Available vehicles: 7
+
+
+Time: 90 seconds
+
+Waiting List size: 0
+
+Vehicle #0 is stationary at empty node null
+Vehicle #1 is heading towards passenger
+Vehicle #2 is stationary at empty node null
+Vehicle #3 is stationary at empty node null
+Vehicle #4 is stationary at empty node null
+Vehicle #5 is heading towards passenger
+Vehicle #6 is stationary at empty node null
+Vehicle #7 is stationary at empty node null
+Vehicle #8 is heading towards passenger
+Vehicle #9 is stationary at empty node null
+
+Available vehicles: 7
+
+
+Time: 120 seconds
+
+Waiting List size: 0
+
+Vehicle #0 is stationary at empty node null
+Vehicle #1 is heading towards passenger
+Vehicle #2 is stationary at empty node null
+Vehicle #3 is stationary at empty node null
+Vehicle #4 is stationary at empty node null
+Vehicle #5 is heading towards passenger
+Vehicle #6 is stationary at empty node null
+Vehicle #7 is stationary at empty node null
+Vehicle #8 is heading towards passenger
+Vehicle #9 is stationary at empty node null
+
+Available vehicles: 7
+
+
+Time: 150 seconds
+
+Waiting List size: 0
+
+Vehicle #0 is stationary at empty node null
+Vehicle #1 is heading towards passenger
+Vehicle #2 is stationary at empty node null
+Vehicle #3 is stationary at empty node null
+Vehicle #4 is stationary at empty node null
+Vehicle #5 is heading towards passenger
+Vehicle #6 is stationary at empty node null
+Vehicle #7 is stationary at empty node null
+Vehicle #8 is heading towards passenger
+Vehicle #9 is stationary at empty node null
+
+Available vehicles: 7
+
+
+Time: 180 seconds
+
+Waiting List size: 0
+
+Vehicle #0 is stationary at empty node null
+Vehicle #1 is heading towards passenger
+Vehicle #2 is stationary at empty node null
+Vehicle #3 is stationary at empty node null
+Vehicle #4 is stationary at empty node null
+Vehicle #5 is heading towards passenger
+Vehicle #6 is stationary at empty node null
+Vehicle #7 is stationary at empty node null
+Vehicle #8 is heading towards passenger
+Vehicle #9 is stationary at empty node null
+
+Available vehicles: 7
+
+
+Time: 210 seconds
+
+Waiting List size: 0
+
+Vehicle #0 is stationary at empty node null
+Vehicle #1 is heading towards passenger
+Vehicle #2 is stationary at empty node null
+Vehicle #3 is stationary at empty node null
+Vehicle #4 is stationary at empty node null
+Vehicle #5 is heading towards passenger
+Vehicle #6 is stationary at empty node null
+Vehicle #7 is stationary at empty node null
+Vehicle #8 is heading towards passenger
+Vehicle #9 is stationary at empty node null
+
+Available vehicles: 7
+
+
+Time: 240 seconds
+
+Waiting List size: 0
+
+Vehicle #0 is stationary at empty node null
+Vehicle #1 is heading towards passenger
+Vehicle #2 is stationary at empty node null
+Vehicle #3 is stationary at empty node null
+Vehicle #4 is stationary at empty node null
+Vehicle #5 is heading towards passenger
+Vehicle #6 is stationary at empty node null
+Vehicle #7 is stationary at empty node null
+Vehicle #8 is heading towards passenger
+Vehicle #9 is stationary at empty node null
+
+Available vehicles: 7
+
+
+Time: 270 seconds
+
+Waiting List size: 0
+
+Vehicle #0 is stationary at empty node null
+(!) Vehicle #1 picked up passenger [Origin id: 9023 destination id: 9022 Departure time: 253]
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is stationary at empty node null
+Vehicle #3 is stationary at empty node null
+Vehicle #4 is stationary at empty node null
+(!) Vehicle #5 picked up passenger [Origin id: 9023 destination id: 9022 Departure time: 294]
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is stationary at empty node null
+Vehicle #7 is stationary at empty node null
+Vehicle #8 is heading towards passenger
+Vehicle #9 is stationary at empty node null
+
+Available vehicles: 7
+
+
+Time: 300 seconds
+
+Waiting List size: 0
+
+Vehicle #0 is stationary at empty node null
+Vehicle #1 is beginning route to destination | Travel time: 240.02272 seconds
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is stationary at empty node null
+Vehicle #3 is stationary at empty node null
+Vehicle #4 is stationary at empty node null
+Vehicle #5 is beginning route to destination | Travel time: 240.02272 seconds
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is stationary at empty node null
+Vehicle #7 is stationary at empty node null
+Vehicle #8 is heading towards passenger
+Vehicle #9 is stationary at empty node null
+
+Available vehicles: 7
+
+
+Time: 330 seconds
+
+Waiting List size: 0
+
+Vehicle #0 is stationary at empty node null
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is stationary at empty node null
+Vehicle #3 is stationary at empty node null
+Vehicle #4 is stationary at empty node null
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is stationary at empty node null
+Vehicle #7 is stationary at empty node null
+Vehicle #8 is heading towards passenger
+Vehicle #9 is stationary at empty node null
+
+Available vehicles: 7
+
+
+Time: 360 seconds
+
+Waiting List size: 1
+
+(!) Vehicle #6 has been assigned to passenger [Origin id: 9023 destination id: 9020 Departure time: 332]
+Vehicle #0 is stationary at empty node null
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is stationary at empty node null
+Vehicle #3 is stationary at empty node null
+Vehicle #4 is stationary at empty node null
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is beginning route to assigned passenger | Travel time: 540.02264 seconds
+Vehicle #7 is stationary at empty node null
+Vehicle #8 is heading towards passenger
+Vehicle #9 is stationary at empty node null
+
+Available vehicles: 6
+
+
+Time: 390 seconds
+
+Waiting List size: 1
+
+(!) Vehicle #7 has been assigned to passenger [Origin id: 9023 destination id: 9001 Departure time: 374]
+Vehicle #0 is stationary at empty node null
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is stationary at empty node null
+Vehicle #3 is stationary at empty node null
+Vehicle #4 is stationary at empty node null
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is heading towards passenger
+Vehicle #7 is beginning route to assigned passenger | Travel time: 540.0227 seconds
+Vehicle #8 is heading towards passenger
+Vehicle #9 is stationary at empty node null
+
+Available vehicles: 5
+
+
+Time: 420 seconds
+
+Waiting List size: 0
+
+Vehicle #0 is stationary at empty node null
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is stationary at empty node null
+Vehicle #3 is stationary at empty node null
+Vehicle #4 is stationary at empty node null
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is heading towards passenger
+Vehicle #7 is heading towards passenger
+Vehicle #8 is heading towards passenger
+Vehicle #9 is stationary at empty node null
+
+Available vehicles: 5
+
+
+Time: 450 seconds
+
+Waiting List size: 2
+
+(!) Vehicle #3 has been assigned to passenger [Origin id: 9023 destination id: 9001 Departure time: 423]
+(!) Vehicle #4 has been assigned to passenger [Origin id: 9023 destination id: 9022 Departure time: 428]
+Vehicle #0 is stationary at empty node null
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is stationary at empty node null
+Vehicle #3 is beginning route to assigned passenger | Travel time: 840.0227 seconds
+Vehicle #4 is beginning route to assigned passenger | Travel time: 780.0227 seconds
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is heading towards passenger
+Vehicle #7 is heading towards passenger
+(!) Vehicle #8 picked up passenger [Origin id: 9023 destination id: 9021 Departure time: 10]
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is stationary at empty node null
+
+Available vehicles: 3
+
+
+Time: 480 seconds
+
+Waiting List size: 1
+
+(!) Vehicle #9 has been assigned to passenger [Origin id: 9023 destination id: 9020 Departure time: 459]
+Vehicle #0 is stationary at empty node null
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is stationary at empty node null
+Vehicle #3 is heading towards passenger
+Vehicle #4 is heading towards passenger
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is heading towards passenger
+Vehicle #7 is heading towards passenger
+Vehicle #8 is beginning route to destination | Travel time: 300.0227 seconds
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is beginning route to assigned passenger | Travel time: 960.02264 seconds
+
+Available vehicles: 2
+
+
+Time: 510 seconds
+
+Waiting List size: 0
+
+Vehicle #0 is stationary at empty node null
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is stationary at empty node null
+Vehicle #3 is heading towards passenger
+Vehicle #4 is heading towards passenger
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is heading towards passenger
+Vehicle #7 is heading towards passenger
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 2
+
+
+Time: 540 seconds
+
+Waiting List size: 0
+
+Vehicle #0 is stationary at empty node null
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is stationary at empty node null
+Vehicle #3 is heading towards passenger
+Vehicle #4 is heading towards passenger
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is heading towards passenger
+Vehicle #7 is heading towards passenger
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 2
+
+
+Time: 570 seconds
+
+Waiting List size: 0
+
+Vehicle #0 is stationary at empty node null
+(!) Vehicle #1 dropped off passenger [Origin id: 9023 destination id: 9022 Departure time: 253]
+Vehicle #2 is stationary at empty node null
+Vehicle #3 is heading towards passenger
+Vehicle #4 is heading towards passenger
+(!) Vehicle #5 dropped off passenger [Origin id: 9023 destination id: 9022 Departure time: 294]
+Vehicle #6 is heading towards passenger
+Vehicle #7 is heading towards passenger
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 4
+
+
+Time: 600 seconds
+
+Waiting List size: 1
+
+(!) Vehicle #1 has been assigned to passenger [Origin id: 9023 destination id: 9022 Departure time: 577]
+Vehicle #0 is stationary at empty node null
+Vehicle #1 is beginning route to assigned passenger | Travel time: 240.02272 seconds
+Vehicle #2 is stationary at empty node null
+Vehicle #3 is heading towards passenger
+Vehicle #4 is heading towards passenger
+Vehicle #5 is stationary at empty node null
+Vehicle #6 is heading towards passenger
+Vehicle #7 is heading towards passenger
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 3
+
+
+Time: 630 seconds
+
+Waiting List size: 1
+
+(!) Vehicle #5 has been assigned to passenger [Origin id: 9023 destination id: 9022 Departure time: 629]
+Vehicle #0 is stationary at empty node null
+Vehicle #1 is heading towards passenger
+Vehicle #2 is stationary at empty node null
+Vehicle #3 is heading towards passenger
+Vehicle #4 is heading towards passenger
+Vehicle #5 is beginning route to assigned passenger | Travel time: 240.02272 seconds
+Vehicle #6 is heading towards passenger
+Vehicle #7 is heading towards passenger
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 2
+
+
+Time: 660 seconds
+
+Waiting List size: 0
+
+Vehicle #0 is stationary at empty node null
+Vehicle #1 is heading towards passenger
+Vehicle #2 is stationary at empty node null
+Vehicle #3 is heading towards passenger
+Vehicle #4 is heading towards passenger
+Vehicle #5 is heading towards passenger
+Vehicle #6 is heading towards passenger
+Vehicle #7 is heading towards passenger
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 2
+
+
+Time: 690 seconds
+
+Waiting List size: 0
+
+Vehicle #0 is stationary at empty node null
+Vehicle #1 is heading towards passenger
+Vehicle #2 is stationary at empty node null
+Vehicle #3 is heading towards passenger
+Vehicle #4 is heading towards passenger
+Vehicle #5 is heading towards passenger
+Vehicle #6 is heading towards passenger
+Vehicle #7 is heading towards passenger
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 2
+
+
+Time: 720 seconds
+
+Waiting List size: 0
+
+Vehicle #0 is stationary at empty node null
+Vehicle #1 is heading towards passenger
+Vehicle #2 is stationary at empty node null
+Vehicle #3 is heading towards passenger
+Vehicle #4 is heading towards passenger
+Vehicle #5 is heading towards passenger
+Vehicle #6 is heading towards passenger
+Vehicle #7 is heading towards passenger
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 2
+
+
+Time: 750 seconds
+
+Waiting List size: 1
+
+(!) Vehicle #0 has been assigned to passenger [Origin id: 9023 destination id: 9007 Departure time: 727]
+Vehicle #0 is beginning route to assigned passenger | Travel time: 1080.0227 seconds
+Vehicle #1 is heading towards passenger
+Vehicle #2 is stationary at empty node null
+Vehicle #3 is heading towards passenger
+Vehicle #4 is heading towards passenger
+Vehicle #5 is heading towards passenger
+Vehicle #6 is heading towards passenger
+Vehicle #7 is heading towards passenger
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 1
+
+
+Time: 780 seconds
+
+Waiting List size: 0
+
+Vehicle #0 is heading towards passenger
+Vehicle #1 is heading towards passenger
+Vehicle #2 is stationary at empty node null
+Vehicle #3 is heading towards passenger
+Vehicle #4 is heading towards passenger
+Vehicle #5 is heading towards passenger
+Vehicle #6 is heading towards passenger
+Vehicle #7 is heading towards passenger
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 1
+
+
+Time: 810 seconds
+
+Waiting List size: 1
+
+(!) Vehicle #2 has been assigned to passenger [Origin id: 9023 destination id: 9022 Departure time: 783]
+Vehicle #0 is heading towards passenger
+Vehicle #1 is heading towards passenger
+Vehicle #2 is beginning route to assigned passenger | Travel time: 1380.0226 seconds
+Vehicle #3 is heading towards passenger
+Vehicle #4 is heading towards passenger
+Vehicle #5 is heading towards passenger
+Vehicle #6 is heading towards passenger
+Vehicle #7 is heading towards passenger
+(!) Vehicle #8 dropped off passenger [Origin id: 9023 destination id: 9021 Departure time: 10]
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 1
+
+
+Time: 840 seconds
+
+Waiting List size: 0
+
+Vehicle #0 is heading towards passenger
+Vehicle #1 is heading towards passenger
+Vehicle #2 is heading towards passenger
+Vehicle #3 is heading towards passenger
+Vehicle #4 is heading towards passenger
+Vehicle #5 is heading towards passenger
+Vehicle #6 is heading towards passenger
+Vehicle #7 is heading towards passenger
+Vehicle #8 is stationary at empty node null
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 1
+
+
+Time: 870 seconds
+
+Waiting List size: 0
+
+Vehicle #0 is heading towards passenger
+(!) Vehicle #1 picked up passenger [Origin id: 9023 destination id: 9022 Departure time: 577]
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is heading towards passenger
+Vehicle #3 is heading towards passenger
+Vehicle #4 is heading towards passenger
+Vehicle #5 is heading towards passenger
+Vehicle #6 is heading towards passenger
+Vehicle #7 is heading towards passenger
+Vehicle #8 is stationary at empty node null
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 1
+
+
+Time: 900 seconds
+
+Waiting List size: 1
+
+(!) Vehicle #8 has been assigned to passenger [Origin id: 9023 destination id: 9004 Departure time: 881]
+Vehicle #0 is heading towards passenger
+Vehicle #1 is beginning route to destination | Travel time: 240.02272 seconds
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is heading towards passenger
+Vehicle #3 is heading towards passenger
+Vehicle #4 is heading towards passenger
+(!) Vehicle #5 picked up passenger [Origin id: 9023 destination id: 9022 Departure time: 629]
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is heading towards passenger
+Vehicle #7 is heading towards passenger
+Vehicle #8 is beginning route to assigned passenger | Travel time: 300.0227 seconds
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 0
+
+
+Time: 930 seconds
+
+Waiting List size: 2
+
+Vehicle #0 is heading towards passenger
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is heading towards passenger
+Vehicle #3 is heading towards passenger
+Vehicle #4 is heading towards passenger
+Vehicle #5 is beginning route to destination | Travel time: 240.02272 seconds
+Vehicle #5 is driving passenger to destination
+(!) Vehicle #6 picked up passenger [Origin id: 9023 destination id: 9020 Departure time: 332]
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is heading towards passenger
+Vehicle #8 is heading towards passenger
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 0
+
+
+Time: 960 seconds
+
+Waiting List size: 2
+
+Vehicle #0 is heading towards passenger
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is heading towards passenger
+Vehicle #3 is heading towards passenger
+Vehicle #4 is heading towards passenger
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is beginning route to destination | Travel time: 540.0227 seconds
+Vehicle #6 is driving passenger to destination
+(!) Vehicle #7 picked up passenger [Origin id: 9023 destination id: 9001 Departure time: 374]
+Vehicle #7 is driving passenger to destination
+Vehicle #8 is heading towards passenger
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 0
+
+
+Time: 990 seconds
+
+Waiting List size: 2
+
+Vehicle #0 is heading towards passenger
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is heading towards passenger
+Vehicle #3 is heading towards passenger
+Vehicle #4 is heading towards passenger
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is beginning route to destination | Travel time: 1020.0227 seconds
+Vehicle #7 is driving passenger to destination
+Vehicle #8 is heading towards passenger
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 0
+
+
+Time: 1020 seconds
+
+Waiting List size: 4
+
+Vehicle #0 is heading towards passenger
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is heading towards passenger
+Vehicle #3 is heading towards passenger
+Vehicle #4 is heading towards passenger
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is driving passenger to destination
+Vehicle #8 is heading towards passenger
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 0
+
+
+Time: 1050 seconds
+
+Waiting List size: 4
+
+Vehicle #0 is heading towards passenger
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is heading towards passenger
+Vehicle #3 is heading towards passenger
+Vehicle #4 is heading towards passenger
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is driving passenger to destination
+Vehicle #8 is heading towards passenger
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 0
+
+
+Time: 1080 seconds
+
+Waiting List size: 4
+
+Vehicle #0 is heading towards passenger
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is heading towards passenger
+Vehicle #3 is heading towards passenger
+Vehicle #4 is heading towards passenger
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is driving passenger to destination
+Vehicle #8 is heading towards passenger
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 0
+
+
+Time: 1110 seconds
+
+Waiting List size: 5
+
+Vehicle #0 is heading towards passenger
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is heading towards passenger
+Vehicle #3 is heading towards passenger
+Vehicle #4 is heading towards passenger
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is driving passenger to destination
+Vehicle #8 is heading towards passenger
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 0
+
+
+Time: 1140 seconds
+
+Waiting List size: 5
+
+Vehicle #0 is heading towards passenger
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is heading towards passenger
+Vehicle #3 is heading towards passenger
+Vehicle #4 is heading towards passenger
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is driving passenger to destination
+Vehicle #8 is heading towards passenger
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 0
+
+
+Time: 1170 seconds
+
+Waiting List size: 5
+
+Vehicle #0 is heading towards passenger
+(!) Vehicle #1 dropped off passenger [Origin id: 9023 destination id: 9022 Departure time: 577]
+Vehicle #2 is heading towards passenger
+Vehicle #3 is heading towards passenger
+Vehicle #4 is heading towards passenger
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is driving passenger to destination
+Vehicle #8 is heading towards passenger
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 1
+
+
+Time: 1200 seconds
+
+Waiting List size: 5
+
+(!) Vehicle #1 has been assigned to passenger [Origin id: 9023 destination id: 9007 Departure time: 902]
+Vehicle #0 is heading towards passenger
+Vehicle #1 is beginning route to assigned passenger | Travel time: 240.02272 seconds
+Vehicle #2 is heading towards passenger
+Vehicle #3 is heading towards passenger
+Vehicle #4 is heading towards passenger
+(!) Vehicle #5 dropped off passenger [Origin id: 9023 destination id: 9022 Departure time: 629]
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is driving passenger to destination
+Vehicle #8 is heading towards passenger
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 1
+
+
+Time: 1230 seconds
+
+Waiting List size: 5
+
+(!) Vehicle #5 has been assigned to passenger [Origin id: 9023 destination id: 9022 Departure time: 923]
+Vehicle #0 is heading towards passenger
+Vehicle #1 is heading towards passenger
+Vehicle #2 is heading towards passenger
+Vehicle #3 is heading towards passenger
+Vehicle #4 is heading towards passenger
+Vehicle #5 is beginning route to assigned passenger | Travel time: 240.02272 seconds
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is driving passenger to destination
+(!) Vehicle #8 picked up passenger [Origin id: 9023 destination id: 9004 Departure time: 881]
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 0
+
+
+Time: 1260 seconds
+
+Waiting List size: 4
+
+Vehicle #0 is heading towards passenger
+Vehicle #1 is heading towards passenger
+Vehicle #2 is heading towards passenger
+Vehicle #3 is heading towards passenger
+(!) Vehicle #4 picked up passenger [Origin id: 9023 destination id: 9022 Departure time: 428]
+Vehicle #4 is driving passenger to destination
+Vehicle #5 is heading towards passenger
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is driving passenger to destination
+Vehicle #8 is beginning route to destination | Travel time: 840.0227 seconds
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 0
+
+
+Time: 1290 seconds
+
+Waiting List size: 5
+
+Vehicle #0 is heading towards passenger
+Vehicle #1 is heading towards passenger
+Vehicle #2 is heading towards passenger
+Vehicle #3 is heading towards passenger
+Vehicle #4 is beginning route to destination | Travel time: 240.02272 seconds
+Vehicle #4 is driving passenger to destination
+Vehicle #5 is heading towards passenger
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is driving passenger to destination
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 0
+
+
+Time: 1320 seconds
+
+Waiting List size: 5
+
+Vehicle #0 is heading towards passenger
+Vehicle #1 is heading towards passenger
+Vehicle #2 is heading towards passenger
+(!) Vehicle #3 picked up passenger [Origin id: 9023 destination id: 9001 Departure time: 423]
+Vehicle #3 is driving passenger to destination
+Vehicle #4 is driving passenger to destination
+Vehicle #5 is heading towards passenger
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is driving passenger to destination
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 0
+
+
+Time: 1350 seconds
+
+Waiting List size: 6
+
+Vehicle #0 is heading towards passenger
+Vehicle #1 is heading towards passenger
+Vehicle #2 is heading towards passenger
+Vehicle #3 is beginning route to destination | Travel time: 1020.0227 seconds
+Vehicle #3 is driving passenger to destination
+Vehicle #4 is driving passenger to destination
+Vehicle #5 is heading towards passenger
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is driving passenger to destination
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 0
+
+
+Time: 1380 seconds
+
+Waiting List size: 6
+
+Vehicle #0 is heading towards passenger
+Vehicle #1 is heading towards passenger
+Vehicle #2 is heading towards passenger
+Vehicle #3 is driving passenger to destination
+Vehicle #4 is driving passenger to destination
+Vehicle #5 is heading towards passenger
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is driving passenger to destination
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 0
+
+
+Time: 1410 seconds
+
+Waiting List size: 6
+
+Vehicle #0 is heading towards passenger
+Vehicle #1 is heading towards passenger
+Vehicle #2 is heading towards passenger
+Vehicle #3 is driving passenger to destination
+Vehicle #4 is driving passenger to destination
+Vehicle #5 is heading towards passenger
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is driving passenger to destination
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 0
+
+
+Time: 1440 seconds
+
+Waiting List size: 6
+
+Vehicle #0 is heading towards passenger
+Vehicle #1 is heading towards passenger
+Vehicle #2 is heading towards passenger
+Vehicle #3 is driving passenger to destination
+Vehicle #4 is driving passenger to destination
+Vehicle #5 is heading towards passenger
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is driving passenger to destination
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 0
+
+
+Time: 1470 seconds
+
+Waiting List size: 6
+
+Vehicle #0 is heading towards passenger
+(!) Vehicle #1 picked up passenger [Origin id: 9023 destination id: 9007 Departure time: 902]
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is heading towards passenger
+Vehicle #3 is driving passenger to destination
+Vehicle #4 is driving passenger to destination
+Vehicle #5 is heading towards passenger
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is driving passenger to destination
+Vehicle #8 is driving passenger to destination
+(!) Vehicle #9 picked up passenger [Origin id: 9023 destination id: 9020 Departure time: 459]
+Vehicle #9 is driving passenger to destination
+
+Available vehicles: 0
+
+
+Time: 1500 seconds
+
+Waiting List size: 7
+
+Vehicle #0 is heading towards passenger
+Vehicle #1 is beginning route to destination | Travel time: 900.0227 seconds
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is heading towards passenger
+Vehicle #3 is driving passenger to destination
+Vehicle #4 is driving passenger to destination
+(!) Vehicle #5 picked up passenger [Origin id: 9023 destination id: 9022 Departure time: 923]
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is driving passenger to destination
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is beginning route to destination | Travel time: 540.0227 seconds
+Vehicle #9 is driving passenger to destination
+
+Available vehicles: 0
+
+
+Time: 1530 seconds
+
+Waiting List size: 9
+
+Vehicle #0 is heading towards passenger
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is heading towards passenger
+Vehicle #3 is driving passenger to destination
+Vehicle #4 is driving passenger to destination
+Vehicle #5 is beginning route to destination | Travel time: 240.02272 seconds
+Vehicle #5 is driving passenger to destination
+(!) Vehicle #6 dropped off passenger [Origin id: 9023 destination id: 9020 Departure time: 332]
+Vehicle #7 is driving passenger to destination
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is driving passenger to destination
+
+Available vehicles: 1
+
+
+Time: 1560 seconds
+
+Waiting List size: 9
+
+(!) Vehicle #6 has been assigned to passenger [Origin id: 9023 destination id: 9022 Departure time: 1018]
+Vehicle #0 is heading towards passenger
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is heading towards passenger
+Vehicle #3 is driving passenger to destination
+(!) Vehicle #4 dropped off passenger [Origin id: 9023 destination id: 9022 Departure time: 428]
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is beginning route to assigned passenger | Travel time: 540.02264 seconds
+Vehicle #7 is driving passenger to destination
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is driving passenger to destination
+
+Available vehicles: 1
+
+
+Time: 1590 seconds
+
+Waiting List size: 8
+
+(!) Vehicle #4 has been assigned to passenger [Origin id: 9023 destination id: 9020 Departure time: 996]
+Vehicle #0 is heading towards passenger
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is heading towards passenger
+Vehicle #3 is driving passenger to destination
+Vehicle #4 is beginning route to assigned passenger | Travel time: 240.02272 seconds
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is heading towards passenger
+Vehicle #7 is driving passenger to destination
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is driving passenger to destination
+
+Available vehicles: 0
+
+
+Time: 1620 seconds
+
+Waiting List size: 8
+
+Vehicle #0 is heading towards passenger
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is heading towards passenger
+Vehicle #3 is driving passenger to destination
+Vehicle #4 is heading towards passenger
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is heading towards passenger
+Vehicle #7 is driving passenger to destination
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is driving passenger to destination
+
+Available vehicles: 0
+
+
+Time: 1650 seconds
+
+Waiting List size: 9
+
+Vehicle #0 is heading towards passenger
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is heading towards passenger
+Vehicle #3 is driving passenger to destination
+Vehicle #4 is heading towards passenger
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is heading towards passenger
+Vehicle #7 is driving passenger to destination
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is driving passenger to destination
+
+Available vehicles: 0
+
+
+Time: 1680 seconds
+
+Waiting List size: 9
+
+Vehicle #0 is heading towards passenger
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is heading towards passenger
+Vehicle #3 is driving passenger to destination
+Vehicle #4 is heading towards passenger
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is heading towards passenger
+Vehicle #7 is driving passenger to destination
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is driving passenger to destination
+
+Available vehicles: 0
+
+
+Time: 1710 seconds
+
+Waiting List size: 9
+
+Vehicle #0 is heading towards passenger
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is heading towards passenger
+Vehicle #3 is driving passenger to destination
+Vehicle #4 is heading towards passenger
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is heading towards passenger
+Vehicle #7 is driving passenger to destination
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is driving passenger to destination
+
+Available vehicles: 0
+
+
+Time: 1740 seconds
+
+Waiting List size: 9
+
+Vehicle #0 is heading towards passenger
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is heading towards passenger
+Vehicle #3 is driving passenger to destination
+Vehicle #4 is heading towards passenger
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is heading towards passenger
+Vehicle #7 is driving passenger to destination
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is driving passenger to destination
+
+Available vehicles: 0
+
+
+Time: 1770 seconds
+
+Waiting List size: 10
+
+Vehicle #0 is heading towards passenger
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is heading towards passenger
+Vehicle #3 is driving passenger to destination
+Vehicle #4 is heading towards passenger
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is heading towards passenger
+Vehicle #7 is driving passenger to destination
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is driving passenger to destination
+
+Available vehicles: 0
+
+
+Time: 1800 seconds
+
+Waiting List size: 10
+
+Vehicle #0 is heading towards passenger
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is heading towards passenger
+Vehicle #3 is driving passenger to destination
+Vehicle #4 is heading towards passenger
+(!) Vehicle #5 dropped off passenger [Origin id: 9023 destination id: 9022 Departure time: 923]
+Vehicle #6 is heading towards passenger
+Vehicle #7 is driving passenger to destination
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is driving passenger to destination
+
+Available vehicles: 1
+
+
+Time: 1830 seconds
+
+Waiting List size: 10
+
+(!) Vehicle #5 has been assigned to passenger [Origin id: 9023 destination id: 9022 Departure time: 1109]
+Vehicle #0 is heading towards passenger
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is heading towards passenger
+Vehicle #3 is driving passenger to destination
+Vehicle #4 is heading towards passenger
+Vehicle #5 is beginning route to assigned passenger | Travel time: 240.02272 seconds
+Vehicle #6 is heading towards passenger
+Vehicle #7 is driving passenger to destination
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is driving passenger to destination
+
+Available vehicles: 0
+
+
+Time: 1860 seconds
+
+Waiting List size: 10
+
+(!) Vehicle #0 picked up passenger [Origin id: 9023 destination id: 9007 Departure time: 727]
+Vehicle #0 is driving passenger to destination
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is heading towards passenger
+Vehicle #3 is driving passenger to destination
+(!) Vehicle #4 picked up passenger [Origin id: 9023 destination id: 9020 Departure time: 996]
+Vehicle #4 is driving passenger to destination
+Vehicle #5 is heading towards passenger
+Vehicle #6 is heading towards passenger
+Vehicle #7 is driving passenger to destination
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is driving passenger to destination
+
+Available vehicles: 0
+
+
+Time: 1890 seconds
+
+Waiting List size: 10
+
+Vehicle #0 is beginning route to destination | Travel time: 900.0227 seconds
+Vehicle #0 is driving passenger to destination
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is heading towards passenger
+Vehicle #3 is driving passenger to destination
+Vehicle #4 is beginning route to destination | Travel time: 540.0227 seconds
+Vehicle #4 is driving passenger to destination
+Vehicle #5 is heading towards passenger
+Vehicle #6 is heading towards passenger
+Vehicle #7 is driving passenger to destination
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is driving passenger to destination
+
+Available vehicles: 0
+
+
+Time: 1920 seconds
+
+Waiting List size: 10
+
+Vehicle #0 is driving passenger to destination
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is heading towards passenger
+Vehicle #3 is driving passenger to destination
+Vehicle #4 is driving passenger to destination
+Vehicle #5 is heading towards passenger
+Vehicle #6 is heading towards passenger
+Vehicle #7 is driving passenger to destination
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is driving passenger to destination
+
+Available vehicles: 0
+
+
+Time: 1950 seconds
+
+Waiting List size: 10
+
+Vehicle #0 is driving passenger to destination
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is heading towards passenger
+Vehicle #3 is driving passenger to destination
+Vehicle #4 is driving passenger to destination
+Vehicle #5 is heading towards passenger
+Vehicle #6 is heading towards passenger
+Vehicle #7 is driving passenger to destination
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is driving passenger to destination
+
+Available vehicles: 0
+
+
+Time: 1980 seconds
+
+Waiting List size: 11
+
+Vehicle #0 is driving passenger to destination
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is heading towards passenger
+Vehicle #3 is driving passenger to destination
+Vehicle #4 is driving passenger to destination
+Vehicle #5 is heading towards passenger
+Vehicle #6 is heading towards passenger
+Vehicle #7 is driving passenger to destination
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is driving passenger to destination
+
+Available vehicles: 0
+
+
+Time: 2010 seconds
+
+Waiting List size: 12
+
+Vehicle #0 is driving passenger to destination
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is heading towards passenger
+Vehicle #3 is driving passenger to destination
+Vehicle #4 is driving passenger to destination
+Vehicle #5 is heading towards passenger
+Vehicle #6 is heading towards passenger
+Vehicle #7 is driving passenger to destination
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is driving passenger to destination
+
+Available vehicles: 0
+
+
+Time: 2040 seconds
+
+Waiting List size: 12
+
+Vehicle #0 is driving passenger to destination
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is heading towards passenger
+Vehicle #3 is driving passenger to destination
+Vehicle #4 is driving passenger to destination
+Vehicle #5 is heading towards passenger
+Vehicle #6 is heading towards passenger
+(!) Vehicle #7 dropped off passenger [Origin id: 9023 destination id: 9001 Departure time: 374]
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is driving passenger to destination
+
+Available vehicles: 1
+
+
+Time: 2070 seconds
+
+Waiting List size: 12
+
+(!) Vehicle #7 has been assigned to passenger [Origin id: 9023 destination id: 9020 Departure time: 1219]
+Vehicle #0 is driving passenger to destination
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is heading towards passenger
+Vehicle #3 is driving passenger to destination
+Vehicle #4 is driving passenger to destination
+Vehicle #5 is heading towards passenger
+Vehicle #6 is heading towards passenger
+Vehicle #7 is beginning route to assigned passenger | Travel time: 1020.0227 seconds
+Vehicle #8 is driving passenger to destination
+(!) Vehicle #9 dropped off passenger [Origin id: 9023 destination id: 9020 Departure time: 459]
+
+Available vehicles: 1
+
+
+Time: 2100 seconds
+
+Waiting List size: 11
+
+(!) Vehicle #9 has been assigned to passenger [Origin id: 9023 destination id: 9020 Departure time: 1485]
+Vehicle #0 is driving passenger to destination
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is heading towards passenger
+Vehicle #3 is driving passenger to destination
+Vehicle #4 is driving passenger to destination
+(!) Vehicle #5 picked up passenger [Origin id: 9023 destination id: 9022 Departure time: 1109]
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is heading towards passenger
+Vehicle #7 is heading towards passenger
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is beginning route to assigned passenger | Travel time: 540.02264 seconds
+
+Available vehicles: 0
+
+
+Time: 2130 seconds
+
+Waiting List size: 11
+
+Vehicle #0 is driving passenger to destination
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is heading towards passenger
+Vehicle #3 is driving passenger to destination
+Vehicle #4 is driving passenger to destination
+Vehicle #5 is beginning route to destination | Travel time: 240.02272 seconds
+Vehicle #5 is driving passenger to destination
+(!) Vehicle #6 picked up passenger [Origin id: 9023 destination id: 9022 Departure time: 1018]
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is heading towards passenger
+(!) Vehicle #8 dropped off passenger [Origin id: 9023 destination id: 9004 Departure time: 881]
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 1
+
+
+Time: 2160 seconds
+
+Waiting List size: 11
+
+(!) Vehicle #8 has been assigned to passenger [Origin id: 9023 destination id: 9001 Departure time: 1262]
+Vehicle #0 is driving passenger to destination
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is heading towards passenger
+Vehicle #3 is driving passenger to destination
+Vehicle #4 is driving passenger to destination
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is beginning route to destination | Travel time: 240.02272 seconds
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is heading towards passenger
+Vehicle #8 is beginning route to assigned passenger | Travel time: 840.02264 seconds
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 0
+
+
+Time: 2190 seconds
+
+Waiting List size: 10
+
+Vehicle #0 is driving passenger to destination
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is heading towards passenger
+Vehicle #3 is driving passenger to destination
+Vehicle #4 is driving passenger to destination
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is heading towards passenger
+Vehicle #8 is heading towards passenger
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 0
+
+
+Time: 2220 seconds
+
+Waiting List size: 11
+
+Vehicle #0 is driving passenger to destination
+Vehicle #1 is driving passenger to destination
+(!) Vehicle #2 picked up passenger [Origin id: 9023 destination id: 9022 Departure time: 783]
+Vehicle #2 is driving passenger to destination
+Vehicle #3 is driving passenger to destination
+Vehicle #4 is driving passenger to destination
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is heading towards passenger
+Vehicle #8 is heading towards passenger
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 0
+
+
+Time: 2250 seconds
+
+Waiting List size: 11
+
+Vehicle #0 is driving passenger to destination
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is beginning route to destination | Travel time: 240.02272 seconds
+Vehicle #2 is driving passenger to destination
+Vehicle #3 is driving passenger to destination
+Vehicle #4 is driving passenger to destination
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is heading towards passenger
+Vehicle #8 is heading towards passenger
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 0
+
+
+Time: 2280 seconds
+
+Waiting List size: 11
+
+Vehicle #0 is driving passenger to destination
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is driving passenger to destination
+Vehicle #3 is driving passenger to destination
+Vehicle #4 is driving passenger to destination
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is heading towards passenger
+Vehicle #8 is heading towards passenger
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 0
+
+
+Time: 2310 seconds
+
+Waiting List size: 12
+
+Vehicle #0 is driving passenger to destination
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is driving passenger to destination
+Vehicle #3 is driving passenger to destination
+Vehicle #4 is driving passenger to destination
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is heading towards passenger
+Vehicle #8 is heading towards passenger
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 0
+
+
+Time: 2340 seconds
+
+Waiting List size: 13
+
+Vehicle #0 is driving passenger to destination
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is driving passenger to destination
+Vehicle #3 is driving passenger to destination
+Vehicle #4 is driving passenger to destination
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is heading towards passenger
+Vehicle #8 is heading towards passenger
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 0
+
+
+Time: 2370 seconds
+
+Waiting List size: 13
+
+Vehicle #0 is driving passenger to destination
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is driving passenger to destination
+Vehicle #3 is driving passenger to destination
+Vehicle #4 is driving passenger to destination
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is heading towards passenger
+Vehicle #8 is heading towards passenger
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 0
+
+
+Time: 2400 seconds
+
+Waiting List size: 13
+
+Vehicle #0 is driving passenger to destination
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is driving passenger to destination
+(!) Vehicle #3 dropped off passenger [Origin id: 9023 destination id: 9001 Departure time: 423]
+Vehicle #4 is driving passenger to destination
+(!) Vehicle #5 dropped off passenger [Origin id: 9023 destination id: 9022 Departure time: 1109]
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is heading towards passenger
+Vehicle #8 is heading towards passenger
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 2
+
+
+Time: 2430 seconds
+
+Waiting List size: 13
+
+(!) Vehicle #3 has been assigned to passenger [Origin id: 9023 destination id: 9021 Departure time: 1347]
+(!) Vehicle #5 has been assigned to passenger [Origin id: 9023 destination id: 9022 Departure time: 1525]
+Vehicle #0 is driving passenger to destination
+(!) Vehicle #1 dropped off passenger [Origin id: 9023 destination id: 9007 Departure time: 902]
+Vehicle #2 is driving passenger to destination
+Vehicle #3 is beginning route to assigned passenger | Travel time: 1020.0227 seconds
+Vehicle #4 is driving passenger to destination
+Vehicle #5 is beginning route to assigned passenger | Travel time: 240.02272 seconds
+(!) Vehicle #6 dropped off passenger [Origin id: 9023 destination id: 9022 Departure time: 1018]
+Vehicle #7 is heading towards passenger
+Vehicle #8 is heading towards passenger
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 2
+
+
+Time: 2460 seconds
+
+Waiting List size: 11
+
+(!) Vehicle #1 has been assigned to passenger [Origin id: 9023 destination id: 9022 Departure time: 1522]
+(!) Vehicle #6 has been assigned to passenger [Origin id: 9023 destination id: 9022 Departure time: 1627]
+Vehicle #0 is driving passenger to destination
+Vehicle #1 is beginning route to assigned passenger | Travel time: 900.0227 seconds
+Vehicle #2 is driving passenger to destination
+Vehicle #3 is heading towards passenger
+(!) Vehicle #4 dropped off passenger [Origin id: 9023 destination id: 9020 Departure time: 996]
+Vehicle #5 is heading towards passenger
+Vehicle #6 is beginning route to assigned passenger | Travel time: 240.02272 seconds
+Vehicle #7 is heading towards passenger
+Vehicle #8 is heading towards passenger
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 1
+
+
+Time: 2490 seconds
+
+Waiting List size: 9
+
+(!) Vehicle #4 has been assigned to passenger [Origin id: 9023 destination id: 9022 Departure time: 1742]
+Vehicle #0 is driving passenger to destination
+Vehicle #1 is heading towards passenger
+Vehicle #2 is driving passenger to destination
+Vehicle #3 is heading towards passenger
+Vehicle #4 is beginning route to assigned passenger | Travel time: 540.02264 seconds
+Vehicle #5 is heading towards passenger
+Vehicle #6 is heading towards passenger
+Vehicle #7 is heading towards passenger
+Vehicle #8 is heading towards passenger
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 0
+
+
+Time: 2520 seconds
+
+Waiting List size: 9
+
+Vehicle #0 is driving passenger to destination
+Vehicle #1 is heading towards passenger
+(!) Vehicle #2 dropped off passenger [Origin id: 9023 destination id: 9022 Departure time: 783]
+Vehicle #3 is heading towards passenger
+Vehicle #4 is heading towards passenger
+Vehicle #5 is heading towards passenger
+Vehicle #6 is heading towards passenger
+Vehicle #7 is heading towards passenger
+Vehicle #8 is heading towards passenger
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 1
+
+
+Time: 2550 seconds
+
+Waiting List size: 9
+
+(!) Vehicle #2 has been assigned to passenger [Origin id: 9023 destination id: 9022 Departure time: 1956]
+Vehicle #0 is driving passenger to destination
+Vehicle #1 is heading towards passenger
+Vehicle #2 is beginning route to assigned passenger | Travel time: 240.02272 seconds
+Vehicle #3 is heading towards passenger
+Vehicle #4 is heading towards passenger
+Vehicle #5 is heading towards passenger
+Vehicle #6 is heading towards passenger
+Vehicle #7 is heading towards passenger
+Vehicle #8 is heading towards passenger
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 0
+
+
+Time: 2580 seconds
+
+Waiting List size: 8
+
+Vehicle #0 is driving passenger to destination
+Vehicle #1 is heading towards passenger
+Vehicle #2 is heading towards passenger
+Vehicle #3 is heading towards passenger
+Vehicle #4 is heading towards passenger
+Vehicle #5 is heading towards passenger
+Vehicle #6 is heading towards passenger
+Vehicle #7 is heading towards passenger
+Vehicle #8 is heading towards passenger
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 0
+
+
+Time: 2610 seconds
+
+Waiting List size: 8
+
+Vehicle #0 is driving passenger to destination
+Vehicle #1 is heading towards passenger
+Vehicle #2 is heading towards passenger
+Vehicle #3 is heading towards passenger
+Vehicle #4 is heading towards passenger
+Vehicle #5 is heading towards passenger
+Vehicle #6 is heading towards passenger
+Vehicle #7 is heading towards passenger
+Vehicle #8 is heading towards passenger
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 0
+
+
+Time: 2640 seconds
+
+Waiting List size: 8
+
+Vehicle #0 is driving passenger to destination
+Vehicle #1 is heading towards passenger
+Vehicle #2 is heading towards passenger
+Vehicle #3 is heading towards passenger
+Vehicle #4 is heading towards passenger
+Vehicle #5 is heading towards passenger
+Vehicle #6 is heading towards passenger
+Vehicle #7 is heading towards passenger
+Vehicle #8 is heading towards passenger
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 0
+
+
+Time: 2670 seconds
+
+Waiting List size: 8
+
+Vehicle #0 is driving passenger to destination
+Vehicle #1 is heading towards passenger
+Vehicle #2 is heading towards passenger
+Vehicle #3 is heading towards passenger
+Vehicle #4 is heading towards passenger
+Vehicle #5 is heading towards passenger
+Vehicle #6 is heading towards passenger
+Vehicle #7 is heading towards passenger
+Vehicle #8 is heading towards passenger
+(!) Vehicle #9 picked up passenger [Origin id: 9023 destination id: 9020 Departure time: 1485]
+Vehicle #9 is driving passenger to destination
+
+Available vehicles: 0
+
+
+Time: 2700 seconds
+
+Waiting List size: 8
+
+Vehicle #0 is driving passenger to destination
+Vehicle #1 is heading towards passenger
+Vehicle #2 is heading towards passenger
+Vehicle #3 is heading towards passenger
+Vehicle #4 is heading towards passenger
+(!) Vehicle #5 picked up passenger [Origin id: 9023 destination id: 9022 Departure time: 1525]
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is heading towards passenger
+Vehicle #7 is heading towards passenger
+Vehicle #8 is heading towards passenger
+Vehicle #9 is beginning route to destination | Travel time: 540.0227 seconds
+Vehicle #9 is driving passenger to destination
+
+Available vehicles: 0
+
+
+Time: 2730 seconds
+
+Waiting List size: 9
+
+Vehicle #0 is driving passenger to destination
+Vehicle #1 is heading towards passenger
+Vehicle #2 is heading towards passenger
+Vehicle #3 is heading towards passenger
+Vehicle #4 is heading towards passenger
+Vehicle #5 is beginning route to destination | Travel time: 240.02272 seconds
+Vehicle #5 is driving passenger to destination
+(!) Vehicle #6 picked up passenger [Origin id: 9023 destination id: 9022 Departure time: 1627]
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is heading towards passenger
+Vehicle #8 is heading towards passenger
+Vehicle #9 is driving passenger to destination
+
+Available vehicles: 0
+
+
+Time: 2760 seconds
+
+Waiting List size: 9
+
+Vehicle #0 is driving passenger to destination
+Vehicle #1 is heading towards passenger
+Vehicle #2 is heading towards passenger
+Vehicle #3 is heading towards passenger
+Vehicle #4 is heading towards passenger
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is beginning route to destination | Travel time: 240.02272 seconds
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is heading towards passenger
+Vehicle #8 is heading towards passenger
+Vehicle #9 is driving passenger to destination
+
+Available vehicles: 0
+
+
+Time: 2790 seconds
+
+Waiting List size: 10
+
+Vehicle #0 is driving passenger to destination
+Vehicle #1 is heading towards passenger
+Vehicle #2 is heading towards passenger
+Vehicle #3 is heading towards passenger
+Vehicle #4 is heading towards passenger
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is heading towards passenger
+Vehicle #8 is heading towards passenger
+Vehicle #9 is driving passenger to destination
+
+Available vehicles: 0
+
+
+Time: 2820 seconds
+
+Waiting List size: 11
+
+(!) Vehicle #0 dropped off passenger [Origin id: 9023 destination id: 9007 Departure time: 727]
+Vehicle #1 is heading towards passenger
+(!) Vehicle #2 picked up passenger [Origin id: 9023 destination id: 9022 Departure time: 1956]
+Vehicle #2 is driving passenger to destination
+Vehicle #3 is heading towards passenger
+Vehicle #4 is heading towards passenger
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is heading towards passenger
+Vehicle #8 is heading towards passenger
+Vehicle #9 is driving passenger to destination
+
+Available vehicles: 1
+
+
+Time: 2850 seconds
+
+Waiting List size: 11
+
+(!) Vehicle #0 has been assigned to passenger [Origin id: 9023 destination id: 9021 Departure time: 1617]
+Vehicle #0 is beginning route to assigned passenger | Travel time: 900.0227 seconds
+Vehicle #1 is heading towards passenger
+Vehicle #2 is beginning route to destination | Travel time: 240.02272 seconds
+Vehicle #2 is driving passenger to destination
+Vehicle #3 is heading towards passenger
+Vehicle #4 is heading towards passenger
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is heading towards passenger
+Vehicle #8 is heading towards passenger
+Vehicle #9 is driving passenger to destination
+
+Available vehicles: 0
+
+
+Time: 2880 seconds
+
+Waiting List size: 11
+
+Vehicle #0 is heading towards passenger
+Vehicle #1 is heading towards passenger
+Vehicle #2 is driving passenger to destination
+Vehicle #3 is heading towards passenger
+Vehicle #4 is heading towards passenger
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is heading towards passenger
+Vehicle #8 is heading towards passenger
+Vehicle #9 is driving passenger to destination
+
+Available vehicles: 0
+
+
+Time: 2910 seconds
+
+Waiting List size: 12
+
+Vehicle #0 is heading towards passenger
+Vehicle #1 is heading towards passenger
+Vehicle #2 is driving passenger to destination
+Vehicle #3 is heading towards passenger
+Vehicle #4 is heading towards passenger
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is heading towards passenger
+Vehicle #8 is heading towards passenger
+Vehicle #9 is driving passenger to destination
+
+Available vehicles: 0
+
+
+Time: 2940 seconds
+
+Waiting List size: 12
+
+Vehicle #0 is heading towards passenger
+Vehicle #1 is heading towards passenger
+Vehicle #2 is driving passenger to destination
+Vehicle #3 is heading towards passenger
+Vehicle #4 is heading towards passenger
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is heading towards passenger
+Vehicle #8 is heading towards passenger
+Vehicle #9 is driving passenger to destination
+
+Available vehicles: 0
+
+
+Time: 2970 seconds
+
+Waiting List size: 13
+
+Vehicle #0 is heading towards passenger
+Vehicle #1 is heading towards passenger
+Vehicle #2 is driving passenger to destination
+Vehicle #3 is heading towards passenger
+Vehicle #4 is heading towards passenger
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is heading towards passenger
+Vehicle #8 is heading towards passenger
+Vehicle #9 is driving passenger to destination
+
+Available vehicles: 0
+
+
+Time: 3000 seconds
+
+Waiting List size: 13
+
+Vehicle #0 is heading towards passenger
+Vehicle #1 is heading towards passenger
+Vehicle #2 is driving passenger to destination
+Vehicle #3 is heading towards passenger
+Vehicle #4 is heading towards passenger
+(!) Vehicle #5 dropped off passenger [Origin id: 9023 destination id: 9022 Departure time: 1525]
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is heading towards passenger
+Vehicle #8 is heading towards passenger
+Vehicle #9 is driving passenger to destination
+
+Available vehicles: 1
+
+
+Time: 3030 seconds
+
+Waiting List size: 16
+
+(!) Vehicle #5 has been assigned to passenger [Origin id: 9023 destination id: 9022 Departure time: 1990]
+Vehicle #0 is heading towards passenger
+Vehicle #1 is heading towards passenger
+Vehicle #2 is driving passenger to destination
+Vehicle #3 is heading towards passenger
+Vehicle #4 is heading towards passenger
+Vehicle #5 is beginning route to assigned passenger | Travel time: 240.02272 seconds
+(!) Vehicle #6 dropped off passenger [Origin id: 9023 destination id: 9022 Departure time: 1627]
+Vehicle #7 is heading towards passenger
+(!) Vehicle #8 picked up passenger [Origin id: 9023 destination id: 9001 Departure time: 1262]
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is driving passenger to destination
+
+Available vehicles: 1
+
+
+Time: 3060 seconds
+
+Waiting List size: 17
+
+(!) Vehicle #6 has been assigned to passenger [Origin id: 9023 destination id: 9007 Departure time: 2220]
+Vehicle #0 is heading towards passenger
+Vehicle #1 is heading towards passenger
+Vehicle #2 is driving passenger to destination
+Vehicle #3 is heading towards passenger
+(!) Vehicle #4 picked up passenger [Origin id: 9023 destination id: 9022 Departure time: 1742]
+Vehicle #4 is driving passenger to destination
+Vehicle #5 is heading towards passenger
+Vehicle #6 is beginning route to assigned passenger | Travel time: 240.02272 seconds
+Vehicle #7 is heading towards passenger
+Vehicle #8 is beginning route to destination | Travel time: 1020.0227 seconds
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is driving passenger to destination
+
+Available vehicles: 0
+
+
+Time: 3090 seconds
+
+Waiting List size: 16
+
+Vehicle #0 is heading towards passenger
+Vehicle #1 is heading towards passenger
+Vehicle #2 is driving passenger to destination
+Vehicle #3 is heading towards passenger
+Vehicle #4 is beginning route to destination | Travel time: 240.02272 seconds
+Vehicle #4 is driving passenger to destination
+Vehicle #5 is heading towards passenger
+Vehicle #6 is heading towards passenger
+Vehicle #7 is heading towards passenger
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is driving passenger to destination
+
+Available vehicles: 0
+
+
+Time: 3120 seconds
+
+Waiting List size: 16
+
+Vehicle #0 is heading towards passenger
+Vehicle #1 is heading towards passenger
+(!) Vehicle #2 dropped off passenger [Origin id: 9023 destination id: 9022 Departure time: 1956]
+Vehicle #3 is heading towards passenger
+Vehicle #4 is driving passenger to destination
+Vehicle #5 is heading towards passenger
+Vehicle #6 is heading towards passenger
+(!) Vehicle #7 picked up passenger [Origin id: 9023 destination id: 9020 Departure time: 1219]
+Vehicle #7 is driving passenger to destination
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is driving passenger to destination
+
+Available vehicles: 1
+
+
+Time: 3150 seconds
+
+Waiting List size: 17
+
+(!) Vehicle #2 has been assigned to passenger [Origin id: 9023 destination id: 9022 Departure time: 2291]
+Vehicle #0 is heading towards passenger
+Vehicle #1 is heading towards passenger
+Vehicle #2 is beginning route to assigned passenger | Travel time: 240.02272 seconds
+Vehicle #3 is heading towards passenger
+Vehicle #4 is driving passenger to destination
+Vehicle #5 is heading towards passenger
+Vehicle #6 is heading towards passenger
+Vehicle #7 is beginning route to destination | Travel time: 540.0227 seconds
+Vehicle #7 is driving passenger to destination
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is driving passenger to destination
+
+Available vehicles: 0
+
+
+Time: 3180 seconds
+
+Waiting List size: 17
+
+Vehicle #0 is heading towards passenger
+Vehicle #1 is heading towards passenger
+Vehicle #2 is heading towards passenger
+Vehicle #3 is heading towards passenger
+Vehicle #4 is driving passenger to destination
+Vehicle #5 is heading towards passenger
+Vehicle #6 is heading towards passenger
+Vehicle #7 is driving passenger to destination
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is driving passenger to destination
+
+Available vehicles: 0
+
+
+Time: 3210 seconds
+
+Waiting List size: 17
+
+Vehicle #0 is heading towards passenger
+Vehicle #1 is heading towards passenger
+Vehicle #2 is heading towards passenger
+Vehicle #3 is heading towards passenger
+Vehicle #4 is driving passenger to destination
+Vehicle #5 is heading towards passenger
+Vehicle #6 is heading towards passenger
+Vehicle #7 is driving passenger to destination
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is driving passenger to destination
+
+Available vehicles: 0
+
+
+Time: 3240 seconds
+
+Waiting List size: 17
+
+Vehicle #0 is heading towards passenger
+Vehicle #1 is heading towards passenger
+Vehicle #2 is heading towards passenger
+Vehicle #3 is heading towards passenger
+Vehicle #4 is driving passenger to destination
+Vehicle #5 is heading towards passenger
+Vehicle #6 is heading towards passenger
+Vehicle #7 is driving passenger to destination
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is driving passenger to destination
+
+Available vehicles: 0
+
+
+Time: 3270 seconds
+
+Waiting List size: 18
+
+Vehicle #0 is heading towards passenger
+Vehicle #1 is heading towards passenger
+Vehicle #2 is heading towards passenger
+Vehicle #3 is heading towards passenger
+Vehicle #4 is driving passenger to destination
+Vehicle #5 is heading towards passenger
+Vehicle #6 is heading towards passenger
+Vehicle #7 is driving passenger to destination
+Vehicle #8 is driving passenger to destination
+(!) Vehicle #9 dropped off passenger [Origin id: 9023 destination id: 9020 Departure time: 1485]
+
+Available vehicles: 1
+
+
+Time: 3300 seconds
+
+Waiting List size: 18
+
+(!) Vehicle #9 has been assigned to passenger [Origin id: 9023 destination id: 9004 Departure time: 2107]
+Vehicle #0 is heading towards passenger
+Vehicle #1 is heading towards passenger
+Vehicle #2 is heading towards passenger
+Vehicle #3 is heading towards passenger
+Vehicle #4 is driving passenger to destination
+(!) Vehicle #5 picked up passenger [Origin id: 9023 destination id: 9022 Departure time: 1990]
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is heading towards passenger
+Vehicle #7 is driving passenger to destination
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is beginning route to assigned passenger | Travel time: 540.02264 seconds
+
+Available vehicles: 0
+
+
+Time: 3330 seconds
+
+Waiting List size: 19
+
+Vehicle #0 is heading towards passenger
+Vehicle #1 is heading towards passenger
+Vehicle #2 is heading towards passenger
+Vehicle #3 is heading towards passenger
+Vehicle #4 is driving passenger to destination
+Vehicle #5 is beginning route to destination | Travel time: 240.02272 seconds
+Vehicle #5 is driving passenger to destination
+(!) Vehicle #6 picked up passenger [Origin id: 9023 destination id: 9007 Departure time: 2220]
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is driving passenger to destination
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 0
+
+
+Time: 3360 seconds
+
+Waiting List size: 22
+
+Vehicle #0 is heading towards passenger
+Vehicle #1 is heading towards passenger
+Vehicle #2 is heading towards passenger
+Vehicle #3 is heading towards passenger
+(!) Vehicle #4 dropped off passenger [Origin id: 9023 destination id: 9022 Departure time: 1742]
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is beginning route to destination | Travel time: 900.0227 seconds
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is driving passenger to destination
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 1
+
+
+Time: 3390 seconds
+
+Waiting List size: 22
+
+(!) Vehicle #4 has been assigned to passenger [Origin id: 9023 destination id: 9022 Departure time: 2325]
+Vehicle #0 is heading towards passenger
+(!) Vehicle #1 picked up passenger [Origin id: 9023 destination id: 9022 Departure time: 1522]
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is heading towards passenger
+Vehicle #3 is heading towards passenger
+Vehicle #4 is beginning route to assigned passenger | Travel time: 240.02272 seconds
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is driving passenger to destination
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 0
+
+
+Time: 3420 seconds
+
+Waiting List size: 24
+
+Vehicle #0 is heading towards passenger
+Vehicle #1 is beginning route to destination | Travel time: 240.02272 seconds
+Vehicle #1 is driving passenger to destination
+(!) Vehicle #2 picked up passenger [Origin id: 9023 destination id: 9022 Departure time: 2291]
+Vehicle #2 is driving passenger to destination
+Vehicle #3 is heading towards passenger
+Vehicle #4 is heading towards passenger
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is driving passenger to destination
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 0
+
+
+Time: 3450 seconds
+
+Waiting List size: 25
+
+Vehicle #0 is heading towards passenger
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is beginning route to destination | Travel time: 240.02272 seconds
+Vehicle #2 is driving passenger to destination
+Vehicle #3 is heading towards passenger
+Vehicle #4 is heading towards passenger
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is driving passenger to destination
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 0
+
+
+Time: 3480 seconds
+
+Waiting List size: 27
+
+Vehicle #0 is heading towards passenger
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is driving passenger to destination
+(!) Vehicle #3 picked up passenger [Origin id: 9023 destination id: 9021 Departure time: 1347]
+Vehicle #3 is driving passenger to destination
+Vehicle #4 is heading towards passenger
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is driving passenger to destination
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 0
+
+
+Time: 3510 seconds
+
+Waiting List size: 27
+
+Vehicle #0 is heading towards passenger
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is driving passenger to destination
+Vehicle #3 is beginning route to destination | Travel time: 300.0227 seconds
+Vehicle #3 is driving passenger to destination
+Vehicle #4 is heading towards passenger
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is driving passenger to destination
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 0
+
+
+Time: 3540 seconds
+
+Waiting List size: 27
+
+Vehicle #0 is heading towards passenger
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is driving passenger to destination
+Vehicle #3 is driving passenger to destination
+Vehicle #4 is heading towards passenger
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is driving passenger to destination
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 0
+
+
+Time: 3570 seconds
+
+Waiting List size: 28
+
+Vehicle #0 is heading towards passenger
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is driving passenger to destination
+Vehicle #3 is driving passenger to destination
+Vehicle #4 is heading towards passenger
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is driving passenger to destination
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 0
+
+
+Time: 3600 seconds
+
+Waiting List size: 28
+
+Vehicle #0 is heading towards passenger
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is driving passenger to destination
+Vehicle #3 is driving passenger to destination
+Vehicle #4 is heading towards passenger
+(!) Vehicle #5 dropped off passenger [Origin id: 9023 destination id: 9022 Departure time: 1990]
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is driving passenger to destination
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 1
+
+
+Time: 3630 seconds
+
+Waiting List size: 30
+
+(!) Vehicle #5 has been assigned to passenger [Origin id: 9023 destination id: 9022 Departure time: 2505]
+Vehicle #0 is heading towards passenger
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is driving passenger to destination
+Vehicle #3 is driving passenger to destination
+Vehicle #4 is heading towards passenger
+Vehicle #5 is beginning route to assigned passenger | Travel time: 240.02272 seconds
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is driving passenger to destination
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 0
+
+
+Time: 3660 seconds
+
+Waiting List size: 29
+
+Vehicle #0 is heading towards passenger
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is driving passenger to destination
+Vehicle #3 is driving passenger to destination
+(!) Vehicle #4 picked up passenger [Origin id: 9023 destination id: 9022 Departure time: 2325]
+Vehicle #4 is driving passenger to destination
+Vehicle #5 is heading towards passenger
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is driving passenger to destination
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 0
+
+
+Time: 3690 seconds
+
+Waiting List size: 29
+
+Vehicle #0 is heading towards passenger
+(!) Vehicle #1 dropped off passenger [Origin id: 9023 destination id: 9022 Departure time: 1522]
+Vehicle #2 is driving passenger to destination
+Vehicle #3 is driving passenger to destination
+Vehicle #4 is beginning route to destination | Travel time: 240.02272 seconds
+Vehicle #4 is driving passenger to destination
+Vehicle #5 is heading towards passenger
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is driving passenger to destination
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 1
+
+
+Time: 3720 seconds
+
+Waiting List size: 31
+
+(!) Vehicle #1 has been assigned to passenger [Origin id: 9023 destination id: 9020 Departure time: 2730]
+Vehicle #0 is heading towards passenger
+Vehicle #1 is beginning route to assigned passenger | Travel time: 240.02272 seconds
+(!) Vehicle #2 dropped off passenger [Origin id: 9023 destination id: 9022 Departure time: 2291]
+Vehicle #3 is driving passenger to destination
+Vehicle #4 is driving passenger to destination
+Vehicle #5 is heading towards passenger
+Vehicle #6 is driving passenger to destination
+(!) Vehicle #7 dropped off passenger [Origin id: 9023 destination id: 9020 Departure time: 1219]
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 2
+
+
+Time: 3750 seconds
+
+Waiting List size: 32
+
+(!) Vehicle #2 has been assigned to passenger [Origin id: 9023 destination id: 9022 Departure time: 2815]
+(!) Vehicle #7 has been assigned to passenger [Origin id: 9023 destination id: 9022 Departure time: 2770]
+Vehicle #0 is heading towards passenger
+Vehicle #1 is heading towards passenger
+Vehicle #2 is beginning route to assigned passenger | Travel time: 240.02272 seconds
+Vehicle #3 is driving passenger to destination
+Vehicle #4 is driving passenger to destination
+Vehicle #5 is heading towards passenger
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is beginning route to assigned passenger | Travel time: 540.02264 seconds
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 0
+
+
+Time: 3780 seconds
+
+Waiting List size: 30
+
+(!) Vehicle #0 picked up passenger [Origin id: 9023 destination id: 9021 Departure time: 1617]
+Vehicle #0 is driving passenger to destination
+Vehicle #1 is heading towards passenger
+Vehicle #2 is heading towards passenger
+Vehicle #3 is driving passenger to destination
+Vehicle #4 is driving passenger to destination
+Vehicle #5 is heading towards passenger
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is heading towards passenger
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 0
+
+
+Time: 3810 seconds
+
+Waiting List size: 32
+
+Vehicle #0 is beginning route to destination | Travel time: 300.0227 seconds
+Vehicle #0 is driving passenger to destination
+Vehicle #1 is heading towards passenger
+Vehicle #2 is heading towards passenger
+Vehicle #3 is driving passenger to destination
+Vehicle #4 is driving passenger to destination
+Vehicle #5 is heading towards passenger
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is heading towards passenger
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 0
+
+
+Time: 3840 seconds
+
+Waiting List size: 32
+
+Vehicle #0 is driving passenger to destination
+Vehicle #1 is heading towards passenger
+Vehicle #2 is heading towards passenger
+(!) Vehicle #3 dropped off passenger [Origin id: 9023 destination id: 9021 Departure time: 1347]
+Vehicle #4 is driving passenger to destination
+Vehicle #5 is heading towards passenger
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is heading towards passenger
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is heading towards passenger
+
+Available vehicles: 1
+
+
+Time: 3870 seconds
+
+Waiting List size: 33
+
+(!) Vehicle #3 has been assigned to passenger [Origin id: 9023 destination id: 9022 Departure time: 2965]
+Vehicle #0 is driving passenger to destination
+Vehicle #1 is heading towards passenger
+Vehicle #2 is heading towards passenger
+Vehicle #3 is beginning route to assigned passenger | Travel time: 300.0227 seconds
+Vehicle #4 is driving passenger to destination
+Vehicle #5 is heading towards passenger
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is heading towards passenger
+Vehicle #8 is driving passenger to destination
+(!) Vehicle #9 picked up passenger [Origin id: 9023 destination id: 9004 Departure time: 2107]
+Vehicle #9 is driving passenger to destination
+
+Available vehicles: 0
+
+
+Time: 3900 seconds
+
+Waiting List size: 32
+
+Vehicle #0 is driving passenger to destination
+Vehicle #1 is heading towards passenger
+Vehicle #2 is heading towards passenger
+Vehicle #3 is heading towards passenger
+Vehicle #4 is driving passenger to destination
+(!) Vehicle #5 picked up passenger [Origin id: 9023 destination id: 9022 Departure time: 2505]
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is heading towards passenger
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is beginning route to destination | Travel time: 840.0227 seconds
+Vehicle #9 is driving passenger to destination
+
+Available vehicles: 0
+
+
+Time: 3930 seconds
+
+Waiting List size: 33
+
+Vehicle #0 is driving passenger to destination
+Vehicle #1 is heading towards passenger
+Vehicle #2 is heading towards passenger
+Vehicle #3 is heading towards passenger
+Vehicle #4 is driving passenger to destination
+Vehicle #5 is beginning route to destination | Travel time: 240.02272 seconds
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is heading towards passenger
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is driving passenger to destination
+
+Available vehicles: 0
+
+
+Time: 3960 seconds
+
+Waiting List size: 34
+
+Vehicle #0 is driving passenger to destination
+Vehicle #1 is heading towards passenger
+Vehicle #2 is heading towards passenger
+Vehicle #3 is heading towards passenger
+(!) Vehicle #4 dropped off passenger [Origin id: 9023 destination id: 9022 Departure time: 2325]
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is heading towards passenger
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is driving passenger to destination
+
+Available vehicles: 1
+
+
+Time: 3990 seconds
+
+Waiting List size: 35
+
+(!) Vehicle #4 has been assigned to passenger [Origin id: 9023 destination id: 9022 Departure time: 3022]
+Vehicle #0 is driving passenger to destination
+(!) Vehicle #1 picked up passenger [Origin id: 9023 destination id: 9020 Departure time: 2730]
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is heading towards passenger
+Vehicle #3 is heading towards passenger
+Vehicle #4 is beginning route to assigned passenger | Travel time: 240.02272 seconds
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is heading towards passenger
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is driving passenger to destination
+
+Available vehicles: 0
+
+
+Time: 4020 seconds
+
+Waiting List size: 37
+
+Vehicle #0 is driving passenger to destination
+Vehicle #1 is beginning route to destination | Travel time: 540.0227 seconds
+Vehicle #1 is driving passenger to destination
+(!) Vehicle #2 picked up passenger [Origin id: 9023 destination id: 9022 Departure time: 2815]
+Vehicle #2 is driving passenger to destination
+Vehicle #3 is heading towards passenger
+Vehicle #4 is heading towards passenger
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is heading towards passenger
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is driving passenger to destination
+
+Available vehicles: 0
+
+
+Time: 4050 seconds
+
+Waiting List size: 37
+
+Vehicle #0 is driving passenger to destination
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is beginning route to destination | Travel time: 240.02272 seconds
+Vehicle #2 is driving passenger to destination
+Vehicle #3 is heading towards passenger
+Vehicle #4 is heading towards passenger
+Vehicle #5 is driving passenger to destination
+Vehicle #6 is driving passenger to destination
+Vehicle #7 is heading towards passenger
+Vehicle #8 is driving passenger to destination
+Vehicle #9 is driving passenger to destination
+
+Available vehicles: 0
+
+
+Time: 4080 seconds
+
+Waiting List size: 37
+
+Vehicle #0 is driving passenger to destination
+Vehicle #1 is driving passenger to destination
+Vehicle #2 is driving passenger to destination
+Vehicle #3 is heading towards passenger
+Vehicle #4 is heading towards passenger
+Vehicle #5 is driving passenger to destin

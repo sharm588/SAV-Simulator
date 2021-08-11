@@ -11,5 +11,8 @@
         <module name="evsimulator.main" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="evsimulator.main" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

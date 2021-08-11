@@ -21,14 +21,14 @@ public class GeneticAlgorithm {
     double mutate = 0.00;
     double mutateValue = 0.025f;
     double bestPercent = 0.1; //take top 10% of fittest organisms
-    double firstTerm = 0.009;
+    double firstTerm = 0.008;
     double arithmeticFactor = 0;
     Random r = new Random();
     double probabilityValue = 0;
     double avgPopulationWaitTime = 0;
     int alphaLength = 24;
     int betaLength = 576;
-    double parentChecker = 0.0;
+    int parentChecker = 0;
 
 
     public void calculateArithmeticFactor() throws IloException, IOException
@@ -88,82 +88,63 @@ public class GeneticAlgorithm {
 
             for (int j = 0; j < populationSize; j++) { //loop through population
                 avgPopulationWaitTime += population.get(j).waitTime;
-                mutate = r.nextFloat();
-
-                if (mutate > mutateValue) { //mutate mutateValue% of the time
-
-
-                    int numberofValues = assignParent();
-                    int parent1_index = populationSize - (numberofValues - 1) - 1;  //assign parent
-
-                    numberofValues = assignParent();
-
-                    int parent2_index = populationSize - (numberofValues - 1) - 1;  //assign parent
-
-                    if (parent2_index == parent1_index) { //make sure parents aren't the same
-                        if (parent2_index == populationSize - 1) parent2_index--;
-                        parent2_index++;
-                    }
-                    //Set alpha array for child
-                    double [] childAlpha = new double[alphaLength];
-                    for(int k =0; k<alphaLength; k++)
+                int numberofValues = assignParent();
+                int parent1_index = populationSize - (numberofValues - 1) - 1;  //assign parent
+                numberofValues = assignParent();
+                int parent2_index = populationSize - (numberofValues - 1) - 1;  //assign parent
+                if (parent2_index == parent1_index) { //make sure parents aren't the same
+                    if (parent2_index == populationSize - 1) parent2_index--;
+                    parent2_index++;
+                }
+                //Set alpha array for child
+                double [] childAlpha = new double[alphaLength];
+                parentChecker = r.nextInt(alphaLength);
+                for(int k =0; k<alphaLength; k++)
+                {
+                    if(k<=parentChecker)
                     {
-                        parentChecker = r.nextFloat();
-                        if(parentChecker>0.50)
-                        {
-                            childAlpha[k] = population.get(parent1_index).alphaValues[k];
-                        }
-                        else
-                        {
-                            childAlpha[k] = population.get(parent2_index).alphaValues[k];
-                        }
-
+                        childAlpha[k] = population.get(parent1_index).alphaValues[k];
                     }
-                    //set Child beta array
-                    double [] childBeta = new double[betaLength];
-                    for(int z = 0; z<betaLength; z++)
+                    else
                     {
-                        parentChecker = r.nextFloat();
-                        if(parentChecker>0.50)
-                        {
-                            childBeta[z] = population.get(parent1_index).betaValues[z];
-                        }
-                        else
-                        {
-                            childBeta[z] = population.get(parent2_index).betaValues[z];
-                        }
+                        childAlpha[k] = population.get(parent2_index).alphaValues[k];
                     }
-                    Organism child = new Organism(childBeta, childAlpha);    //create child
-                    nextGeneration.add(child); //add organism to temporary array list
-
-                } else {
-                    double high = 10;
-                    double [] childAlpha = new double[alphaLength];
-                    for(int a = 0; a<alphaLength; a++)
+                }
+                //set Child beta array
+                double [] childBeta = new double[betaLength];
+                parentChecker = r.nextInt(betaLength);
+                for(int z = 0; z<betaLength; z++)
+                {
+                    if(z<=parentChecker)
                     {
-                        double alphaVal = high * r.nextDouble();
-                        childAlpha[a] = alphaVal;
+                        childBeta[z] = population.get(parent1_index).betaValues[z];
                     }
-                    double [] childBeta = new double[betaLength];
-                    for(int b = 0; b<betaLength; b++)
+                    else
                     {
-                        double betaVal = high * r.nextDouble();
-                        childBeta[b] = betaVal;
+                        childBeta[z] = population.get(parent2_index).betaValues[z];
                     }
-
-
-                    Organism child = new Organism(childBeta, childAlpha); //create organism with random alpha and beta values (mutation)
-                    nextGeneration.add(child);
                 }
 
-            }
+                mutate = r.nextDouble();
+                if(mutate<=mutateValue) {
+                    int randomAlphaIndex = r.nextInt(alphaLength);
+                    int randomBetaIndex = r.nextInt(betaLength);
+                    double newAlphaValue = 10* r.nextDouble();
+                    double newBetaValue = 10 * r.nextDouble();
+                    childAlpha[randomAlphaIndex] = newAlphaValue;
+                    childBeta[randomBetaIndex] = newBetaValue;
+                }
 
+
+                Organism child = new Organism(childBeta, childAlpha); //create organism with random alpha and beta values (mutation)
+                nextGeneration.add(child);
+            }
 
             Collections.sort(population);   //sort current population from lowest to highest waiting time
             avgPopulationWaitTime /= population.size();
-            System.out.println((i+1) + ": " + population.get(0).waitTime); //print best waiting time
-            System.out.println("Beta values: " + Arrays.toString(population.get(0).betaValues));
-            System.out.println("Alpha values: " + Arrays.toString(population.get(0).alphaValues));
+            System.out.println(population.get(0).waitTime); //print best waiting time
+//            System.out.println("Beta values: " + Arrays.toString(population.get(0).betaValues));
+//            System.out.println("Alpha values: " + Arrays.toString(population.get(0).alphaValues));
             avgPopulationWaitTime = 0;
 
             for (int x = 0; x < bestNumber; x++) { //add best organisms from this generation to next generation
