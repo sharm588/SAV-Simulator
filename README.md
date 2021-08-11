@@ -6,7 +6,7 @@
 
 Ensure the following are installed on your computer 
 
-1.) Java (https://www.java.com/en/download)
+1.) Java/JDK 8 (https://www.java.com/en/download, https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html)
 
 2.) IntelliJ Community Edition (https://www.jetbrains.com/idea/download)
 
