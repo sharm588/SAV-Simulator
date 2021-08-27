@@ -27,12 +27,12 @@ Ensure the following are installed on your computer
     1. Navigate to File -> Settings -> Plugins and search Lombok
     2. Restart IntelliJ and make sure to enable annotations processing when prompted in the bottom left corner
 
-4.)  Overwrite current IDE settings with provided settings to ensure project runs correctly
+4.)  If provided with an access token, overwrite current IDE settings with provided settings to ensure project runs correctly
     
     1. Go to File -> Settings Repository
     2. Enter the settings repository URL (https://github.com/sharm588/SAEV-Simulator-Settings.git)
     3. Click 'Overwrite Local'
-    4. Enter access token when requested: b00412df1d4c49081939b50c6bd715951bffaf04
+    4. Enter access token when requested
     
 5.) Set environment variable for resources folder to 'RESOURCES_FOLDER' when using main file *Application*
    
