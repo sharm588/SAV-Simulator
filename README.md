@@ -1,9 +1,9 @@
 <p align="center">
 <img src="https://s.marketwatch.com/public/resources/images/MW-EV890_uberse_ZH_20160914102258.jpg" width=500>
 </p>
-<p align="center">
+<h1 align="center">
 Shared Autonomous Electric Vehicles Simulator
-</p>
+</h1>
 
 # Run using IntelliJ IDEA
 
