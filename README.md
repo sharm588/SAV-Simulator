@@ -1,8 +1,11 @@
-# Shared Autonomous Electric Vehicles Simulator
+<p align="center">
+<img src="https://s.marketwatch.com/public/resources/images/MW-EV890_uberse_ZH_20160914102258.jpg" width=500>
+</p>
+<p align="center">
+Shared Autonomous Electric Vehicles Simulator
+</p>
 
-![Autonomous Uber](https://s.marketwatch.com/public/resources/images/MW-EV890_uberse_ZH_20160914102258.jpg)
-
-## Run using IntelliJ IDEA
+# Run using IntelliJ IDEA
 
 Ensure the following are installed on your computer 
 
@@ -16,7 +19,7 @@ Ensure the following are installed on your computer
 
 *Note: Make sure to download IBM's Download Director before installing the CPLEX Optimizer*
     
-### Setting Up IntelliJ Project
+## Setting Up IntelliJ Project
 
 1.) Open IntelliJ IDEA and click *Check out from Version Control* from the main menu
 
@@ -43,7 +46,7 @@ Ensure the following are installed on your computer
     5. In the 'Environment Variables' section under 'Configuration', type 'RESOURCES_FOLDER=' followed by the path for the resources folder (right click the resources folder in the project directory and select 'Copy Path...')
     6. Click the 'Apply' button then 'Ok'
     
-### Adding CPLEX Optimizer
+## Adding CPLEX Optimizer
 
 1.) Go to the *build.gradle* file and compile the cplex.jar file with your cplex.jar path under *dependencies*
 
