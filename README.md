@@ -5,7 +5,7 @@
 Shared Autonomous Electric Vehicles Simulator
 </h1>
 <p align="center">
-Repository for a simulation of autonomous electric vehicles in ridesharing. The simulation ensures that the vehicles pick up and drop passengers at designated destinations in the most efficient way possible using a shortest path algorithm and IBM’s CPLEX API.
+Repository for a simulation of autonomous electric vehicles in ridesharing. The simulation ensures that the vehicles pick up and drop passengers at designated destinations in the most efficient way possible using Dijkstra's algoirithm, IBM’s CPLEX API, and a genetic algorithm.
 </p>
 
 # Run using IntelliJ IDEA
