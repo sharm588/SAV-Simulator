@@ -5,8 +5,12 @@
 Shared Autonomous Vehicles Simulator
 </h1>
 <p align="center">
-Repository for a simulation of autonomous vehicles in ridesharing. The simulation ensures that the vehicles pick up and drop passengers at designated destinations in the most efficient way possible using Dijkstra's algorithm, IBM’s CPLEX API, and a genetic algorithm.
+Repository for a simulation of autonomous vehicles in ridesharing
 </p>
+
+# About
+
+Autonomous vehicles remove the need for a driver, which reduces the price for ridesharing to the point where it is competitive to the use of personal vehicles. However, using a fleet of shared autonomous vehicles (SAV) poses several new challenges, such as deciding which vehicle is assigned to which passenger. Using Dikjstra's shortest path algorithm, a CPLEX optimization equation, and a genetic algorithm with an SAV simulation allows us to find the most efficient way to pick-up/drop-off passengers to minimize passenger wait times.
 
 # Run using IntelliJ IDEA
 
