@@ -36,7 +36,7 @@ Install the following:
 4.)  If provided an access token, overwrite current IDE settings with provided settings to ensure project runs correctly (optional)
     
     1. Go to File -> Settings Repository
-    2. Enter the settings repository URL (https://github.com/sharm588/SAEV-Simulator-Settings.git)
+    2. Enter the settings repository URL (https://github.com/sharm588/SAV-Simulator-Settings.git)
     3. Click 'Overwrite Local'
     4. Enter access token when requested
     
@@ -62,7 +62,7 @@ Install the following:
 
     1. Click the box in the top right hand corner with the file's name
     2. Click 'Edit Configurations...'
-    3. In the 'VM options' section under 'Configuration', enter '-Djava.library.path=' followed by the path for the files for the CPLEX library
+    3. In the 'VM options' section under 'Configuration', enter '-Djava.library.path=' followed by the path for the CPLEX library files
     
         a.) '-Djava.library.path=/.../CPLEX_Studio1210/cplex/bin/x86-64_osx' for macOS 
         b.) '-Djava.library.path="C:\...\CPLEX_Studio1210\cplex\bin\x64_win64"' for Windows
