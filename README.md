@@ -20,7 +20,7 @@ Install the following:
 
 4.) CPLEX Optimizer (https://www.ibm.com/analytics/cplex-optimizer)
 
-*Note: Make sure to download IBM's Download Director before installing the CPLEX Optimizer*
+*Note: Download IBM's Download Director before installing the CPLEX Optimizer*
     
 ## Setting Up IntelliJ Project
 
