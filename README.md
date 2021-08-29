@@ -10,7 +10,7 @@ Repository for a simulation of autonomous vehicles in ridesharing. The simulatio
 
 # Run using IntelliJ IDEA
 
-Ensure the following are installed on your computer 
+Install the following: 
 
 1.) Java (https://www.java.com/en/download)
 
