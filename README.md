@@ -5,7 +5,7 @@
 Shared Autonomous Vehicles Simulator
 </h1>
 <p align="center">
-Repository for a simulation of shared autonomous vehicles in ridesharing
+Repository for a simulation of autonomous vehicles in ridesharing
 </p>
 
 # About
