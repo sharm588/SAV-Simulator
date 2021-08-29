@@ -10,7 +10,7 @@ Repository for a simulation of autonomous vehicles in ridesharing
 
 # About
 
-Autonomous vehicles remove the need for a driver, which reduces the price for ridesharing to the point where it is competitive to the use of personal vehicles. However, using a fleet of shared autonomous vehicles (SAV) poses several new challenges, such as deciding which vehicle is assigned to which passenger. Using Dikjstra's shortest path algorithm, a CPLEX optimization equation, and a genetic algorithm with an SAV simulation allows us to find the most efficient way to pick-up/drop-off passengers to minimize passenger wait times.
+Autonomous vehicles remove the need for a driver, which reduces the price for ridesharing to the point where it is competitive to the use of personal vehicles. However, using a fleet of shared autonomous vehicles (SAV) poses several new challenges, such as deciding which vehicle is assigned to which passenger. Using Dikjstra's shortest path algorithm, a CPLEX optimization equation, and a genetic algorithm with an SAV simulation allows us to find the most efficient vehicle-passenger assignments to pick-up/drop-off passengers to minimize passenger wait times.
 
 # Run using IntelliJ IDEA
 
